@@ -1,40 +1,15 @@
-function [fig, YY, TT, PLANETS, R, V] = plotPath(path)
+function [figECI, STRUC, figSYN, figRSC, figVSC] = plotPath(path, holdon, color, firstL)
 
-% DESCRIPTION
-% This function plots the trajectory of a spacecraft given a path matrix, 
-% which includes information on position and velocity at different times.
-% It also plots the orbits of planets and computes the distance and velocity 
-% of the spacecraft relative to the Sun over time. Additionally, it determines 
-% the positions of planets at specific times based on the provided path.
-% 
-% INPUT
-% - path : Matrix where each row represents a leg of the trajectory and 
-%          contains position and velocity vectors, time of flybys, and other
-%          relevant information. Columns represent:
-%          1-3  : Position vectors (x, y, z)
-%          4-6  : Velocity vectors (vx, vy, vz)
-%          7    : Planet ID
-%          8    : Time of flyby (in seconds)
-% 
-% OUTPUT
-% - fig      : Figure handle for the plot of the spacecraft trajectory and planets' orbits.
-% - YY       : Matrix of spacecraft positions and velocities over time.
-% - TT       : Vector of times corresponding to spacecraft positions.
-% - PLANETS  : Structure array containing the positions of planets at various times.
-% - R        : Vector of distances of the spacecraft from the Sun over time.
-% - V        : Vector of velocities of the spacecraft over time.
-% 
-% PROCESS
-% - Plot the orbits of planets based on the provided time range.
-% - For each leg of the trajectory:
-%   - Compute the spacecraft's trajectory by propagating its orbit.
-%   - Plot the spacecraft's trajectory and mark the flyby points.
-%   - Store the positions and velocities over time.
-% - Compute the distance and velocity of the spacecraft relative to the Sun.
-% - Determine the positions of planets at the times specified in the path matrix.
-% - Update the plot legend to indicate the departing location and flyby points.
-% 
-% -------------------------------------------------------------------------
+if nargin == 1
+    holdon = 0;   % --> open new figure
+    color  = 'b'; % --> blue trajectory
+    firstL = 1;   % --> highlight departing condition
+elseif nargin == 2
+    color = 'b';
+    firstL = 1;
+elseif nargin == 3
+    firstL = 1;
+end
 
 mu = 132724487690;
 AU = 149597870.7;
@@ -44,9 +19,9 @@ TFBS = path(:,8);
 DTS  = [0; diff(TFBS)];
 
 %%%%% plot planets orbits %%%%%
-t0   = path(1,8);
-tend = path(end,8);
-fig  = plotPLTS_tt(PLTS, t0, tend);
+t0     = path(1,8);
+tend   = path(end,8);
+figECI = plotPLTS_tt(PLTS, t0, tend, holdon);
 %%%%% plot planets orbits %%%%%
 
 %%%%% plot trajectory %%%%%
@@ -60,55 +35,141 @@ for NLEG = 2:size(path,1)
     tt         = [0:1*86400:DTS(NLEG)*86400]';
     [~,yy]     = propagateKepler(rr1, vv1, tt, mu); % forward propagation
 
-    if NLEG == 2
-        hold on;
-        plot3(yy(1,1)./AU, yy(1,2)./AU, yy(1,3)./AU, 'ks', 'markersize', 10);
+    if firstL == 1
+        if NLEG == 2
+            hold on;
+            plot3(yy(1,1)./AU, yy(1,2)./AU, yy(1,3)./AU,...
+                's', 'MarkerSize', 10, 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Cyan', 'DisplayName', 'Departure');
+        end
     end
     
     if NLEG  == 2
         hold on;
-        plot3(yy(:,1)./AU, yy(:,2)./AU, yy(:,3)./AU, 'b', 'linewidth', 2, 'handlevisibility', 'off');
-        plot3(yy(end,1)./AU, yy(end,2)./AU, yy(end,3)./AU, 'ro', 'markersize', 8);
+        plot3(yy(:,1)./AU, yy(:,2)./AU, yy(:,3)./AU, 'Color', color, 'linewidth', 2, 'HandleVisibility', 'Off');
+        if holdon == 0
+            plot3(yy(end,1)./AU, yy(end,2)./AU, yy(end,3)./AU, ...
+                'o', 'MarkerSize', 8, 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Red', 'DisplayName', 'Fly-by');
+        else
+            plot3(yy(end,1)./AU, yy(end,2)./AU, yy(end,3)./AU, ...
+                'o', 'MarkerSize', 8, 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Red', 'HandleVisibility', 'Off');
+        end
     else
         hold on;
-        plot3(yy(:,1)./AU, yy(:,2)./AU, yy(:,3)./AU, 'b', 'linewidth', 2, 'handlevisibility', 'off');
-        plot3(yy(end,1)./AU, yy(end,2)./AU, yy(end,3)./AU, 'ro', 'markersize', 8, 'handlevisibility', 'off');
+        plot3(yy(:,1)./AU, yy(:,2)./AU, yy(:,3)./AU,...
+            'Color', color, 'linewidth', 2, 'HandleVisibility', 'Off');
+        plot3(yy(end,1)./AU, yy(end,2)./AU, yy(end,3)./AU,...
+            'o', 'MarkerSize', 8, 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Red', 'HandleVisibility', 'Off');
     end
     
     YY = [YY; yy];
     if NLEG == 2
         TT = [TT; ((tt))];
     else
-        TT = [TT; TT(end)+((tt))];
+        TT = [TT; TT(end)+(tt)];
     end
     
 end
+TT = path(1,8) + TT./86400;
 %%%%% plot trajectory %%%%%
 
 %%%%% distance and velocity w.r.t. time %%%%%
-R = zeros(size(YY,1),1);
-V = zeros(size(YY,1),1);
-for indi = 1:size(YY,1)
-    R(indi,1) = norm(YY(indi,1:3));
-    V(indi,1) = norm(YY(indi,4:6)); 
-end
+R = vecnorm(YY(:,1:3)')';
+V = vecnorm(YY(:,4:6)')';
 %%%%% distance and velocity w.r.t. time %%%%%
 
 %%%%% planets positions in the time considered %%%%%
-tdep  = path(1,8);
-TPLTS = TT./86400 + tdep;
+TPLTS = TT;
 PLTS  = unique(PLTS);
 for indj = 1:length(PLTS)
-    pl = PLTS(indj);
+    pl               = PLTS(indj);
     PLANETS(indj).pl = pl;
     for indi = 1:length(TPLTS)
-        PLANETS(indj).planet(indi,:) = EphSS_cartesian(pl, TPLTS(indi));
-        PLANETS(indj).Tpl(indi,:) = TPLTS(indi);
+        [rr, vv]                           = EphSS_cartesian(pl, TPLTS(indi));
+        PLANETS(indj).statesPL_ECI(indi,:) = [rr, vv];
+        PLANETS(indj).Tpl(indi,:)          = TPLTS(indi);
     end
+    [statesPL_SYN]             = wrapECI2Synodic_SE(PLANETS(indj).statesPL_ECI, PLANETS(indj).Tpl);
+    PLANETS(indj).statesPL_SYN = statesPL_SYN;
 end
 %%%%% planets positions in the time considered %%%%%
 
-legend('Departing location', 'Flyby');
-legend('Location', 'Best');
+%%%%% save the results %%%%%
+STRUC.StatesSC = YY;
+STRUC.EpochsSC = TT;
+STRUC.TOFsSC   = [0; TT(2:end) - TT(1)];
+STRUC.DistSC   = R;
+STRUC.VelSC    = V;
+
+STRUC.SatesScFB  = path(:,1:6);
+STRUC.EpochsScFB = path(:,8);
+
+STRUC.Planets    = PLANETS;
+
+% --> from ECLIPTIC J2000 to SUN-EARTH SYNODIC reference frame
+[statesSC_SYN] = wrapECI2Synodic_SE(STRUC.StatesSC, STRUC.EpochsSC);
+[statesPL_SYN] = wrapECI2Synodic_SE(STRUC.SatesScFB, STRUC.EpochsScFB);
+
+STRUC.StatesSC_syn   = statesSC_SYN;
+STRUC.StatesScFB_syn = statesPL_SYN;
+
+%%%%% save the results %%%%%
+
+if nargout >= 3
+
+    figSYN = figure( 'Color', [1 1 1] );
+    hold on; grid on; axis equal;
+    xlabel('x - AU'); ylabel('y - AU'); zlabel('z - AU');
+    
+    plot3(STRUC.StatesSC_syn(:,1), STRUC.StatesSC_syn(:,2), STRUC.StatesSC_syn(:,3), 'b', 'LineWidth', 2, 'HandleVisibility', 'off');
+    
+    plot3( STRUC.StatesScFB_syn(2:end,1), STRUC.StatesScFB_syn(2:end,2), STRUC.StatesScFB_syn(2:end,3), ...
+        'o', 'MarkerSize', 8, 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Red', 'DisplayName', 'Fly-by');
+    plot3( STRUC.StatesScFB_syn(1,1), STRUC.StatesScFB_syn(1,2), STRUC.StatesScFB_syn(1,3), ...
+        's', 'MarkerSize', 10, 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Cyan', 'DisplayName', 'Departure');
+    
+    for indpl = 1:length(STRUC.Planets)
+        plot3(STRUC.Planets(indpl).statesPL_SYN(:,1), STRUC.Planets(indpl).statesPL_SYN(:,2), STRUC.Planets(indpl).statesPL_SYN(:,3), ...
+            'k', 'linewidth', 0.5, 'HandleVisibility', 'Off');
+    end
+
+    if nargout >= 4
+
+
+        figRSC = figure( 'Color', [1 1 1] );
+        hold on; grid on;
+        xlabel('Days from launch'); ylabel('Sun-spacecraft distance - AU');
+
+        plot(STRUC.TOFsSC, STRUC.DistSC./AU, 'b', 'linewidth', 2, 'HandleVisibility', 'off');
+        
+        distfb = vecnorm( STRUC.SatesScFB(:,1:3)' )';
+        toffb  = [ 0; STRUC.EpochsScFB(2:end) - STRUC.EpochsScFB(1) ];
+
+        plot(toffb(1), distfb(1)./AU, ...
+            's', 'MarkerSize', 10, 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Cyan', 'DisplayName', 'Departure');
+
+        plot(toffb(2:end), distfb(2:end)./AU, ...
+            'o', 'MarkerSize', 8, 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Red', 'DisplayName', 'Fly-by');
+
+        if nargout == 5
+            figVSC = figure( 'Color', [1 1 1] );
+            hold on; grid on;
+            xlabel('Days from launch'); ylabel('Spacecraft velocity - km/s');
+
+            plot(STRUC.TOFsSC, STRUC.VelSC, 'b.', 'MarkerSize', 5, 'HandleVisibility', 'off');
+
+            velfb = vecnorm( STRUC.SatesScFB(:,4:6)' )';
+            toffb = [ 0; STRUC.EpochsScFB(2:end) - STRUC.EpochsScFB(1) ];
+
+            plot(toffb(1), velfb(1), ...
+                's', 'MarkerSize', 10, 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Cyan', 'DisplayName', 'Departure');
+
+            plot(toffb(2:end), velfb(2:end), ...
+                'o', 'MarkerSize', 8, 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Red', 'DisplayName', 'Fly-by');
+
+        end
+
+    end
+
+end
 
 end
