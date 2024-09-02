@@ -43,5 +43,5 @@ Bellome, A., “Trajectory design of multi-target missions via graph transcripti
 https://dspace.lib.cranfield.ac.uk/items/711f45c8-e6e4-4f27-909d-94170df400e3
 
 <a id="2">[2]</a> 
-Bellome, Andrea, et al. "Multiobjective design of gravity-assist trajectories via graph transcription and dynamic programming." Journal of Spacecraft and Rockets 60.5 (2023): 1381-1399.
+Bellome, A., et al. "Multiobjective design of gravity-assist trajectories via graph transcription and dynamic programming." Journal of Spacecraft and Rockets 60.5 (2023): 1381-1399.
 https://doi.org/10.2514/1.A35472.
