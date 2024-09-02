@@ -19,6 +19,7 @@ newFolder  = [ pwd '/ASTRA/Lambert problem and defects' ];
 % --> check if Lambert mex works on the current machine
 try 
     [VI,VF] = lambertMR_MEXIFY_mex(zeros(1,3),zeros(1,3),zeros(1,1),zeros(1,1),zeros(1,1),zeros(1,1));
+    disp( 'Lambert mex function available! All good.' );
 catch
     cd(newFolder);
     disp( 'No Lambert mex function available... ASTRA creates it!!' );
@@ -41,6 +42,7 @@ end
 % --> check if defects mex works on the current machine
 try
    [dv, alpha, alpha_A] = findDV_mex(zeros(1,3),zeros(1,3),zeros(1,1),zeros(1,1));
+   disp( 'Defects mex function available! All good.' );
 catch
     disp( 'No defects mex function available... ASTRA creates it!!' );
     disp( 'Mexifying defects function...' );
