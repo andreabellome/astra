@@ -1,0 +1,9 @@
+LIBRARY findDV_mex.mexw64
+EXPORTS
+mexFunction
+mexfilerequiredapiversion
+emlrtMexFcnProperties
+findDV
+findDV_initialize
+findDV_terminate
+findDV_atexit

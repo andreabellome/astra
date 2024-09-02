@@ -1,0 +1,110 @@
+[
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=lambertMR_MEXIFY_mex -D__USE_MINGW_ANSI_STDIO=1   lambertMR_MEXIFY_data.c -o build/win64/lambertMR_MEXIFY_data.o",
+    "file": "lambertMR_MEXIFY_data.c",
+    "output": "build/win64/lambertMR_MEXIFY_data.o"
+  },
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=lambertMR_MEXIFY_mex -D__USE_MINGW_ANSI_STDIO=1   rt_nonfinite.c -o build/win64/rt_nonfinite.o",
+    "file": "rt_nonfinite.c",
+    "output": "build/win64/rt_nonfinite.o"
+  },
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=lambertMR_MEXIFY_mex -D__USE_MINGW_ANSI_STDIO=1   lambertMR_MEXIFY_initialize.c -o build/win64/lambertMR_MEXIFY_initialize.o",
+    "file": "lambertMR_MEXIFY_initialize.c",
+    "output": "build/win64/lambertMR_MEXIFY_initialize.o"
+  },
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=lambertMR_MEXIFY_mex -D__USE_MINGW_ANSI_STDIO=1   lambertMR_MEXIFY_terminate.c -o build/win64/lambertMR_MEXIFY_terminate.o",
+    "file": "lambertMR_MEXIFY_terminate.c",
+    "output": "build/win64/lambertMR_MEXIFY_terminate.o"
+  },
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=lambertMR_MEXIFY_mex -D__USE_MINGW_ANSI_STDIO=1   lambertMR_MEXIFY.c -o build/win64/lambertMR_MEXIFY.o",
+    "file": "lambertMR_MEXIFY.c",
+    "output": "build/win64/lambertMR_MEXIFY.o"
+  },
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=lambertMR_MEXIFY_mex -D__USE_MINGW_ANSI_STDIO=1   dot.c -o build/win64/dot.o",
+    "file": "dot.c",
+    "output": "build/win64/dot.o"
+  },
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=lambertMR_MEXIFY_mex -D__USE_MINGW_ANSI_STDIO=1   norm.c -o build/win64/norm.o",
+    "file": "norm.c",
+    "output": "build/win64/norm.o"
+  },
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=lambertMR_MEXIFY_mex -D__USE_MINGW_ANSI_STDIO=1   mod.c -o build/win64/mod.o",
+    "file": "mod.c",
+    "output": "build/win64/mod.o"
+  },
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=lambertMR_MEXIFY_mex -D__USE_MINGW_ANSI_STDIO=1   power.c -o build/win64/power.o",
+    "file": "power.c",
+    "output": "build/win64/power.o"
+  },
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=lambertMR_MEXIFY_mex -D__USE_MINGW_ANSI_STDIO=1   interface/_coder_lambertMR_MEXIFY_api.c -o build/win64/_coder_lambertMR_MEXIFY_api.o",
+    "file": "interface/_coder_lambertMR_MEXIFY_api.c",
+    "output": "build/win64/_coder_lambertMR_MEXIFY_api.o"
+  },
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=lambertMR_MEXIFY_mex -D__USE_MINGW_ANSI_STDIO=1   interface/_coder_lambertMR_MEXIFY_mex.c -o build/win64/_coder_lambertMR_MEXIFY_mex.o",
+    "file": "interface/_coder_lambertMR_MEXIFY_mex.c",
+    "output": "build/win64/_coder_lambertMR_MEXIFY_mex.o"
+  },
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=lambertMR_MEXIFY_mex -D__USE_MINGW_ANSI_STDIO=1   sqrt.c -o build/win64/sqrt.o",
+    "file": "sqrt.c",
+    "output": "build/win64/sqrt.o"
+  },
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=lambertMR_MEXIFY_mex -D__USE_MINGW_ANSI_STDIO=1   asin.c -o build/win64/asin.o",
+    "file": "asin.c",
+    "output": "build/win64/asin.o"
+  },
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=lambertMR_MEXIFY_mex -D__USE_MINGW_ANSI_STDIO=1   acos.c -o build/win64/acos.o",
+    "file": "acos.c",
+    "output": "build/win64/acos.o"
+  },
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=lambertMR_MEXIFY_mex -D__USE_MINGW_ANSI_STDIO=1   acosh.c -o build/win64/acosh.o",
+    "file": "acosh.c",
+    "output": "build/win64/acosh.o"
+  },
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=lambertMR_MEXIFY_mex -D__USE_MINGW_ANSI_STDIO=1   asinh.c -o build/win64/asinh.o",
+    "file": "asinh.c",
+    "output": "build/win64/asinh.o"
+  },
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=lambertMR_MEXIFY_mex -D__USE_MINGW_ANSI_STDIO=1   interface/_coder_lambertMR_MEXIFY_info.c -o build/win64/_coder_lambertMR_MEXIFY_info.o",
+    "file": "interface/_coder_lambertMR_MEXIFY_info.c",
+    "output": "build/win64/_coder_lambertMR_MEXIFY_info.o"
+  },
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\lambertMR_MEXIFY\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=lambertMR_MEXIFY_mex -D__USE_MINGW_ANSI_STDIO=1   \"C:/Program Files/MATLAB/R2022b/extern/version/c_mexapi_version.c\" -o build/win64/c_mexapi_version.o",
+    "file": "C:/Program Files/MATLAB/R2022b/extern/version/c_mexapi_version.c",
+    "output": "build/win64/c_mexapi_version.o"
+  }
+]

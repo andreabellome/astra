@@ -1,0 +1,62 @@
+[
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=findDV_mex -D__USE_MINGW_ANSI_STDIO=1   findDV_data.c -o build/win64/findDV_data.o",
+    "file": "findDV_data.c",
+    "output": "build/win64/findDV_data.o"
+  },
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=findDV_mex -D__USE_MINGW_ANSI_STDIO=1   rt_nonfinite.c -o build/win64/rt_nonfinite.o",
+    "file": "rt_nonfinite.c",
+    "output": "build/win64/rt_nonfinite.o"
+  },
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=findDV_mex -D__USE_MINGW_ANSI_STDIO=1   findDV_initialize.c -o build/win64/findDV_initialize.o",
+    "file": "findDV_initialize.c",
+    "output": "build/win64/findDV_initialize.o"
+  },
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=findDV_mex -D__USE_MINGW_ANSI_STDIO=1   findDV_terminate.c -o build/win64/findDV_terminate.o",
+    "file": "findDV_terminate.c",
+    "output": "build/win64/findDV_terminate.o"
+  },
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=findDV_mex -D__USE_MINGW_ANSI_STDIO=1   findDV.c -o build/win64/findDV.o",
+    "file": "findDV.c",
+    "output": "build/win64/findDV.o"
+  },
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=findDV_mex -D__USE_MINGW_ANSI_STDIO=1   interface/_coder_findDV_api.c -o build/win64/_coder_findDV_api.o",
+    "file": "interface/_coder_findDV_api.c",
+    "output": "build/win64/_coder_findDV_api.o"
+  },
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=findDV_mex -D__USE_MINGW_ANSI_STDIO=1   interface/_coder_findDV_mex.c -o build/win64/_coder_findDV_mex.o",
+    "file": "interface/_coder_findDV_mex.c",
+    "output": "build/win64/_coder_findDV_mex.o"
+  },
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=findDV_mex -D__USE_MINGW_ANSI_STDIO=1   wrapToPi.c -o build/win64/wrapToPi.o",
+    "file": "wrapToPi.c",
+    "output": "build/win64/wrapToPi.o"
+  },
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=findDV_mex -D__USE_MINGW_ANSI_STDIO=1   interface/_coder_findDV_info.c -o build/win64/_coder_findDV_info.o",
+    "file": "interface/_coder_findDV_info.c",
+    "output": "build/win64/_coder_findDV_info.o"
+  },
+  {
+    "directory": "C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV",
+    "command": "C:\\ProgramData\\MATLAB\\SupportPackages\\R2022b\\3P.instrset\\mingw_w64.instrset\\bin\\gcc -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\" -I \"C:\\Users\\andre\\Documents\\GitHub\\astra_def\\ASTRA\\Lambert problem and defects\\codegen\\mex\\findDV\\interface\" -I \"C:\\Program Files\\MATLAB\\R2022b\\extern\\include\" -I \".\" -DMODEL=findDV_mex -D__USE_MINGW_ANSI_STDIO=1   \"C:/Program Files/MATLAB/R2022b/extern/version/c_mexapi_version.c\" -o build/win64/c_mexapi_version.o",
+    "file": "C:/Program Files/MATLAB/R2022b/extern/version/c_mexapi_version.c",
+    "output": "build/win64/c_mexapi_version.o"
+  }
+]

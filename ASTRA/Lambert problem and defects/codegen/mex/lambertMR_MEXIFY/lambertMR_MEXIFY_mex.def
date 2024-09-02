@@ -1,0 +1,9 @@
+LIBRARY lambertMR_MEXIFY_mex.mexw64
+EXPORTS
+mexFunction
+mexfilerequiredapiversion
+emlrtMexFcnProperties
+lambertMR_MEXIFY
+lambertMR_MEXIFY_initialize
+lambertMR_MEXIFY_terminate
+lambertMR_MEXIFY_atexit

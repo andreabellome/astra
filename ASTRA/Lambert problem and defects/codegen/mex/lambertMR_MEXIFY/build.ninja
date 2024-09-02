@@ -1,0 +1,61 @@
+# CompilerName=mingw64
+# Mode=optim
+ninja_required_version = 1.3
+
+# Basic folders
+root = .
+builddir = $root/build/win64
+matlabdir = C:/Program Files/MATLAB/R2022b
+startdir = C:/Users/andre/Documents/GitHub/astra_def/ASTRA/Lambert problem and defects
+
+# Toolchain information
+cc = C:\ProgramData\MATLAB\SupportPackages\R2022b\3P.instrset\mingw_w64.instrset\bin\gcc
+cxx = C:\ProgramData\MATLAB\SupportPackages\R2022b\3P.instrset\mingw_w64.instrset\bin\g++
+linker = C:\ProgramData\MATLAB\SupportPackages\R2022b\3P.instrset\mingw_w64.instrset\bin\gcc
+linkerxx = C:\ProgramData\MATLAB\SupportPackages\R2022b\3P.instrset\mingw_w64.instrset\bin\g++
+
+cflags =  -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I "C:\Users\andre\Documents\GitHub\astra_def\ASTRA\Lambert problem and defects\codegen\mex\lambertMR_MEXIFY" -I "C:\Users\andre\Documents\GitHub\astra_def\ASTRA\Lambert problem and defects" -I "C:\Users\andre\Documents\GitHub\astra_def\ASTRA\Lambert problem and defects\codegen\mex\lambertMR_MEXIFY\interface" -I "C:\Program Files\MATLAB\R2022b\extern\include" -I "." -DMODEL=lambertMR_MEXIFY_mex -D__USE_MINGW_ANSI_STDIO=1  
+
+cxxflags =  -c -fexceptions -fno-omit-frame-pointer -std=c++11 -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c++11 -I "C:\Users\andre\Documents\GitHub\astra_def\ASTRA\Lambert problem and defects\codegen\mex\lambertMR_MEXIFY" -I "C:\Users\andre\Documents\GitHub\astra_def\ASTRA\Lambert problem and defects" -I "C:\Users\andre\Documents\GitHub\astra_def\ASTRA\Lambert problem and defects\codegen\mex\lambertMR_MEXIFY\interface" -I "C:\Program Files\MATLAB\R2022b\extern\include" -I "." -DMODEL=lambertMR_MEXIFY_mex -D__USE_MINGW_ANSI_STDIO=1  
+
+ldflags =  -m64 -Wl,--no-undefined -shared -static -L"C:\Program Files\MATLAB\R2022b\extern\lib\win64\mingw64" -llibmx -llibmex -llibmat -lm -llibmwlapack -llibmwblas -o "lambertMR_MEXIFY_mex.mexw64" -L"$matlabdir\extern\lib\win64\mingw64" -llibmwblas -llibemlrt -llibcovrt -llibut -llibmwmathutil  lambertMR_MEXIFY_mex.def
+
+linkobjs = 
+
+# Build Rules
+rule cc
+    command = $cc $cflags $in -o $out
+
+rule cxx
+    command = $cxx $cxxflags $in -o $out
+
+rule link
+    command = $linker @$out.rsp $linkobjs $ldflags
+    rspfile = $out.rsp
+    rspfile_content = $in
+
+rule linkxx
+    command = $linkerxx $in $linkobjs $ldflags
+
+# Build
+build $builddir/lambertMR_MEXIFY_data.o : cc $root/lambertMR_MEXIFY_data.c
+build $builddir/rt_nonfinite.o : cc $root/rt_nonfinite.c
+build $builddir/lambertMR_MEXIFY_initialize.o : cc $root/lambertMR_MEXIFY_initialize.c
+build $builddir/lambertMR_MEXIFY_terminate.o : cc $root/lambertMR_MEXIFY_terminate.c
+build $builddir/lambertMR_MEXIFY.o : cc $root/lambertMR_MEXIFY.c
+build $builddir/dot.o : cc $root/dot.c
+build $builddir/norm.o : cc $root/norm.c
+build $builddir/mod.o : cc $root/mod.c
+build $builddir/power.o : cc $root/power.c
+build $builddir/_coder_lambertMR_MEXIFY_api.o : cc $root/interface/_coder_lambertMR_MEXIFY_api.c
+build $builddir/_coder_lambertMR_MEXIFY_mex.o : cc $root/interface/_coder_lambertMR_MEXIFY_mex.c
+build $builddir/sqrt.o : cc $root/sqrt.c
+build $builddir/asin.o : cc $root/asin.c
+build $builddir/acos.o : cc $root/acos.c
+build $builddir/acosh.o : cc $root/acosh.c
+build $builddir/asinh.o : cc $root/asinh.c
+build $builddir/_coder_lambertMR_MEXIFY_info.o : cc $root/interface/_coder_lambertMR_MEXIFY_info.c
+build $builddir/c_mexapi_version.o : cc $matlabdir/extern/version/c_mexapi_version.c
+
+# Link
+build $root\lambertMR_MEXIFY_mex.mexw64 : link $builddir/lambertMR_MEXIFY_data.o $builddir/rt_nonfinite.o $builddir/lambertMR_MEXIFY_initialize.o $builddir/lambertMR_MEXIFY_terminate.o $builddir/lambertMR_MEXIFY.o $builddir/dot.o $builddir/norm.o $builddir/mod.o $builddir/power.o $builddir/_coder_lambertMR_MEXIFY_api.o $builddir/_coder_lambertMR_MEXIFY_mex.o $builddir/sqrt.o $builddir/asin.o $builddir/acos.o $builddir/acosh.o $builddir/asinh.o $builddir/_coder_lambertMR_MEXIFY_info.o $builddir/c_mexapi_version.o 

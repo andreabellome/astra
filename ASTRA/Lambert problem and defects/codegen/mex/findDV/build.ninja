@@ -1,0 +1,53 @@
+# CompilerName=mingw64
+# Mode=optim
+ninja_required_version = 1.3
+
+# Basic folders
+root = .
+builddir = $root/build/win64
+matlabdir = C:/Program Files/MATLAB/R2022b
+startdir = C:/Users/andre/Documents/GitHub/astra_def/ASTRA/Lambert problem and defects
+
+# Toolchain information
+cc = C:\ProgramData\MATLAB\SupportPackages\R2022b\3P.instrset\mingw_w64.instrset\bin\gcc
+cxx = C:\ProgramData\MATLAB\SupportPackages\R2022b\3P.instrset\mingw_w64.instrset\bin\g++
+linker = C:\ProgramData\MATLAB\SupportPackages\R2022b\3P.instrset\mingw_w64.instrset\bin\gcc
+linkerxx = C:\ProgramData\MATLAB\SupportPackages\R2022b\3P.instrset\mingw_w64.instrset\bin\g++
+
+cflags =  -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I "C:\Users\andre\Documents\GitHub\astra_def\ASTRA\Lambert problem and defects\codegen\mex\findDV" -I "C:\Users\andre\Documents\GitHub\astra_def\ASTRA\Lambert problem and defects" -I "C:\Users\andre\Documents\GitHub\astra_def\ASTRA\Lambert problem and defects\codegen\mex\findDV\interface" -I "C:\Program Files\MATLAB\R2022b\extern\include" -I "." -DMODEL=findDV_mex -D__USE_MINGW_ANSI_STDIO=1  
+
+cxxflags =  -c -fexceptions -fno-omit-frame-pointer -std=c++11 -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c++11 -I "C:\Users\andre\Documents\GitHub\astra_def\ASTRA\Lambert problem and defects\codegen\mex\findDV" -I "C:\Users\andre\Documents\GitHub\astra_def\ASTRA\Lambert problem and defects" -I "C:\Users\andre\Documents\GitHub\astra_def\ASTRA\Lambert problem and defects\codegen\mex\findDV\interface" -I "C:\Program Files\MATLAB\R2022b\extern\include" -I "." -DMODEL=findDV_mex -D__USE_MINGW_ANSI_STDIO=1  
+
+ldflags =  -m64 -Wl,--no-undefined -shared -static -L"C:\Program Files\MATLAB\R2022b\extern\lib\win64\mingw64" -llibmx -llibmex -llibmat -lm -llibmwlapack -llibmwblas -o "findDV_mex.mexw64" -L"$matlabdir\extern\lib\win64\mingw64" -llibmwblas -llibemlrt -llibcovrt -llibut -llibmwmathutil  findDV_mex.def
+
+linkobjs = 
+
+# Build Rules
+rule cc
+    command = $cc $cflags $in -o $out
+
+rule cxx
+    command = $cxx $cxxflags $in -o $out
+
+rule link
+    command = $linker @$out.rsp $linkobjs $ldflags
+    rspfile = $out.rsp
+    rspfile_content = $in
+
+rule linkxx
+    command = $linkerxx $in $linkobjs $ldflags
+
+# Build
+build $builddir/findDV_data.o : cc $root/findDV_data.c
+build $builddir/rt_nonfinite.o : cc $root/rt_nonfinite.c
+build $builddir/findDV_initialize.o : cc $root/findDV_initialize.c
+build $builddir/findDV_terminate.o : cc $root/findDV_terminate.c
+build $builddir/findDV.o : cc $root/findDV.c
+build $builddir/_coder_findDV_api.o : cc $root/interface/_coder_findDV_api.c
+build $builddir/_coder_findDV_mex.o : cc $root/interface/_coder_findDV_mex.c
+build $builddir/wrapToPi.o : cc $root/wrapToPi.c
+build $builddir/_coder_findDV_info.o : cc $root/interface/_coder_findDV_info.c
+build $builddir/c_mexapi_version.o : cc $matlabdir/extern/version/c_mexapi_version.c
+
+# Link
+build $root\findDV_mex.mexw64 : link $builddir/findDV_data.o $builddir/rt_nonfinite.o $builddir/findDV_initialize.o $builddir/findDV_terminate.o $builddir/findDV.o $builddir/_coder_findDV_api.o $builddir/_coder_findDV_mex.o $builddir/wrapToPi.o $builddir/_coder_findDV_info.o $builddir/c_mexapi_version.o 
