@@ -27,7 +27,7 @@ INPUT.depOpts = [t0 tf dt];
 INPUT.opt      = 2;          % --> (1) is for SODP, (2) is for MODP, (3) is for DATES, (4) is for YEARS - MODP
 INPUT.vInfOpts = [3 5];      % --> min/max departing infinity velocities (km/s)
 INPUT.dsmOpts  = [1 Inf];    % --> max defect DSM, and total DSMs (km/s)
-INPUT.plot     = [1 1];      % --> plot(1) for Pareto front, plot(2) for best traj. DV
+INPUT.plot     = [0 0];      % --> plot(1) for Pareto front, plot(2) for best traj. DV
 INPUT.parallel = true;       % --> put true for parallel, false otherwise
 INPUT.tstep    = dt;         % --> step size for Time of flight            
 %%%%%%%%%% set options %%%%%%%%%%
@@ -44,14 +44,14 @@ close all; clc;
 % --> extract path from Pareto front
 [path, revs, res] = pathfromPF(OUTPUT);
 
-% --> plot the path
-plotPath(path);
-
 % --> plot the Pareto front
 plotPareto(OUTPUT(1).ovPF);
 
+% --> plot the path
+[figECI, STRUC, figSYN, figRSC, figVSC] = plotPath(path);
+
 % --> save the output
-generateOutputTXT(path, '.\');
+generateOutputTXT(path, './results');
 
 %% --> futher refine around the optimal DV-solution
 
@@ -63,7 +63,3 @@ INPUT.res     = res;
 
 % --> further refine using ASTRA
 OUTPUTref = refineUsingASTRApath(path, INPUT);
-
-
-
-
