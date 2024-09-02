@@ -1,5 +1,5 @@
 # ASTRA
-ASTRA (Automatic Swing-by TRAjectories) is a MATLAB-based toolbox for optimally build MGA trajectories. This has been built as a result of Andrea Bellome's Ph.D. thesis [[1]](#1).
+ASTRA (Automatic Swing-by TRAjectories) is a MATLAB-based toolbox for optimally build multi-gravity assist (MGA) trajectories. This has been built as a result of Andrea Bellome's Ph.D. thesis [[1]](#1). ASTRA is based on Dynamic Programming (DP) to optimize MGA trajectories, both in single-objective (SODP) and multi-objective (MODP).
 
 To cite this folder please use the references [[1]](#1) and [[2]](#2).
 
@@ -20,7 +20,13 @@ To run a full exploration of Saturn system, the following system requirements ar
 
 ## Usage and test cases
 
+To use the repository, one finds different test scripts. These are listed here:
 
+1. Test script 1: [st_astra_main.m](/st1_astra_main.m), to plot TG for Saturn system. Refer to [this section](#Section_1).
+
+### Test script 1: Run DP optimization with ASTRA  <a id="Section_1"></a> 
+
+TBD
 
 ## Contributing
 
