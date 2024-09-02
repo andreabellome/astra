@@ -12,11 +12,12 @@ To work with ASTRA, one can simply clone the repository in the local machine:
 git clone "https://github.com/andreabellome/MRPLP_DACE_python"
 ```
 
-To run a full exploration of Saturn system, the following system requirements are recommended:
+To run a full exploration of MGA trajectories, the following system requirements are recommended:
 + CPU six-core from 2.6 GHz to 3.6 GHz
 + RAM minimum 16 GB
 + Any version of [MATLAB](https://it.mathworks.com/products/matlab.html)>2021b <!-- with [Optimization Toolbox](https://it.mathworks.com/products/optimization.html) (this need will be eliminated in the future) -->
 
+Lighter requirements will be required in future releases, as ASTRA will be able to optimize one launch year at a time, and even one date at a time. The price will be the computational time. 
 
 ## Usage and test cases
 
