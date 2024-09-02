@@ -45,7 +45,7 @@ close all; clc;
 [path, revs, res] = pathfromPF(OUTPUT);
 
 % --> plot the Pareto front
-plotPareto(OUTPUT(1).ovPF);
+figPareto = plotPareto(OUTPUT(1).ovPF);
 
 % --> plot the path
 [figECI, STRUC, figSYN, figRSC, figVSC] = plotPath(path);
