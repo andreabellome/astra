@@ -22,7 +22,7 @@ To run a full exploration of Saturn system, the following system requirements ar
 
 To use the repository, one finds different test scripts. These are listed here:
 
-1. Test script 1: [st_astra_main.m](/st1_astra_main.m), to plot TG for Saturn system. Refer to [this section](#Section_1).
+1. Test script 1: [st_astra_main.m](/st1_astra_main.m), to optimize MGA missions. Refer to [this section](#Section_1).
 
 ### Test script 1: Run DP optimization with ASTRA  <a id="Section_1"></a> 
 
