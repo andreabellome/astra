@@ -1,4 +1,41 @@
 # ASTRA
-ASTRA (Automatic Swing-by TRAjectories) is a MATLAB-based toolbox for optimally build MGA trajectories. This has been built as a result of the Ph.D. thesis XXXX.
+ASTRA (Automatic Swing-by TRAjectories) is a MATLAB-based toolbox for optimally build MGA trajectories. This has been built as a result of Andrea Bellome's Ph.D. thesis [[1]](#1).
 
-To cite this folder please use the references XXX and XXX.
+To cite this folder please use the references [[1]](#1) and [[2]](#2).
+
+## Installation & Requirements
+
+To work with ASTRA, one can simply clone the repository in the local machine:
+
+
+```bash
+git clone "https://github.com/andreabellome/MRPLP_DACE_python"
+```
+
+To run a full exploration of Saturn system, the following system requirements are recommended:
++ CPU six-core from 2.6 GHz to 3.6 GHz
++ RAM minimum 16 GB
++ Any version of [MATLAB](https://it.mathworks.com/products/matlab.html)>2021b <!-- with [Optimization Toolbox](https://it.mathworks.com/products/optimization.html) (this need will be eliminated in the future) -->
+
+
+## Usage and test cases
+
+
+
+## Contributing
+
+Currently, only invited developers can contribute to the repository.
+
+## License
+
+The work is under license [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc/4.0/), that is an Attribution Non-Commercial license.
+
+
+## References
+<a id="1">[1]</a> 
+Bellome, A., “Trajectory design of multi-target missions via graph transcription and dynamic programming,” Ph.D. thesis, Cranfield University, 2023.
+https://dspace.lib.cranfield.ac.uk/items/711f45c8-e6e4-4f27-909d-94170df400e3
+
+<a id="2">[2]</a> 
+Bellome, Andrea, et al. "Multiobjective design of gravity-assist trajectories via graph transcription and dynamic programming." Journal of Spacecraft and Rockets 60.5 (2023): 1381-1399.
+https://doi.org/10.2514/1.A35472.
