@@ -26,7 +26,7 @@ if nargin == 1 % --> new figure
 
     fig = figure( 'Color', [1 1 1] );
     hold on; grid on;
-    xlabel('Time of flight - years'); ylabel('\Deltav - km/s');
+    xlabel('Time of flight [years]'); ylabel('\Deltav [km/s]');
     plot(paretofront(:,1), paretofront(:,2), 'o', 'MarkerSize', markersize, 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Red', 'HandleVisibility', 'Off');
 elseif nargin == 2 % --> same figure
     markersize = 8;
@@ -35,7 +35,7 @@ elseif nargin == 2 % --> same figure
         fig = figure( 'Color', [1 1 1] );
     end
     hold on; grid on;
-    xlabel('Time of flight - years'); ylabel('\Deltav - km/s');
+    xlabel('Time of flight [years]'); ylabel('\Deltav [km/s]');
     plot(paretofront(:,1), paretofront(:,2), 'o', 'MarkerSize', markersize, 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Green', 'HandleVisibility', 'Off');
 elseif nargin == 3
     markersize = 8;
@@ -44,7 +44,7 @@ elseif nargin == 3
         fig = figure( 'Color', [1 1 1] );
     end
     hold on; grid on;
-    xlabel('Time of flight - years'); ylabel('\Deltav - km/s');
+    xlabel('Time of flight [years]'); ylabel('\Deltav [km/s]');
     plot(paretofront(:,1), paretofront(:,2), marker, 'MarkerSize', markersize, 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Green', 'HandleVisibility', 'Off');
 elseif nargin == 4
     markersize = 8;
@@ -53,7 +53,7 @@ elseif nargin == 4
         fig = figure( 'Color', [1 1 1] );
     end
     hold on; grid on;
-    xlabel('Time of flight - years'); ylabel('\Deltav - km/s');
+    xlabel('Time of flight [years]'); ylabel('\Deltav [km/s]');
     plot(paretofront(:,1), paretofront(:,2), marker, 'MarkerSize', markersize, 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', color, 'HandleVisibility', 'Off');
     legend;
     legend('Location', 'Best');
@@ -66,7 +66,7 @@ elseif nargin == 5
         fig = figure( 'Color', [1 1 1] );
     end
     hold on; grid on;
-    xlabel('Time of flight - years'); ylabel('\Deltav - km/s');
+    xlabel('Time of flight [years]'); ylabel('\Deltav [km/s]');
     plot(paretofront(:,1), paretofront(:,2), marker, 'MarkerSize', markersize, 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', color, 'DisplayName', name);
     legend;
     legend('Location', 'Best');
@@ -78,7 +78,7 @@ elseif nargin == 6
         fig = figure( 'Color', [1 1 1] );
     end
     hold on; grid on;
-    xlabel('Time of flight - years'); ylabel('\Deltav - km/s');
+    xlabel('Time of flight [years]'); ylabel('\Deltav [km/s]');
     plot(paretofront(:,1), paretofront(:,2), marker, 'MarkerSize', markersize, 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', color, 'DisplayName', name);
     legend;
     legend('Location', 'Best');

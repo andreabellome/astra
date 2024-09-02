@@ -38,7 +38,7 @@ tt = t0:2:tend;
 AU = 149597870.7;
 
 axis equal; grid on;
-xlabel('x - AU'); ylabel('y - AU');
+xlabel('x [AU]'); ylabel('y [AU]');
 
 for indi = 1:length(pl)
     
@@ -54,5 +54,13 @@ for indi = 1:length(pl)
 end
 
 plot3(0, 0, 0, 'o', 'markersize', 10, 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Yellow', 'handlevisibility', 'off');
+
+labelsDim = 16;
+axesDim   = 16;
+set(findall(gcf,'-property','FontSize'), 'FontSize',labelsDim)
+h = findall(gcf, 'type', 'text');
+set(h, 'fontsize', axesDim);
+ax          = gca; 
+ax.FontSize = axesDim; 
 
 end

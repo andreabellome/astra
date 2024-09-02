@@ -158,7 +158,7 @@ if nargout >= 3
 
     figSYN = figure( 'Color', [1 1 1] );
     hold on; grid on; axis equal;
-    xlabel('x - AU'); ylabel('y - AU'); zlabel('z - AU');
+    xlabel('x [AU]'); ylabel('y [AU]'); zlabel('z [AU]');
     
     plot3(STRUC.StatesSC_syn(:,1), STRUC.StatesSC_syn(:,2), STRUC.StatesSC_syn(:,3), 'b', 'LineWidth', 2, 'HandleVisibility', 'off');
     
@@ -172,12 +172,20 @@ if nargout >= 3
             'k', 'linewidth', 0.5, 'HandleVisibility', 'Off');
     end
 
+    labelsDim = 16;
+    axesDim   = 16;
+    set(findall(figSYN,'-property','FontSize'), 'FontSize',labelsDim)
+    h = findall(figSYN, 'type', 'text');
+    set(h, 'fontsize', axesDim);
+    ax          = gca; 
+    ax.FontSize = axesDim; 
+
     if nargout >= 4
 
 
         figRSC = figure( 'Color', [1 1 1] );
         hold on; grid on;
-        xlabel('Days from launch'); ylabel('Sun-spacecraft distance - AU');
+        xlabel('Days from launch'); ylabel('Sun-spacecraft distance [AU]');
 
         plot(STRUC.TOFsSC, STRUC.DistSC./AU, 'b', 'linewidth', 2, 'HandleVisibility', 'off');
         
@@ -207,6 +215,14 @@ if nargout >= 3
                 'o', 'MarkerSize', 8, 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Red', 'DisplayName', 'Fly-by');
 
         end
+
+        labelsDim = 16;
+        axesDim   = 16;
+        set(findall(figRSC,'-property','FontSize'), 'FontSize',labelsDim)
+        h = findall(figRSC, 'type', 'text');
+        set(h, 'fontsize', axesDim);
+        ax          = gca; 
+        ax.FontSize = axesDim; 
 
     end
 
