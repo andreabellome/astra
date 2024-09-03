@@ -1,4 +1,4 @@
-function [LEGSn, VASn, VINFn] = wrapConstructionResonance_DP(LEGSnext, VASnext, VINFnext, legs, res, indl, tolINCL, parallel)
+function [LEGSn, VASn, VINFn] = wrapConstructionResonance_DP(LEGSnext, VASnext, VINFnext, legs, res, indl, tolINCL, parallel, idcentral)
 
 % DESCRIPTION
 % This function attempts to construct resonant orbits for a spacecraft trajectory
@@ -23,8 +23,12 @@ function [LEGSn, VASn, VINFn] = wrapConstructionResonance_DP(LEGSnext, VASnext, 
 % 
 % -------------------------------------------------------------------------
 
+if nargin == 8
+    idcentral = 1;
+end
+
 pl2 = legs(indl,2);
-[LEGSnext, VASnext, VINFnext] = checkResonance_DP(LEGSnext, VASnext, VINFnext, pl2, res, parallel);
+[LEGSnext, VASnext, VINFnext] = checkResonance_DP(LEGSnext, VASnext, VINFnext, pl2, res, parallel, idcentral);
 if isempty(LEGSnext) % --> if the resonance is not achievable, then end
     LEGSn = [];
     VASn  = [];
@@ -42,7 +46,7 @@ if parallel == true
         vasp  = VASnext(indl,:);
         vinfp = VINFnext(indl,:);
 
-        [legn, vasn, vinfn] = constructResonantOrbits_DP(legp, vasp, vinfp, pl2, res, tolINCL);
+        [legn, vasn, vinfn] = constructResonantOrbits_DP(legp, vasp, vinfp, pl2, res, tolINCL, idcentral);
 
         STRUC(indl).LEGSn = legn;
         STRUC(indl).VASn  = vasn;
@@ -58,7 +62,7 @@ else
         vasp  = VASnext(indl,:);
         vinfp = VINFnext(indl,:);
 
-        [legn, vasn, vinfn] = constructResonantOrbits_DP(legp, vasp, vinfp, pl2, res, tolINCL);
+        [legn, vasn, vinfn] = constructResonantOrbits_DP(legp, vasp, vinfp, pl2, res, tolINCL, idcentral);
 
         STRUC(indl).LEGSn = legn;
         STRUC(indl).VASn  = vasn;

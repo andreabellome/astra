@@ -8,10 +8,10 @@ try clear INPUT; catch; end; clc;
 
 % --> sequence to be optimized
 INPUT.idcentral = 6; % --> central body (Sun in this case)
-seq = [ 5 4 3 ]; res = [ ];
+seq = [ 5 4 4 3 ]; res = [ 13 7 2 ];
 
 %%%%%%%%%% multi-rev. options %%%%%%%%%%
-maxrev                        = 9;                                                          % --> max. number of revolutions (round number)
+maxrev                        = 3;                                                          % --> max. number of revolutions (round number)
 chosenRevs                    = differentRuns_v2(seq, maxrev);                              % --> generate successive runs
 [INPUT.chosenRevs, INPUT.res] = processResonances(chosenRevs, res);                         % --> process the resonances options
 [INPUT.chosenRevs]            = maxRevOuterPlanets(seq, INPUT.chosenRevs, INPUT.idcentral); % --> only zero revs. on outer planets
@@ -34,7 +34,7 @@ INPUT.tstep    = dt;         % --> step size for Time of flight
 %%%%%%%%%% set options %%%%%%%%%%
 
 % --> specify lower/upper bound for TOF on each leg
-INPUT.TOF_LIM = [[30 60]; [20 40]]; 
+INPUT.TOF_LIM = [[30 60]; [20 40]; [20 40]]; 
 
 %% --> optimize using ASTRA
 

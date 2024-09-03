@@ -1,4 +1,4 @@
-function [legn, vasn, vinfn, MAT_VV] = constructResonantOrbits_DP(legp, vasp, vinfp, plt, res, tolINCL)
+function [legn, vasn, vinfn, MAT_VV] = constructResonantOrbits_DP(legp, vasp, vinfp, plt, res, tolINCL, idcentral)
 
 % DESCRIPTION
 % This function constructs resonant orbits for a spacecraft by evaluating potential 
@@ -28,9 +28,23 @@ function [legn, vasn, vinfn, MAT_VV] = constructResonantOrbits_DP(legp, vasp, vi
 % 
 % -------------------------------------------------------------------------
 
-mu                    = 132724487690;                       % --> gravitational parameter of the Sun
-[muPL, radius, smapl] = planetConstants(plt);               % --> planet semi-major axis
-rpmin                 = maxmin_flybyAltitude(plt) + radius; % --> minimum flyby altitude
+if nargin == 6
+    idcentral = 1;
+end
+
+if idcentral == 1
+
+    mu                    = 132724487690;                       % --> gravitational parameter of the Sun
+    [muPL, radius, smapl] = planetConstants(plt);               % --> planet semi-major axis
+    rpmin                 = maxmin_flybyAltitude(plt) + radius; % --> minimum flyby altitude
+
+else
+
+    [mu, muPL, smapl, radius, hmin] = constants(idcentral, plt); 
+    rpmin = radius + hmin;
+
+end
+
 Tpl                   = 2*pi*sqrt(smapl^3/mu);              % --> period of the planet
 Tsc                   = res(1)/res(2)*Tpl;                  % --> period of the SC orbit
 dt                    = res(2)*Tsc/86400;                   % --> transfer time (of the resonant orbit)
@@ -42,9 +56,9 @@ tIN  = legp(end);
 vInf = vinfp(end);
 
 % --> planet state at the two encounters 
-[rrga1, vvga1] = EphSS_cartesian(plIN, tIN);
+[rrga1, vvga1] = EphSS_cartesian(plIN, tIN, idcentral);
 rrIN           = rrga1;
-[rrga2, vvga2] = EphSS_cartesian(plIN, tIN + res(1)*Tpl/86400);
+[rrga2, vvga2] = EphSS_cartesian(plIN, tIN + res(1)*Tpl/86400, idcentral);
 
 % --> incoming keplerian elements (before the first flyby)
 kepIN = car2kep([rrIN, vvIN], mu);

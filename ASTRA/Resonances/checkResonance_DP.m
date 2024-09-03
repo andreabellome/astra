@@ -1,4 +1,4 @@
-function [LEGSnext, VASnext, VINFnext] = checkResonance_DP(LEGSnext, VASnext, VINFnext, plt, res, parallel)
+function [LEGSnext, VASnext, VINFnext] = checkResonance_DP(LEGSnext, VASnext, VINFnext, plt, res, parallel, idcentral)
 
 % DESCRIPTION
 % This function checks if specific resonances can be achieved during a spacecraft's flyby
@@ -22,10 +22,23 @@ function [LEGSnext, VASnext, VINFnext] = checkResonance_DP(LEGSnext, VASnext, VI
 % 
 % -------------------------------------------------------------------------
 
-mu = 132724487690;
+if nargin == 6
+    idcentral = 1;
+end
 
-[muPL, radius, smapl] = planetConstants(plt); % --> planet semi-major axis
-rpmin = maxmin_flybyAltitude(plt) + radius;
+if idcentral == 1
+
+    mu = 132724487690;
+    
+    [muPL, radius, smapl] = planetConstants(plt); % --> planet semi-major axis
+    rpmin = maxmin_flybyAltitude(plt) + radius;
+
+else
+
+    [mu, muPL, smapl, radpl, hmin] = constants(idcentral, plt);
+    rpmin = radpl + hmin;
+
+end
 
 Tpl = 2*pi*sqrt(smapl^3/mu);     % --> period of the planet
 Tsc = res(1)/res(2)*Tpl;         % --> period of the SC
@@ -41,7 +54,7 @@ if parallel == true
         plIN = LEGSnext(indi, end-1);
         tIN  = LEGSnext(indi, end);
 
-        [rrga, vvga] = EphSS_car(plIN, tIN);
+        [rrga, vvga] = EphSS_cartesian(plIN, tIN, idcentral);
 
         vvinfIN = vvIN - vvga;
 
@@ -80,7 +93,7 @@ else
         plIN = LEGSnext(indi, end-1);
         tIN  = LEGSnext(indi, end);
 
-        [rrga, vvga] = EphSS_car(plIN, tIN);
+        [rrga, vvga] = EphSS_cartesian(plIN, tIN, idcentral);
 
         vvinfIN = vvIN - vvga;
 

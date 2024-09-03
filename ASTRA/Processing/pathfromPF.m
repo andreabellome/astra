@@ -1,4 +1,4 @@
-function [path, revs, res] = pathfromPF(OUTPUT, rowPF)
+function [path, revs, res] = pathfromPF(OUTPUT, outNumber, rowPF)
 
 % DESCRIPTION
 % This function extracts a specific path and the associated parameters 
@@ -8,6 +8,7 @@ function [path, revs, res] = pathfromPF(OUTPUT, rowPF)
 % INPUT
 % - OUTPUT : Struct array containing results from multiple runs, including 
 %            details like paths, revolutions, and costs.
+% - outNumber : row ID of the OUTPUT structure.
 % - rowPF  : Optional index specifying the row of the Pareto Front to extract. 
 %            If not provided, the function selects the best path based on cost.
 % 
@@ -22,7 +23,10 @@ function [path, revs, res] = pathfromPF(OUTPUT, rowPF)
 % -------------------------------------------------------------------------
 
 
-if nargin == 1
+if nargin == 2
+    outNumber = 1;
+    rowPF     = [];
+elseif nargin == 3
     rowPF = [];
 end
 
@@ -32,11 +36,12 @@ for indo = 1:length(OUTPUT)
 end
 
 if ~isempty(rowPF)
-    revs    = OUTPUT(1).REVSovPF(rowPF,:);
-    res     = OUTPUT(1).res;
     
-    runOpts = generateDiffRuns(OUTPUT(1).REVSovPF(rowPF,:), res);
-    path    = OUTPUT(1).LEGovPF(rowPF,:);
+    revs    = OUTPUT(outNumber).REVSovPF(rowPF,:);
+    res     = OUTPUT(outNumber).res;
+    
+    runOpts = generateDiffRuns(OUTPUT(outNumber).REVSovPF(rowPF,:), res);
+    path    = OUTPUT(outNumber).LEGovPF(rowPF,:);
     path    = ASTRA_wrapPath_DP(path(1:3:end-1), path(2), diff(path(2:3:end)), runOpts);
 else
     resonances = cell2mat({OUTPUT.res}');
