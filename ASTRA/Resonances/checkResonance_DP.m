@@ -54,7 +54,7 @@ if parallel == true
         plIN = LEGSnext(indi, end-1);
         tIN  = LEGSnext(indi, end);
 
-        [rrga, vvga] = EphSS_car(plIN, tIN, idcentral);
+        [rrga, vvga] = EphSS_cartesian(plIN, tIN, idcentral);
 
         vvinfIN = vvIN - vvga;
 

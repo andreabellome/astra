@@ -29,7 +29,7 @@ INPUT.opt      = 3;          % --> (1) is for SODP, (2) is for MODP, (3) is for 
 INPUT.vInfOpts = [0 2];      % --> min/max departing infinity velocities (km/s)
 INPUT.dsmOpts  = [1 Inf];    % --> max defect DSM, and total DSMs (km/s)
 INPUT.plot     = [1 1];      % --> plot(1) for Pareto front, plot(2) for best traj. DV
-INPUT.parallel = false;       % --> put true for parallel, false otherwise
+INPUT.parallel = true;       % --> put true for parallel, false otherwise
 INPUT.tstep    = dt;         % --> step size for Time of flight            
 %%%%%%%%%% set options %%%%%%%%%%
 
