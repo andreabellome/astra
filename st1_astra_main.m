@@ -11,7 +11,7 @@ INPUT.idcentral = 6; % --> central body (Sun in this case)
 seq = [ 5 4 3 ]; res = [ ];
 
 %%%%%%%%%% multi-rev. options %%%%%%%%%%
-maxrev                        = 2;                                                          % --> max. number of revolutions (round number)
+maxrev                        = 9;                                                          % --> max. number of revolutions (round number)
 chosenRevs                    = differentRuns_v2(seq, maxrev);                              % --> generate successive runs
 [INPUT.chosenRevs, INPUT.res] = processResonances(chosenRevs, res);                         % --> process the resonances options
 [INPUT.chosenRevs]            = maxRevOuterPlanets(seq, INPUT.chosenRevs, INPUT.idcentral); % --> only zero revs. on outer planets
@@ -25,8 +25,8 @@ INPUT.depOpts = [t0 tf dt];
 %%%%%%%%%% set departing options %%%%%%%%%%
 
 %%%%%%%%%% set options %%%%%%%%%%
-INPUT.opt      = 2;          % --> (1) is for SODP, (2) is for MODP, (3) is for DATES, (4) is for YEARS - MODP
-INPUT.vInfOpts = [0 5];      % --> min/max departing infinity velocities (km/s)
+INPUT.opt      = 1;          % --> (1) is for SODP, (2) is for MODP, (3) is for DATES, (4) is for YEARS - MODP
+INPUT.vInfOpts = [0 2];      % --> min/max departing infinity velocities (km/s)
 INPUT.dsmOpts  = [1 Inf];    % --> max defect DSM, and total DSMs (km/s)
 INPUT.plot     = [0 0];      % --> plot(1) for Pareto front, plot(2) for best traj. DV
 INPUT.parallel = true;       % --> put true for parallel, false otherwise

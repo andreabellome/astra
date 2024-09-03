@@ -56,7 +56,7 @@ if idcentral == 1 % --> central body is SUN
     end
 
 else % --> moon's system
-    [~, muPL, ~, radpl, hmin] = constants(idcentral, pl);
+    [~, muPL, ~, radpl, hmin] = constants(idcentral, pl1);
     rpmin                     = radpl + hmin;
 end
 
