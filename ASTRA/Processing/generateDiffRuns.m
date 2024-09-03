@@ -56,18 +56,8 @@ for indj = 1:size(revVec,2)
         
         if rev == 0
             revopt = [0 0];
-        elseif rev == 10
-            revopt = [1 0];
-        elseif rev == 11
-            revopt = [1 1];
-        elseif rev == 20
-            revopt = [2 0];
-        elseif rev == 21
-            revopt = [2 1];
-        elseif rev == 30
-            revopt = [3 0];
-        elseif rev == 31
-            revopt = [3 1];
+        else
+            revopt = arrayfun(@(x) str2double(x), num2str(rev));
         end
         
         REVS(indi,lastcol:lastcol+1) = revopt;

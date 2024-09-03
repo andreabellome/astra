@@ -1,4 +1,4 @@
-function [chosenRevs] = maxRevOuterPlanets(seq, chosenRevs)
+function [chosenRevs] = maxRevOuterPlanets(seq, chosenRevs, idcentral)
 
 % DESCRIPTION
 % This function updates the matrix of chosen revolutions to set the 
@@ -10,6 +10,7 @@ function [chosenRevs] = maxRevOuterPlanets(seq, chosenRevs)
 % - seq        : Sequence of IDs for flyby bodies, indicating the order in which they are visited.
 % - chosenRevs : Matrix representing different permutations of number of revolutions and 
 %                cases (low-/high-energy) for each leg. Each column represents a leg of the sequence.
+% - idcentral  : ID of the central body. See constants.m
 % 
 % OUTPUT
 % - chosenRevs : Updated matrix where the revolutions for the outer planets (IDs 5 to 1192) 
@@ -30,15 +31,23 @@ function [chosenRevs] = maxRevOuterPlanets(seq, chosenRevs)
 % 
 % -------------------------------------------------------------------------
 
-ind = find(seq >= 5 & seq <= 1192);
-if ind == 1
-    nleg = 1;
-else
-    nleg = ind - 1;
+if nargin == 2
+    idcentral = 1;
 end
-for indl = 1:length(nleg)
-    chosenRevs(:,nleg(indl)) = 0;
+
+if idcentral == 1
+
+    ind = find(seq >= 5 & seq <= 1192);
+    if ind == 1
+        nleg = 1;
+    else
+        nleg = ind - 1;
+    end
+    for indl = 1:length(nleg)
+        chosenRevs(:,nleg(indl)) = 0;
+    end
+    chosenRevs = unique(chosenRevs, 'rows', 'stable');
+
 end
-chosenRevs = unique(chosenRevs, 'rows', 'stable');
 
 end

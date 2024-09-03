@@ -1,4 +1,4 @@
-function [rr, vv] = EphSS_cartesian(pl, t)
+function [rr, vv] = EphSS_cartesian(pl, t, idcentral)
 
 % DESCRIPTION:
 % This function computes the Cartesian position (rr) and velocity (vv) vectors for a given celestial body at a specific time.
@@ -12,7 +12,8 @@ function [rr, vv] = EphSS_cartesian(pl, t)
 %      - Value 1194 corresponds to the asteroid Lutetia.
 %      - Other values are handled by a default ephemeris function.
 % 
-% t  : Time at which the position and velocity vectors are to be computed.
+% t          : Time at which the position and velocity vectors are to be computed.
+% idcentral  : ID of the central body. See constants.m
 % 
 % OUTPUT:
 % rr : Cartesian position vector of the celestial body (3x1 vector).
@@ -27,19 +28,31 @@ function [rr, vv] = EphSS_cartesian(pl, t)
 % 
 % -------------------------------------------------------------------------
 
-if pl <= 10
-    [rr, vv] = EphSS_car(pl, t);
-%     [rr, vv] = EphAA_car(pl, t);
-elseif pl >= 1 + 10 && pl <= 463 + 10 % --> JFC
-    pl       = pl - 10;
-    [rr, vv] = EphCA_car(pl, t);
-elseif pl >= 1 + 10 + 463 && pl <= 720 + 10 + 463 % --> CENTAURS
-    pl       = pl - (10 + 463);
-    [rr, vv] = EphCE_car(pl, t);
-elseif pl == 1194 % --> Lutetia
-    [rr, vv] = EphLutetia(pl, t);
-else
-    [rr, vv] = EphLOWq(pl, t);
+if nargin == 2
+    idcentral = 1;
+end
+
+if idcentral == 1 % --> central body is SUN
+
+    if pl <= 10
+        [rr, vv] = EphSS_car(pl, t);
+    %     [rr, vv] = EphAA_car(pl, t);
+    elseif pl >= 1 + 10 && pl <= 463 + 10 % --> JFC
+        pl       = pl - 10;
+        [rr, vv] = EphCA_car(pl, t);
+    elseif pl >= 1 + 10 + 463 && pl <= 720 + 10 + 463 % --> CENTAURS
+        pl       = pl - (10 + 463);
+        [rr, vv] = EphCE_car(pl, t);
+    elseif pl == 1194 % --> Lutetia
+        [rr, vv] = EphLutetia(pl, t);
+    else
+        [rr, vv] = EphLOWq(pl, t);
+    end
+
+else % --> moon's systems
+
+    [rr, vv] = approxEphem_CC(pl, t, idcentral);
+
 end
 
 end

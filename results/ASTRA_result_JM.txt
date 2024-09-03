@@ -1,0 +1,55 @@
+
+          _/_/_/     _/_/_/  _/_/_/_/_/  _/_/_/    _/_/_/ 
+        _/    _/   _/           _/     _/    _/  _/    _/ 
+       _/_/_/_/     _/_/       _/     _/_/_/    _/_/_/_/  
+      _/    _/         _/     _/     _/    _/  _/    _/   
+     _/    _/    _/_/_/      _/     _/    _/  _/    _/    
+
+
+               - ASTRA solution - 
+
+-------------------------------------------------------------- 
+
+Departing planet            : Jupiter
+Distance from the Sun       : 5.2026 AU 
+
+-------------------------------------------------------------- 
+
+Arrival planet              : Mars   
+Distance from the Sun       : 1.5237 AU 
+Departing C3 (from Earth)   : 20.0229 km^2/s^2 
+Departing infinity velocity : 4.4747 km/s 
+Arrival infinity velocity   : 2.6739 km/s 
+Total cost (DSMs)           : 0.0000 km/s 
+Total cost                  : 7.1486 km/s 
+Time of flight              : 0.0821 years 
+
+-------------------------------------------------------------- 
+
+MGA Details : 
+
+Swing-by sequence      : -J--M-
+
+Departing date         : [2023  12  27   0   0   0]
+Arrival date           : [2024   1  26   0   0   0]
+Time of flight per leg : 30 days 
+
+DSMs magnitudes        : 0 km/s 
+                         0 km/s 
+
+Infinity velocities    : 
+Jupiter - Mars         : 4.4747 - 2.6739 km/s 
+
+State at departure/arrival (km and km/s) : 
+Jupiter                       : [605344.67413     -1061378.4068                 0      6.3646421901     -1.4465454646                 0]  
+Mars                          : [-518017.5589     -97471.28956                0      1.953703961     -10.98264924                0]  
+
+Encounter dates        : 
+Jupiter                : [2023  12  27   0   0   0]
+Mars                   : [2024   1  26   0   0   0]
+
+Transfer types         : 
+Jupiter - Mars         : outbound - outbound 
+
+-------------------------------------------------------------- 
+

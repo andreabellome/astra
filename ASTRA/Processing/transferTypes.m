@@ -1,10 +1,11 @@
-function [TYPES, STATES, fig] = transferTypes(path)
+function [TYPES, STATES, fig] = transferTypes(path, idcentral)
 
 % DESCRIPTION :
 % given a path from ASTRA output, find the transfer types (OO, OI, IO, II).
 %
 % INPUT : 
-% - path : MGA transfer as coming from ASTRA output
+% - path      : MGA transfer as coming from ASTRA outputù
+% - idcentral : ID of the central body
 %
 % OUTPUT :
 % - TYPES  : matrix containing the follwing info : 
@@ -19,8 +20,16 @@ function [TYPES, STATES, fig] = transferTypes(path)
 %
 % -------------------------------------------------------------------------
 
-mu = 132724487690; % --> gravitational parameter of the Sun
-AU = 149597870.7;
+if nargin == 1
+    idcentral = 1;
+end
+
+mu = constants(idcentral, 1);
+if idcentral == 1
+    AU = 149597870.7;
+else
+    [~, AU] = planetConstants(idcentral);
+end
 
 dep_pls = path(1:end-1,7);
 arr_pls = path(2:end,7);

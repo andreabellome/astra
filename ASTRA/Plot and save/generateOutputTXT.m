@@ -1,4 +1,4 @@
-function [out] = generateOutputTXT(path, folder, nametemp)
+function [out] = generateOutputTXT(path, idcentral, folder, nametemp)
 
 % DESCRIPTION
 % This function generates a text file containing detailed information about 
@@ -21,28 +21,50 @@ function [out] = generateOutputTXT(path, folder, nametemp)
 % 
 % -------------------------------------------------------------------------
 
+if nargin == 1
+    idcentral = 1;
+    if exist('results','dir') == 7 % --> the folder exists on the current path
+    else % --> the folder does not exist on the current path
+        mkdir('results');
+    end
+end
+
 % --> variables and constants
-AU   = 149597870.7;
+if idcentral == 1
+    AU = 149597870.7;
+else
+    [~, AU] = planetConstants(idcentral);
+end
 plts = path(:,7);
 
 % --> dep./arr. infinity velocities at each planet
-[VINFS, vvd, vva, rrd, rra] = path2Vinfs(path);
+[VINFS, vvd, vva, rrd, rra] = path2Vinfs(path, idcentral);
 
 % --> transfer types per leg
-[TYPES] = transferTypes(path);
+[TYPES] = transferTypes(path, idcentral);
 
 % --> write the sequence name
-seqName = seq2SeqName(plts);
+seqName = seq2SeqName(plts, idcentral);
 
 % --> managing the inputs related to saving folder
 if nargin == 1 % --> the user has not specified the folder
+
     if exist('results','dir') == 7 % --> the folder exists on the current path
         name = ['\results\ASTRA_result_' seqName '.txt'];
     else % --> the folder does not exist on the current path
         mkdir('results');
         name = ['\results\ASTRA_result_' seqName '.txt'];
     end
+
 elseif nargin == 2 % --> the user has specified the folder
+
+    if exist('results','dir') == 7 % --> the folder exists on the current path
+        name = ['\results\ASTRA_result_' seqName '.txt'];
+    else % --> the folder does not exist on the current path
+        mkdir('results');
+        name = ['\results\ASTRA_result_' seqName '.txt'];
+    end
+elseif nargin == 3
     if isempty(folder) % --> the user has not specified the folder
         if exist('results','dir') == 7 % --> the folder exists on the current path
             name = ['\results\ASTRA_result_' seqName '.txt'];
@@ -58,7 +80,7 @@ elseif nargin == 2 % --> the user has specified the folder
             name = [folder '\ASTRA_result_' seqName '.txt'];
         end
     end
-elseif nargin == 3 % --> the user has specified the folder AND the file name
+elseif nargin == 4 % --> the user has specified the folder AND the file name
 
     if isempty(nametemp) % --> the user has not specified the file name
         nametemp = [ 'ASTRA_result_' seqName '.txt' ];
@@ -106,8 +128,11 @@ fprintf(out,'-------------------------------------------------------------- \n')
 
 fprintf(out,'\n');
 
-fprintf(out,['Departing planet            : ' planetIdToName(plts(1)) '\n']);
-fprintf(out,'Distance from the Sun       : %.4f AU \n', astroConstantsj2000(plts(1))/AU);
+[~, ~, rpl1] = constants(idcentral, plts(1));
+[~, ~, rplf] = constants(idcentral, plts(end));
+
+fprintf(out,['Departing body                 : ' planetIdToName(plts(1), idcentral) '\n']);
+fprintf(out,'Distance from the central body : %.4f AU \n', rpl1/AU);
 
 fprintf(out,'\n');
 
@@ -115,14 +140,14 @@ fprintf(out,'-------------------------------------------------------------- \n')
 
 fprintf(out,'\n');
 
-fprintf(out,['Arrival planet              : ' planetIdToName(plts(end)) '\n']);
-fprintf(out,'Distance from the Sun       : %.4f AU \n', astroConstantsj2000(plts(end))/AU);
-fprintf(out,'Departing C3 (from Earth)   : %.4f km^2/s^2 \n', path(1,9)^2);
-fprintf(out,'Departing infinity velocity : %.4f km/s \n', path(1,9));
-fprintf(out,'Arrival infinity velocity   : %.4f km/s \n', path(end,9));
-fprintf(out,'Total cost (DSMs)           : %.4f km/s \n', sum(path(:,10)));
-fprintf(out,'Total cost                  : %.4f km/s \n', path(1,9)+path(end,9) + sum(path(:,10)));
-fprintf(out,'Time of flight              : %.4f years \n', path(1,16));
+fprintf(out,['Arrival body                   : ' planetIdToName(plts(end), idcentral) '\n']);
+fprintf(out,'Distance from the central body : %.4f AU \n', rplf/AU);
+fprintf(out,'Departing C3                   : %.4f km^2/s^2 \n', path(1,9)^2);
+fprintf(out,'Departing infinity velocity    : %.4f km/s \n', path(1,9));
+fprintf(out,'Arrival infinity velocity      : %.4f km/s \n', path(end,9));
+fprintf(out,'Total cost (DSMs)              : %.4f km/s \n', sum(path(:,10)));
+fprintf(out,'Total cost                     : %.4f km/s \n', path(1,9)+path(end,9) + sum(path(:,10)));
+fprintf(out,'Time of flight                 : %.4f years \n', path(1,16));
 
 fprintf(out,'\n');
 
@@ -135,7 +160,7 @@ fprintf(out, 'MGA Details : \n');
 fprintf(out,'\n');
 
 fprintf(out, 'Swing-by sequence      : ');
-fprintf(out, generateOutputSequenceTXT(path)); fprintf(out,'\n');
+fprintf(out, generateOutputSequenceTXT(path, idcentral)); fprintf(out,'\n');
 
 fprintf(out,'\n');
 
@@ -158,8 +183,8 @@ fprintf(out,'\n');
 
 fprintf(out, 'Infinity velocities    : \n');
 for indi = 1:size(VINFS,1)
-    name_pl_1 = planetIdToName(VINFS(indi,1));
-    name_pl_2 = planetIdToName(VINFS(indi,2));
+    name_pl_1 = planetIdToName(VINFS(indi,1), idcentral);
+    name_pl_2 = planetIdToName(VINFS(indi,2), idcentral);
     vinf_pl_1 = VINFS(indi,3);
     vinf_pl_2 = VINFS(indi,4);
     
@@ -170,8 +195,8 @@ fprintf(out,'\n');
 
 fprintf(out, 'State at departure/arrival (km and km/s) : \n');
 for indi = 1:size(VINFS,1)
-    name_pl_1 = planetIdToName(VINFS(indi,1));
-    name_pl_2 = planetIdToName(VINFS(indi,2));
+    name_pl_1 = planetIdToName(VINFS(indi,1), idcentral);
+    name_pl_2 = planetIdToName(VINFS(indi,2), idcentral);
 
     fprintf(out, [name_pl_1 '                       : '  '[' num2str([rrd(indi,:) vvd(indi,:)]) ']' '  \n']);
     fprintf(out, [name_pl_2 '                       : '  '[' num2str([rra(indi,:) vva(indi,:)]) ']' '  \n']);
@@ -191,8 +216,8 @@ fprintf(out,'\n');
 fprintf(out, 'Transfer types         : \n');
 for indi = 1:size(TYPES,1)
    
-    name_pl_1 = planetIdToName(TYPES(indi,1));
-    name_pl_2 = planetIdToName(TYPES(indi,2));
+    name_pl_1 = planetIdToName(TYPES(indi,1), idcentral);
+    name_pl_2 = planetIdToName(TYPES(indi,2), idcentral);
     
     if TYPES(indi,3) == 8
         type_1 = 'outbound';

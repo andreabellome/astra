@@ -1,0 +1,55 @@
+
+          _/_/_/     _/_/_/  _/_/_/_/_/  _/_/_/    _/_/_/ 
+        _/    _/   _/           _/     _/    _/  _/    _/ 
+       _/_/_/_/     _/_/       _/     _/_/_/    _/_/_/_/  
+      _/    _/         _/     _/     _/    _/  _/    _/   
+     _/    _/    _/_/_/      _/     _/    _/  _/    _/    
+
+
+               - ASTRA solution - 
+
+-------------------------------------------------------------- 
+
+Departing planet            : Earth  
+Distance from the Sun       : 1.0000 AU 
+
+-------------------------------------------------------------- 
+
+Arrival planet              : Venus  
+Distance from the Sun       : 0.7233 AU 
+Departing C3 (from Earth)   : 40.1792 km^2/s^2 
+Departing infinity velocity : 6.3387 km/s 
+Arrival infinity velocity   : 4.0564 km/s 
+Total cost (DSMs)           : 0.0000 km/s 
+Total cost                  : 10.3952 km/s 
+Time of flight              : 0.0821 years 
+
+-------------------------------------------------------------- 
+
+MGA Details : 
+
+Swing-by sequence      : -E--V-
+
+Departing date         : [2023  10   8   0   0   0]
+Arrival date           : [2023  11   7   0   0   0]
+Time of flight per leg : 30 days 
+
+DSMs magnitudes        : 0 km/s 
+                         0 km/s 
+
+Infinity velocities    : 
+Earth   - Venus        : 6.3387 - 4.0564 km/s 
+
+State at departure/arrival (km and km/s) : 
+Earth                         : [159332.7335      342112.2928                0     -8.360413728      10.52940063                0]  
+Venus                         : [293087.3504      30002.66962                0     -1.634359456      15.31571847                0]  
+
+Encounter dates        : 
+Earth                  : [2023  10   8   0   0   0]
+Venus                  : [2023  11   7   0   0   0]
+
+Transfer types         : 
+Earth   - Venus        : outbound - inbound 
+
+-------------------------------------------------------------- 
+
