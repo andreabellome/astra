@@ -27,7 +27,9 @@ function [LEGSn, VASn, VINFn, nLP, nDEF] = wrap_MODP_st2(LEGSnext, VASnext, legs
 % 
 % -------------------------------------------------------------------------
 
-mu    = 132724487690;
+idcentral = INPUT.idcentral;
+mu        = constants(idcentral, 1);
+
 dvLim = INPUT.dsmOpts(1);
 
 pl1   = legs(indl,1);
@@ -40,18 +42,21 @@ T0   = unique(LEGSnext(:,end), 'rows', 'stable');
 
 % --> find next nodes (i.e. couples of planets with their visiting epochs)
 [MAT, M1, M2] = generateMAT(pl1, pl2, T0, TOFS);
-[EPH]         = wrap_generateEPH(M1, M2);
+[EPH]         = wrap_generateEPH(M1, M2, idcentral);
 
-if pl1 > 11 % --> perform the flyby with an asteroid/comet
-    muPL  = 0;
-    rpmin = 1000;
-else % --> perform the flyby with a planet
-    [muPL, radius] = planetConstants(pl1);
-    rpmin          = maxmin_flybyAltitude(pl1) + radius;
+if idcentral == 1 % --> central body is SUN
+    if pl1 > 11 % --> perform the flyby with an asteroid/comet
+        muPL  = 0;
+        rpmin = 1000;
+    else % --> perform the flyby with a planet
+        [muPL, radius] = planetConstants(pl1);
+        rpmin          = maxmin_flybyAltitude(pl1) + radius;
+    end
+
+else % --> moon's system
+    [~, muPL, ~, radpl, hmin] = constants(idcentral, pl1);
+    rpmin                     = radpl + hmin;
 end
-
-% [muPL, radius] = planetConstants(pl1);
-% rpmin          = maxmin_flybyAltitude(pl1) + radius;
 
 % --> number of defects
 nDEF = numberOfDefects(LEGSnext, TOFS);

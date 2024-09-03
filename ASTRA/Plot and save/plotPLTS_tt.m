@@ -1,4 +1,4 @@
-function [fig] = plotPLTS_tt(pl, t0, tend, holdon)
+function [fig] = plotPLTS_tt(pl, t0, tend, idcentral, holdon)
 
 % DESCRIPTION
 % This function plots the orbits of specified planets over a given time range 
@@ -25,6 +25,9 @@ function [fig] = plotPLTS_tt(pl, t0, tend, holdon)
 % -------------------------------------------------------------------------
 
 if nargin == 3 % --> open a new figure
+    idcentral = 1;
+    fig = figure('Color', [1 1 1]);
+elseif nargin == 4
     fig = figure('Color', [1 1 1]);
 else % --> hold on with the current figure
     if holdon == 0
@@ -34,22 +37,44 @@ else % --> hold on with the current figure
     end
 end
 
-tt = t0:2:tend;
-AU = 149597870.7;
+if idcentral == 1
+    tt = t0:2:tend;
+else
+    tt = linspace(t0, tend, 5e3);
+end
 
 axis equal; grid on;
-xlabel('x [AU]'); ylabel('y [AU]');
+
+if idcentral == 1
+    AU = 149597870.7;
+    xlabel('x [AU]'); ylabel('y [AU]');
+else
+    [~, AU] = planetConstants(idcentral);
+    if idcentral == 5
+        xlabel('x [R_J]'); ylabel('y [R_J]');
+    elseif idcentral == 6
+        xlabel('x [R_S]'); ylabel('y [R_S]');
+    elseif idcentral == 7
+        xlabel('x [R_S]'); ylabel('y [R_S]');
+    end
+end
 
 for indi = 1:length(pl)
+
+    try
     
     rrpl = zeros(length(tt), 3);
     vvpl = zeros(length(tt), 3);
     for indt = 1:length(tt)
-        [rrpl(indt,:), vvpl(indt,:)] = EphSS_cartesian(pl(indi), tt(indt));
+        [rrpl(indt,:), vvpl(indt,:)] = EphSS_cartesian(pl(indi), tt(indt), idcentral);
     end
     
     hold on;
     plot3(rrpl(:,1)./AU, rrpl(:,2)./AU, rrpl(:,3)./AU, 'k', 'linewidth', 0.5, 'handlevisibility', 'off');
+
+    catch
+        st = 1;
+    end
     
 end
 

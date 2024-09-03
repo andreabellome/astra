@@ -62,7 +62,7 @@ else
     % --> extract the minimum DV path
     minTOFy = TOFYS(row);
     minPATH = LEGSnext(row,:);
-    minPATH = ASTRA_wrapPath_DP(minPATH(1:3:end-1), minPATH(2), diff(minPATH(2:3:end)), runOpts);
+    minPATH = ASTRA_wrapPath_DP(minPATH(1:3:end-1), minPATH(2), diff(minPATH(2:3:end)), runOpts, INPUT.idcentral);
 
     % --> save the Pareto Front information
     OUTPUT.LEGSpf = LEGSpf;

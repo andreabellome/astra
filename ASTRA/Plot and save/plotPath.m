@@ -1,4 +1,4 @@
-function [figECI, STRUC, figSYN, figRSC, figVSC] = plotPath(path, holdon, color, firstL)
+function [figECI, STRUC, figSYN, figRSC, figVSC] = plotPath(path, idcentral, holdon, color, firstL)
 
 % DESCRIPTION
 % This function plots the trajectory of a spacecraft and the orbits of 
@@ -9,14 +9,15 @@ function [figECI, STRUC, figSYN, figRSC, figVSC] = plotPath(path, holdon, color,
 % plots of distance and velocity over time.
 % 
 % INPUT
-% - path   : Nx8 matrix where each row contains the state vector of the 
-%            spacecraft at a given time. Columns represent position and 
-%            velocity in ECI frame, as well as time and planet IDs.
-% - holdon : optional flag to determine if the current figure should be 
-%            held for additional plotting. Default is 0 (create new figure).
-% - color  : optional color for the trajectory plot. Default is 'b' (blue).
-% - firstL : optional flag to highlight the departure condition. Default 
-%            is 1 (highlight).
+% - path      : Nx8 matrix where each row contains the state vector of the 
+%               spacecraft at a given time. Columns represent position and 
+%               velocity in ECI frame, as well as time and planet IDs.
+% - idcentral : ID of the central body. See constants.m
+% - holdon    : optional flag to determine if the current figure should be 
+%               held for additional plotting. Default is 0 (create new figure).
+% - color     : optional color for the trajectory plot. Default is 'b' (blue).
+% - firstL    : optional flag to highlight the departure condition. Default 
+%               is 1 (highlight).
 % 
 % OUTPUT
 % - figECI : handle to the figure showing the spacecraft trajectory and 
@@ -41,18 +42,27 @@ function [figECI, STRUC, figSYN, figRSC, figVSC] = plotPath(path, holdon, color,
 
 
 if nargin == 1
+    idcentral = 1;
     holdon = 0;   % --> open new figure
     color  = 'b'; % --> blue trajectory
     firstL = 1;   % --> highlight departing condition
 elseif nargin == 2
+    holdon = 0;   % --> open new figure
+    color  = 'b'; % --> blue trajectory
+    firstL = 1;   % --> highlight departing condition
+elseif nargin == 3
     color = 'b';
     firstL = 1;
-elseif nargin == 3
+elseif nargin == 4
     firstL = 1;
 end
 
-mu = 132724487690;
-AU = 149597870.7;
+mu = constants(idcentral,1);
+if idcentral == 1
+    AU = 149597870.7;
+else
+    [~, AU] = planetConstants(idcentral);
+end
 
 PLTS = path(:,7);
 TFBS = path(:,8);
@@ -61,7 +71,7 @@ DTS  = [0; diff(TFBS)];
 %%%%% plot planets orbits %%%%%
 t0     = path(1,8);
 tend   = path(end,8);
-figECI = plotPLTS_tt(PLTS, t0, tend, holdon);
+figECI = plotPLTS_tt(PLTS, t0, tend, idcentral, holdon);
 %%%%% plot planets orbits %%%%%
 
 %%%%% plot trajectory %%%%%
@@ -72,7 +82,7 @@ for NLEG = 2:size(path,1)
     VV  = path(NLEG, 4:6);
     
     [rr1, vv1] = FGKepler_dt(car2kep([RR VV], mu), -DTS(NLEG)*86400, mu); % backward propagation
-    tt         = [0:1*86400:DTS(NLEG)*86400]';
+    tt         = linspace( 0, DTS(NLEG)*86400, 5e3 )';
     [~,yy]     = propagateKepler(rr1, vv1, tt, mu); % forward propagation
 
     if firstL == 1
@@ -124,11 +134,11 @@ for indj = 1:length(PLTS)
     pl               = PLTS(indj);
     PLANETS(indj).pl = pl;
     for indi = 1:length(TPLTS)
-        [rr, vv]                           = EphSS_cartesian(pl, TPLTS(indi));
+        [rr, vv]                           = EphSS_cartesian(pl, TPLTS(indi), idcentral);
         PLANETS(indj).statesPL_ECI(indi,:) = [rr, vv];
         PLANETS(indj).Tpl(indi,:)          = TPLTS(indi);
     end
-    [statesPL_SYN]             = wrapECI2Synodic_SE(PLANETS(indj).statesPL_ECI, PLANETS(indj).Tpl);
+    [statesPL_SYN]             = wrapECI2Synodic_SE(PLANETS(indj).statesPL_ECI, PLANETS(indj).Tpl, idcentral);
     PLANETS(indj).statesPL_SYN = statesPL_SYN;
 end
 %%%%% planets positions in the time considered %%%%%
@@ -146,8 +156,8 @@ STRUC.EpochsScFB = path(:,8);
 STRUC.Planets    = PLANETS;
 
 % --> from ECLIPTIC J2000 to SUN-EARTH SYNODIC reference frame
-[statesSC_SYN] = wrapECI2Synodic_SE(STRUC.StatesSC, STRUC.EpochsSC);
-[statesPL_SYN] = wrapECI2Synodic_SE(STRUC.SatesScFB, STRUC.EpochsScFB);
+[statesSC_SYN] = wrapECI2Synodic_SE(STRUC.StatesSC, STRUC.EpochsSC, idcentral);
+[statesPL_SYN] = wrapECI2Synodic_SE(STRUC.SatesScFB, STRUC.EpochsScFB, idcentral);
 
 STRUC.StatesSC_syn   = statesSC_SYN;
 STRUC.StatesScFB_syn = statesPL_SYN;

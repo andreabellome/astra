@@ -1,4 +1,4 @@
-function [path, fig] = ASTRA_wrapPath_DP(seq, t0, tofs, NREVS)
+function [path, fig] = ASTRA_wrapPath_DP(seq, t0, tofs, NREVS, idcentral)
 
 % DESCRIPTION :
 % this function allows for building the path matrix of an MGA sequence.
@@ -10,14 +10,19 @@ function [path, fig] = ASTRA_wrapPath_DP(seq, t0, tofs, NREVS)
 % NREVS : nx3 matrix (n=length(seq)-1) on which the multiple revolutions
 %         options are passed. If NREVS(i,3)~=0, then a resonance is
 %         included in the transfer.
-%
+% idcentral  : ID of the central body. See constants.m
+% 
 % OUTPUT :
 % path : is the path matrix
 % fig  : if requested by the user, a figure with the trajectory is returned
 %
 % -------------------------------------------------------------------------
 
-mu = 132724487690; % --> gravitational parameter of the Sun
+if nargin == 4
+    idcentral = 1;
+end
+
+mu = constants(idcentral, 1);
 
 % --> from tofs to epochs
 T = zeros(1, length(tofs)+1);
@@ -39,8 +44,8 @@ for indi = 1:size(legs,1)
     t1 = T(indi);
     t2 = T(indi+1);
     
-    [r1, v1] = EphSS_cartesian(pl1, t1);
-    [r2, v2] = EphSS_cartesian(pl2, t2);
+    [r1, v1] = EphSS_cartesian(pl1, t1, idcentral);
+    [r2, v2] = EphSS_cartesian(pl2, t2, idcentral);
     
     if Nrev(3) ~= 0 % --> then construct resonant transfers
         res   = [Nrev(3), Nrev(4)];
@@ -69,17 +74,23 @@ for indi = 1:size(legs,1)
         rrIN     = r1;
         vvIN     = vasn;
     else
-        if pl1 > 11 % --> perform the flyby with an asteroid/comet
-            muPL  = 0;
-            rpmin = 1000;
-        else % --> perform the flyby with a planet
-            [muPL, radius] = planetConstants(pl1);
-            rpmin          = maxmin_flybyAltitude(pl1) + radius;
+
+        if idcentral == 1
+            if pl1 > 11 % --> perform the flyby with an asteroid/comet
+                muPL  = 0;
+                rpmin = 1000;
+            else % --> perform the flyby with a planet
+                [muPL, radius] = planetConstants(pl1);
+                rpmin          = maxmin_flybyAltitude(pl1) + radius;
+            end
+        else % --> moon's system
+            [~, muPL, ~, radpl, hmin] = constants(idcentral, pl1);
+            rpmin                     = radpl + hmin;
         end
 
-        dv(indi)       = findDV(vvIN - v1, v1Short - v1, muPL, rpmin); % DSM
-        rrIN = r2;
-        vvIN = v2Short;
+        dv(indi) = findDV(vvIN - v1, v1Short - v1, muPL, rpmin); % DSM
+        rrIN     = r2;
+        vvIN     = v2Short;
     end
         
 end
@@ -98,7 +109,7 @@ path(1,15)    = path(end,9);                               % --> arrival vinf (k
 path(1,16)    = sum(path(2:end,11))/365.25;                % --> TOF (years)
 
 if nargout > 1 % --> if requested from the user, plot the trajectory
-    [fig] = plotPath(path);
+    [fig] = plotPath(path, idcentral);
 end
 
 end

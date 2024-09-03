@@ -26,7 +26,8 @@ function [LEGSnext, VASnext, VINFnext, tocVec, nLP] = wrap_DynProgr_st1(T0, legs
 
 tic0  = tic;
 
-mu    = 132724487690;
+idcentral = INPUT.idcentral;
+mu        = constants(idcentral, 1);
 
 indl  = 1;
 pl1   = legs(indl,1);
@@ -38,7 +39,7 @@ TOFS = wrap_TOFs(pl1, pl2, optMR, tstep, TOF_LIM, indl);
 
 % --> find next nodes (i.e. couples of planets with their visiting epochs)
 [MAT, M1, M2] = generateMAT(pl1, pl2, T0, TOFS);
-[EPH]         = wrap_generateEPH(M1, M2);
+[EPH]         = wrap_generateEPH(M1, M2, idcentral);
 
 nLP  = size(MAT,1);
 
@@ -83,7 +84,7 @@ else
         vv2        = EPH( EPH(:,1) == pl2 & EPH(:,2) == t2 , 6:8 );
         tof        = MAT(indm,4) - MAT(indm,2);
         
-        [vvd, vva] = lambertMR(rr1, rr2, tof*86400, mu, optMR(1), optMR(2));
+        [vvd, vva] = lambertMR_MEXIFY(rr1, rr2, tof*86400, mu, optMR(1), optMR(2));
 
         dv               = norm(vvd - vv1);
         VASnext(indm,:)  = vva;
