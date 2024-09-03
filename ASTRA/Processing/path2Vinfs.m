@@ -1,4 +1,4 @@
-function [VINFS, vvd, vva, rrd, rra] = path2Vinfs(path)
+function [VINFS, vvd, vva, rrd, rra] = path2Vinfs(path, idcentral)
 
 % DESCRIPTION
 % This function computes the v-infinity vectors at each leg of a trajectory
@@ -9,7 +9,7 @@ function [VINFS, vvd, vva, rrd, rra] = path2Vinfs(path)
 % - path : Matrix where each row represents a state in the trajectory with 
 %          columns for position (x, y, z), velocity (vx, vy, vz), 
 %          planetary ID, time, and v-infinity.
-% 
+% - idcentral : ID of the central body. See constants.m
 % OUTPUT
 % - VINFS : Matrix containing the departure and arrival v-infinity vectors 
 %           and their magnitudes for each leg of the trajectory.
@@ -20,8 +20,11 @@ function [VINFS, vvd, vva, rrd, rra] = path2Vinfs(path)
 % 
 % -------------------------------------------------------------------------
 
+if nargin == 1
+    idcentral = 1;
+end
 
-mu = 132724487690;
+mu = constants(idcentral, 1);
 
 % --> find arrival and departing v-infinities
 vvInfDep = zeros(size(path,1)-2,3);
@@ -38,7 +41,7 @@ for row = 3:size(path,1)
     dt        = (tIN - path(row-1,8))*86400;
     [~, vvOU] = FGKepler_dt(kepIN, -dt, mu);
     
-    [~, vvga1] = EphSS_cartesian(path(row-1,7), path(row-1,8));
+    [~, vvga1] = EphSS_cartesian(path(row-1,7), path(row-1,8), idcentral);
 
     vvInfDep(row-2,:) = vvOU - vvga1;
     vInfDep(row-2,1)  = norm(vvInfDep(row-2,:));

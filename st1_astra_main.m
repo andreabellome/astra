@@ -55,7 +55,7 @@ figPareto = plotPareto(OUTPUT(1).ovPF);
 [figECI, STRUC, figSYN, figRSC, figVSC] = plotPath(path, INPUT.idcentral);
 
 % --> save the output
-generateOutputTXT(path, './results');
+generateOutputTXT(path, INPUT.idcentral, './results');
 
 %% --> futher refine around the optimal DV-solution
 

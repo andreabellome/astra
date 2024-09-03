@@ -168,7 +168,7 @@ if nargout >= 3
 
     figSYN = figure( 'Color', [1 1 1] );
     hold on; grid on; axis equal;
-    xlabel('x [AU]'); ylabel('y [AU]'); zlabel('z [AU]');
+    xlabel('x [adim]'); ylabel('y [adim]'); zlabel('z [adim]');
     
     plot3(STRUC.StatesSC_syn(:,1), STRUC.StatesSC_syn(:,2), STRUC.StatesSC_syn(:,3), 'b', 'LineWidth', 2, 'HandleVisibility', 'off');
     

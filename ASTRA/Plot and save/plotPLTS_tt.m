@@ -60,8 +60,6 @@ else
 end
 
 for indi = 1:length(pl)
-
-    try
     
     rrpl = zeros(length(tt), 3);
     vvpl = zeros(length(tt), 3);
@@ -72,10 +70,6 @@ for indi = 1:length(pl)
     hold on;
     plot3(rrpl(:,1)./AU, rrpl(:,2)./AU, rrpl(:,3)./AU, 'k', 'linewidth', 0.5, 'handlevisibility', 'off');
 
-    catch
-        st = 1;
-    end
-    
 end
 
 plot3(0, 0, 0, 'o', 'markersize', 10, 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Yellow', 'handlevisibility', 'off');
