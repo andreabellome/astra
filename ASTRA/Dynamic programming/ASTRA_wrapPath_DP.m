@@ -52,7 +52,7 @@ for indi = 1:size(legs,1)
         legp  = [pl1 t1];
         vasp  = vvIN;
         vinfp = norm(vvIN - v1);
-        [~, vasn, ~] = constructResonantOrbits_DP(legp, vasp, vinfp, pl2, res, deg2rad(1));
+        [~, vasn, ~] = constructResonantOrbits_DP(legp, vasp, vinfp, pl2, res, deg2rad(1), idcentral);
 
     else
         [v1Short, v2Short] = lambertMR_MEXIFY_mex(r1, r2, (t2 - t1)*86400, mu, Nrev(1), Nrev(2));

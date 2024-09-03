@@ -34,28 +34,36 @@ for indt = 1:length(TT0)
 end
 clc;
 
-% --> post process
-tdep = zeros( length(OUTPUT),1 );
-for indou = 1:length(OUTPUT)
-    tdep(indou,:) = OUTPUT(indou).LEGSpf(1,2);
-end
-costs   = [ OUTPUT.minCOST ]';
-MAT     = sortrows( [tdep, costs], 2 );
-[~, ia] = unique(MAT(:,1), 'rows', 'first');
-mat     = MAT(ia,:);
+if exist('OUTPUT','var') == 1
 
-% --> plot options
-if INPUT.plot(1) == 1 % --> plot cost w.r.t. launch date
-    figure( 'Color', [1 1 1] );
-    hold on; grid on;
-    xlabel( 'Departing date [MJD2000]' ); ylabel( 'Cost [km/s]' );
-    plot( mat(:,1), mat(:,2), 'o', 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Yellow' );
-end
+    % --> post process
+    tdep = zeros( length(OUTPUT),1 );
+    for indou = 1:length(OUTPUT)
+        tdep(indou,:) = OUTPUT(indou).LEGSpf(1,2);
+    end
+    costs   = [ OUTPUT.minCOST ]';
+    MAT     = sortrows( [tdep, costs], 2 );
+    [~, ia] = unique(MAT(:,1), 'rows', 'first');
+    mat     = MAT(ia,:);
+    
+    % --> plot options
+    if INPUT.plot(1) == 1 % --> plot cost w.r.t. launch date
+        figure( 'Color', [1 1 1] );
+        hold on; grid on;
+        xlabel( 'Departing date [MJD2000]' ); ylabel( 'Cost [km/s]' );
+        plot( mat(:,1), mat(:,2), 'o', 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Yellow' );
+    end
+    
+    if INPUT.plot(2) == 1 % --> plot best traj.
+        [~, row] = min( costs );
+        path     = OUTPUT(row).minPATH;
+        plotPath(path, INPUT.idcentral);
+    end
 
-if INPUT.plot(2) == 1 % --> plot best traj.
-    [~, row] = min( costs );
-    path     = OUTPUT(row).minPATH;
-    plotPath(path, INPUT.idcentral);
+else
+    OUTPUT = [];
+    disp(':( ... no solutions with current settings ... :(');
+
 end
 
 end
