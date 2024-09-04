@@ -132,7 +132,15 @@ fprintf(out,'\n');
 [~, ~, rplf] = constants(idcentral, plts(end));
 
 fprintf(out,['Departing body                 : ' planetIdToName(plts(1), idcentral) '\n']);
-fprintf(out,'Distance from the central body : %.4f AU \n', rpl1/AU);
+if idcentral == 1
+    fprintf(out,'Distance from the central body : %.4f AU \n', rpl1/AU);
+elseif idcentral == 5
+    fprintf(out,'Distance from the central body : %.4f Rj \n', rpl1/AU);
+elseif idcentral == 6
+    fprintf(out,'Distance from the central body : %.4f Rs \n', rpl1/AU);
+elseif idcentral == 7
+    fprintf(out,'Distance from the central body : %.4f Ru \n', rpl1/AU);
+end
 
 fprintf(out,'\n');
 
@@ -141,7 +149,17 @@ fprintf(out,'-------------------------------------------------------------- \n')
 fprintf(out,'\n');
 
 fprintf(out,['Arrival body                   : ' planetIdToName(plts(end), idcentral) '\n']);
-fprintf(out,'Distance from the central body : %.4f AU \n', rplf/AU);
+
+if idcentral == 1
+    fprintf(out,'Distance from the central body : %.4f AU \n', rplf/AU);
+elseif idcentral == 5
+    fprintf(out,'Distance from the central body : %.4f Rj \n', rplf/AU);
+elseif idcentral == 6
+    fprintf(out,'Distance from the central body : %.4f Rs \n', rplf/AU);
+elseif idcentral == 7
+    fprintf(out,'Distance from the central body : %.4f Ru \n', rplf/AU);
+end
+
 fprintf(out,'Departing C3                   : %.4f km^2/s^2 \n', path(1,9)^2);
 fprintf(out,'Departing infinity velocity    : %.4f km/s \n', path(1,9));
 fprintf(out,'Arrival infinity velocity      : %.4f km/s \n', path(end,9));
