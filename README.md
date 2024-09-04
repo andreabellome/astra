@@ -31,7 +31,7 @@ To use the repository, one finds different test scripts. These are listed here:
 
 This script allows to optimize ASTRA using both SODP (single-objective dynamic programming) and MODP (multi-objective dynamic programming). This section provides a breakdown of the minimal input parameters needed. 
 
-The following script is used to add ```ASTRA``` and to build max functions (namely the Lambert solver and the defects function).
+The following script is used to add ```ASTRA``` and to build mex functions (namely the Lambert solver and the defects function).
 
 ```matlab
 clearDeleteAdd;
@@ -46,6 +46,7 @@ Then one proceeds to select appropriate input parameters.
 try clear INPUT; catch; end; clc;
 
 % --> sequence to be optimized
+INPUT.idcentral = 1; 
 seq = [ 3 2 3 3 5 ]; res = [ 2 1 3 ];
 
 %%%%%%%%%% multi-rev. options %%%%%%%%%%
@@ -74,6 +75,7 @@ INPUT.tstep    = dt;         % --> step size for Time of flight
 
 Things to notice are:
 
+- ```INPUT.idcentral``` allows to select the system. In this example, ```INPUT.idcentral = 1``` means that Solar System is selected. Other options are: 5 for Jupiter system, 6 for Saturn system and 7 for Uranus system. See also [constants.m]() for knowing about the IDs of the bodies.
 - ```maxRevOuterPlanets``` will prune options with more than one rev. on legs towards outer planets (i.e., from Jupiter on). This to prevent the mission duration to increase a lot.
 - ```res``` is a list of integers with ```[ N, M, LEG_ID ]```, where ```N``` and ```M``` are the object and spacecraft revolutions, respectively, and ```LEG_ID``` is the number of the leg at which the resonance is.
 - ```INPUT.opt``` selects the type of optimization. 
