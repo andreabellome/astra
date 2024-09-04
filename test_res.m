@@ -1,11 +1,12 @@
 
 clearDeleteAdd; % --> !!! ONLY CALL IT ONCE FOR SPEED
 
+%%
 
 idcentral = 6;
 pl        = 1;
 
-[muCentral, mupl] = constants(idcentral, pl);
+muCentral = constants(idcentral, pl);
 
 t0        = 0;
 
