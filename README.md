@@ -7,7 +7,6 @@ To cite this folder please use the references [[1]](#1) and [[2]](#2).
 
 To work with ASTRA, one can simply clone the repository in the local machine:
 
-
 ```bash
 git clone "https://github.com/andreabellome/MRPLP_DACE_python"
 ```
