@@ -95,7 +95,7 @@ if ~isempty(MSSTRUC(1).STRUC)
     
                 Nrev = rev2RevOpt(nextn, INPUT.res, indms);
                 if Nrev(3) ~= 0 % --> compute the resonant transfers
-                    [LEGSn, VASn, VINFn] = wrapConstructionResonance_DP(LEGSprev, VASprev, VINFprev, legs, Nrev(3:4), indms, deg2rad(1), INPUT.parallel);
+                    [LEGSn, VASn, VINFn] = wrapConstructionResonance_DP(LEGSprev, VASprev, VINFprev, legs, Nrev(3:4), indms, deg2rad(1), INPUT.parallel, INPUT.idcentral);
                     nlp  = 0;
                     ndef = 0;
                 else % --> LP between two consecutive nodes
@@ -190,7 +190,7 @@ try
     if INPUT.plot(1) == 1
         [~, run] = min([OUTPUT.minCOST]');
         path     = OUTPUT(run).minPATH;
-        plotPath(path);
+        plotPath(path, INPUT.idcentral);
     end
 catch
 end

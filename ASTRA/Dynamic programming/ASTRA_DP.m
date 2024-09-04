@@ -37,7 +37,7 @@ function [OUTPUT] = ASTRA_DP(seq, INPUT)
 % -------------------------------------------------------------------------
 
 
-clc;
+close all; clc;
 
 % --> check parallel pool
 if INPUT.parallel == true
