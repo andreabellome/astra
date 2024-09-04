@@ -82,7 +82,7 @@ Things to notice are:
 ```3``` is for SODP run each launch date. If the user selects a launch window greater or equal than 1 year, this option is selected automatically.
 ```4``` is for MODP run each launch year. If the user selects a launch window greater or equal than 3 year, this option is selected automatically.
 
-The options defined above allow for an MGA trajectory search of ```Earth-Venus-Earth-Earth-Jupiter``` mission in year ```2023``` using MODP (```INPUT.opt=2```).
+The options defined above allow for an MGA trajectory search of ```Earth-Venus-Earth-Earth-Jupiter``` mission in year ```2023``` using MODP (```INPUT.opt=2```). There is a specified 2:1 resonance on the ```Earth-Earth``` leg, i.e., ```res = [2 1 3]```.
 
 ASTRA main engine can then be run using:
 
