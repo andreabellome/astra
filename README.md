@@ -8,7 +8,7 @@ To cite this folder please use the references [[1]](#1) and [[2]](#2).
 To work with ASTRA, one can simply clone the repository in the local machine:
 
 ```bash
-git clone "https://github.com/andreabellome/MRPLP_DACE_python"
+git clone "https://github.com/andreabellome/astra"
 ```
 
 To run a full exploration of MGA trajectories, the following system requirements are recommended:
