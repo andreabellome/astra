@@ -1,0 +1,71 @@
+
+          _/_/_/     _/_/_/  _/_/_/_/_/  _/_/_/    _/_/_/ 
+        _/    _/   _/           _/     _/    _/  _/    _/ 
+       _/_/_/_/     _/_/       _/     _/_/_/    _/_/_/_/  
+      _/    _/         _/     _/     _/    _/  _/    _/   
+     _/    _/    _/_/_/      _/     _/    _/  _/    _/    
+
+
+               - ASTRA solution - 
+
+-------------------------------------------------------------- 
+
+Departing body                 : Titan
+Distance from the central body : 20.9828 AU 
+
+-------------------------------------------------------------- 
+
+Arrival body                   : Rhea   
+Distance from the central body : 9.0519 AU 
+Departing C3                   : 2.5743 km^2/s^2 
+Departing infinity velocity    : 1.6045 km/s 
+Arrival infinity velocity      : 3.5835 km/s 
+Total cost (DSMs)              : 0.0000 km/s 
+Total cost                     : 5.1879 km/s 
+Time of flight                 : 0.4559 years 
+
+-------------------------------------------------------------- 
+
+MGA Details : 
+
+Swing-by sequence      : -T--R--R--R-
+
+Departing date         : [2023   4  11   0   0   0]
+Arrival date           : [2023   9  24  12  36   1]
+Time of flight per leg : 40 days 
+                         58.7438 days 
+                         67.7813 days 
+
+DSMs magnitudes        : 0 km/s 
+                         0 km/s 
+                         0 km/s 
+                         0 km/s 
+
+Infinity velocities    : 
+Titan - Rhea         : 1.6045 - 3.5835 km/s 
+Rhea    - Rhea         : 3.5835 - 3.5835 km/s 
+Rhea    - Rhea         : 3.5835 - 3.5835 km/s 
+
+State at departure/arrival (km and km/s) : 
+Titan                       : [-1200915.7984     -225316.53746                 0      1.0065277806     -3.8717708217                 0]  
+Rhea                          : [148418.288      505781.4305                0     -7.891513397      5.963396959                0]  
+
+Rhea                          : [148418.288      505781.4305                0      -7.79884331      5.955752856                0]  
+Rhea                          : [148418.288      505781.4305                0      -7.79884331      5.955752856                0]  
+
+Rhea                          : [148418.288      505781.4305                0     -7.816954266      5.957437254                0]  
+Rhea                          : [148418.288      505781.4305                0     -7.816954266      5.957437254                0]  
+
+Encounter dates        : 
+Jupiter                : [2023   4  11   0   0   0]
+Mars                   : [2023   5  21   0   0   0]
+Mars                   : [2023   7  18  17  51   0]
+Mars                   : [2023   9  24  12  36   1]
+
+Transfer types         : 
+Titan - Rhea         : inbound - outbound 
+Rhea    - Rhea         : outbound - outbound 
+Rhea    - Rhea         : outbound - outbound 
+
+-------------------------------------------------------------- 
+

@@ -186,7 +186,7 @@ try
         % --> plot the best path
         [~, run] = min([OUTPUT.minCOST]');
         path     = OUTPUT(run).minPATH;
-        plotPath(path);
+        plotPath(path, INPUT.idcentral);
     end
 catch
 end

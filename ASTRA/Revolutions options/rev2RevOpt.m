@@ -31,11 +31,7 @@ rev = num2str(rev);
 if str2double(rev(1)) == 0
     revopt = [0 0];
 else
-    if length(rev) == 2
-        revopt = [ str2double(rev(1)) str2double(rev(2))];
-    elseif length(rev) == 3
-        revopt = [ str2double(rev(1:2)) str2double(rev(3))];
-    end
+    revopt = [ str2double(rev(1:end-1)) str2double(rev(end)) ];
 end
 revopt = [ revopt zeros(1,2) ];
 

@@ -22,13 +22,13 @@ function [path, revs, res] = pathfromPF(OUTPUT, outNumber, rowPF)
 % 
 % -------------------------------------------------------------------------
 
-
-if nargin == 2
+if nargin == 1
     outNumber = 1;
     rowPF     = [];
-elseif nargin == 3
-    rowPF = [];
+elseif nargin == 2
+    rowPF     = [];
 end
+
 
 res = OUTPUT(1).res;
 for indo = 1:length(OUTPUT)

@@ -52,12 +52,12 @@ for indj = 1:size(revVec,2)
    
     for indi = 1:size(revVec,1)
        
-        rev = revVec(indi, indj);
-        
-        if rev == 0
+        rev = num2str(revVec(indi, indj));
+
+        if str2double(rev(1)) == 0
             revopt = [0 0];
         else
-            revopt = arrayfun(@(x) str2double(x), num2str(rev));
+            revopt = [ str2double(rev(1:end-1)) str2double(rev(end)) ];
         end
         
         REVS(indi,lastcol:lastcol+1) = revopt;
