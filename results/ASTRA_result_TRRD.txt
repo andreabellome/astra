@@ -17,12 +17,12 @@ Distance from the central body : 20.9828 Rs
 
 Arrival body                   : Dione  
 Distance from the central body : 6.4809 Rs 
-Departing C3                   : 2.5907 km^2/s^2 
-Departing infinity velocity    : 1.6096 km/s 
-Arrival infinity velocity      : 1.9826 km/s 
-Total cost (DSMs)              : 0.4641 km/s 
-Total cost                     : 4.0563 km/s 
-Time of flight                 : 0.2977 years 
+Departing C3                   : 2.6326 km^2/s^2 
+Departing infinity velocity    : 1.6225 km/s 
+Arrival infinity velocity      : 2.0133 km/s 
+Total cost (DSMs)              : 0.3771 km/s 
+Total cost                     : 4.0130 km/s 
+Time of flight                 : 0.3155 years 
 
 -------------------------------------------------------------- 
 
@@ -30,42 +30,42 @@ MGA Details :
 
 Swing-by sequence      : -T--R--R--D-
 
-Departing date         : [2023  12  24  12   0   0]
-Arrival date           : [2024   4  11   5  51   0]
-Time of flight per leg : 30 days 
+Departing date         : [2023   7  27   6   0   0]
+Arrival date           : [2023  11  19  11  51   0]
+Time of flight per leg : 31 days 
                          58.7438 days 
-                         20 days 
+                         25.5 days 
 
 DSMs magnitudes        : 0 km/s 
                          0 km/s 
                          0 km/s 
-                         0.46411 km/s 
+                         0.37714 km/s 
 
 Infinity velocities    : 
-Titan - Rhea         : 1.6096 - 3.5944 km/s 
-Rhea    - Rhea         : 3.5944 - 3.5944 km/s 
-Rhea    - Dione        : 3.6311 - 1.9826 km/s 
+Titan - Rhea         : 1.6225 - 3.7453 km/s 
+Rhea    - Rhea         : 3.7453 - 3.7453 km/s 
+Rhea    - Dione        : 3.6779 - 2.0133 km/s 
 
 State at departure/arrival (km and km/s) : 
-Titan                       : [-549687.81779     -1091242.2279                 0      3.6936064595      -1.533845412                 0]  
-Rhea                          : [521299.3892     -78037.10959                0     -2.104853805      9.664335486                0]  
+Titan                       : [-34506.650693      1221382.6542                 0     -3.9472195865    -0.18856938936                 0]  
+Rhea                          : [498483.3527     -171339.4023                0      6.460819279      7.463798941                0]  
 
-Rhea                          : [521299.3892     -78037.10959                0      -2.13652849      9.577483755                0]  
-Rhea                          : [521299.3892     -78037.10959                0      -2.13652849      9.577483755                0]  
+Rhea                          : [498483.3527     -171339.4023                0      6.449860048      7.395421179                0]  
+Rhea                          : [498483.3527     -171339.4023                0      6.449860048      7.395421179                0]  
 
-Rhea                          : [521299.3892     -78037.10959                0     -2.316628513      9.038960391                0]  
-Dione                         : [86500.69043      367349.1137                0     -11.70412313      2.678848903                0]  
+Rhea                          : [498483.3527     -171339.4023                0      6.276691276      6.953648338                0]  
+Dione                         : [-109655.4586     -361114.1388                0      11.55329639        -3.371139                0]  
 
 Encounter dates        : 
-Jupiter                : [2023  12  24  12   0   0]
-Mars                   : [2024   1  23  12   0   0]
-Mars                   : [2024   3  22   5  51   0]
-Earth                  : [2024   4  11   5  51   0]
+Jupiter                : [2023   7  27   6   0   0]
+Mars                   : [2023   8  27   6   0   0]
+Mars                   : [2023  10  24  23  51   0]
+Earth                  : [2023  11  19  11  51   0]
 
 Transfer types         : 
-Titan - Rhea         : inbound - inbound 
-Rhea    - Rhea         : inbound - inbound 
-Rhea    - Dione        : inbound - inbound 
+Titan - Rhea         : inbound - outbound 
+Rhea    - Rhea         : outbound - outbound 
+Rhea    - Dione        : outbound - inbound 
 
 -------------------------------------------------------------- 
 

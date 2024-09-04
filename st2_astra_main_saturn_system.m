@@ -20,7 +20,7 @@ chosenRevs                    = differentRuns_v2(seq, maxrev);                  
 %%%%%%%%%% set departing options %%%%%%%%%%
 t0 = date2mjd2000([2023 1 1 0 0 0]); % --> initial date range (MJD2000)
 tf = t0 + 1*365.25;                  % --> final date range (MJD2000)
-dt = 2.5;                            % --> step size (days)
+dt = 0.25;                            % --> step size (days)
 INPUT.depOpts = [t0 tf dt];
 %%%%%%%%%% set departing options %%%%%%%%%%
 
@@ -29,7 +29,7 @@ INPUT.opt      = 2;          % --> (1) is for SODP, (2) is for MODP, (3) is for 
 INPUT.vInfOpts = [0 2];      % --> min/max departing infinity velocities (km/s)
 INPUT.dsmOpts  = [1 Inf];    % --> max defect DSM, and total DSMs (km/s)
 INPUT.plot     = [1 1];      % --> plot(1) for Pareto front, plot(2) for best traj. DV
-INPUT.parallel = false;       % --> put true for parallel, false otherwise
+INPUT.parallel = true;       % --> put true for parallel, false otherwise
 INPUT.tstep    = dt;         % --> step size for Time of flight            
 %%%%%%%%%% set options %%%%%%%%%%
 
