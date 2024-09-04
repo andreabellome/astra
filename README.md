@@ -83,6 +83,149 @@ Things to notice are:
 ```3``` is for SODP run each launch date. If the user selects a launch window greater or equal than 1 year, this option is selected automatically.
 ```4``` is for MODP run each launch year. If the user selects a launch window greater or equal than 3 year, this option is selected automatically.
 
+The options defined above allow for an MGA trajectory search of ```Earth-Venus-Earth-Earth-Jupiter``` mission in year ```2023``` using MODP (```INPUT.opt=2```).
+
+ASTRA main engine can then be run using:
+
+```matlab
+%% --> optimize using ASTRA
+
+% --> launch ASTRA optimization
+OUTPUT = ASTRA_DP(seq, INPUT);
+```
+
+Results are saved in a structure called ```OUTPUT```.
+
+If needed, one can then post-process the results, extracting the desired trajectory from the Pareto front, plotting the Pareto front itself and the selected path.
+
+```matlab
+%% --> extract desired path and plot
+
+close all; clc;
+
+% --> extract path from Pareto front
+[path, revs, res] = pathfromPF(OUTPUT);
+
+% --> plot the Pareto front
+figPareto = plotPareto(OUTPUT(1).ovPF);
+
+% --> plot the path
+[figECI, STRUC, figSYN, figRSC, figVSC] = plotPath(path, INPUT.idcentral);
+
+% --> save the output
+generateOutputTXT(path, INPUT.idcentral, './results');
+```
+
+The plot of the Pareto front is the following:
+
+<!-- INCLUDE PLOT HERE -->
+
+The plot of the optimal trajectory in inertial frame is the following:
+
+<!-- INCLUDE PLOT HERE -->
+
+The function [plotPath.m](./ASTRA/Plot%20and%20save/plotPath.m) also allows to plot the trajectory in synodic frame as well as the evolutions of spacecraft distance and velocity with respect to central body:
+
+<!-- INCLUDE PLOT HERE -->
+
+The function [generateOutputTXT.m](./ASTRA/Plot%20and%20save/generateOutputTXT.m) creates a .txt file in a folder called ```./results``` that has all the info of the trajectory. This is reported here:
+
+```
+
+          _/_/_/     _/_/_/  _/_/_/_/_/  _/_/_/    _/_/_/ 
+        _/    _/   _/           _/     _/    _/  _/    _/ 
+       _/_/_/_/     _/_/       _/     _/_/_/    _/_/_/_/  
+      _/    _/         _/     _/     _/    _/  _/    _/   
+     _/    _/    _/_/_/      _/     _/    _/  _/    _/    
+
+
+               - ASTRA solution - 
+
+-------------------------------------------------------------- 
+
+Departing body                 : Earth  
+Distance from the central body : 1.0000 AU 
+
+-------------------------------------------------------------- 
+
+Arrival body                   : Jupiter
+Distance from the central body : 5.2026 AU 
+Departing C3                   : 11.1821 km^2/s^2 
+Departing infinity velocity    : 3.3440 km/s 
+Arrival infinity velocity      : 5.5560 km/s 
+Total cost (DSMs)              : 0.2297 km/s 
+Total cost                     : 9.1297 km/s 
+Time of flight                 : 6.5995 years 
+
+-------------------------------------------------------------- 
+
+MGA Details : 
+
+Swing-by sequence      : -E--V--E--E--J-
+
+Departing date         : [2023   6   5   0   0   0]
+Arrival date           : [2030   1   9  11  32  29]
+Time of flight per leg : 175 days 
+                         325 days 
+                         730.4809 days 
+                         1180 days 
+
+DSMs magnitudes        : 0 km/s 
+                         0 km/s 
+                         0.0025302 km/s 
+                         0 km/s 
+                         0.22717 km/s 
+
+Infinity velocities    : 
+Earth   - Venus        : 3.344 - 5.5398 km/s 
+Venus   - Earth        : 5.5423 - 9.3649 km/s 
+Earth   - Earth        : 9.3649 - 9.3667 km/s 
+Earth   - Jupiter      : 9.5899 - 5.556 km/s 
+
+State at departure/arrival (km and km/s) : 
+Earth                         : [-41536210.28622      -145973470.626                   0      25.22061812303     -7.815385638442     -1.511901456476]  
+Venus                         : [-68483058.5096      82679154.4959      5068735.73872     -31.9673430837     -19.9046273943      1.44904973131]  
+
+Venus                         : [-68483058.5096      82679154.4959      5068735.73872     -31.8207835326     -24.8436384232    -0.473867544232]  
+Earth                         : [136074658.5919      60926320.94723                   0     -20.73484901584      22.55369065354      1.423799578027]  
+
+Earth                         : [136074658.5919      60926320.94723                   0     -21.90609082435      27.19379108781      1.468331664356]  
+Earth                         : [136074658.5919      60926320.94723                   0     -21.90609082435      27.19379108781      1.468331664356]  
+
+Earth                         : [136074658.5919      60926320.94723                   0     -19.36823020848      33.54168925672     -2.256209104279]  
+Jupiter                       : [-590948699.8079     -555350715.9192      15543181.54531      5.830113194957     -4.241447010639     0.3662016507624]  
+
+Encounter dates        : 
+Earth                  : [2023   6   5   0   0   0]
+Venus                  : [2023  11  27   0   0   0]
+Earth                  : [2024  10  17   0   0   0]
+Earth                  : [2026  10  17  11  32  29]
+Jupiter                : [2030   1   9  11  32  29]
+
+Transfer types         : 
+Earth   - Venus        : outbound - outbound 
+Venus   - Earth        : outbound - inbound 
+Earth   - Earth        : inbound - inbound 
+Earth   - Jupiter      : inbound - inbound 
+
+-------------------------------------------------------------- 
+```
+
+Finally, one can further refine the solution around a specified trajectory, to further reduce the defects that might arise:
+
+```matlab
+%% --> futher refine around the optimal DV-solution
+
+INPUT.t0days  = 10;   % --> days around current solution departing epoch
+INPUT.tofdays = 15;   % --> days around current solution TOFs
+INPUT.dt      = 0.5;  % --> step size (days)
+INPUT.revs    = revs;
+INPUT.res     = res;
+
+% --> further refine using ASTRA
+OUTPUTref = refineUsingASTRApath(path, INPUT);
+```
+
 ### Test script 2: Run DP optimization with ASTRA using custom constraints <a id="Section_2"></a> 
 
 
