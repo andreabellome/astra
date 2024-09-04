@@ -195,7 +195,15 @@ if nargout >= 3
 
         figRSC = figure( 'Color', [1 1 1] );
         hold on; grid on;
-        xlabel('Days from launch'); ylabel('Sun-spacecraft distance [AU]');
+        if idcentral == 1
+            xlabel('Days from launch'); ylabel('Spacecraft distance to Sun [AU]');
+        elseif idcentral == 5
+            xlabel('Days from launch'); ylabel('Spacecraft distance to Jupiter [R_J]');
+        elseif idcentral == 6
+            xlabel('Days from launch'); ylabel('Spacecraft distance to Saturn [R_S]');
+        elseif idcentral == 7
+            xlabel('Days from launch'); ylabel('Spacecraft distance to Uranus [R_U]');
+        end
 
         plot(STRUC.TOFsSC, STRUC.DistSC./AU, 'b', 'linewidth', 2, 'HandleVisibility', 'off');
         
@@ -211,7 +219,7 @@ if nargout >= 3
         if nargout == 5
             figVSC = figure( 'Color', [1 1 1] );
             hold on; grid on;
-            xlabel('Days from launch'); ylabel('Spacecraft velocity - km/s');
+            xlabel('Days from launch'); ylabel('Spacecraft velocity [km/s]');
 
             plot(STRUC.TOFsSC, STRUC.VelSC, 'b.', 'MarkerSize', 5, 'HandleVisibility', 'off');
 
