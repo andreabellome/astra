@@ -57,13 +57,9 @@ figPareto = plotPareto(OUTPUT(1).ovPF);
 % --> save the output
 generateOutputTXT(path, INPUT.idcentral, './results');
 
-%% --> futher refine around the optimal DV-solution
+% --> save the figures
+name = [pwd '/results/Images/figECIsat.png'];
+exportgraphics(figECI, name, 'Resolution', 1200);
 
-INPUT.t0days  = 10;   % --> days around current solution departing epoch
-INPUT.tofdays = 15;   % --> days around current solution TOFs
-INPUT.dt      = 0.5;  % --> step size (days)
-INPUT.revs    = revs;
-INPUT.res     = res;
-
-% --> further refine using ASTRA
-OUTPUTref = refineUsingASTRApath(path, INPUT);
+name = [pwd '/results/Images/figSYNsat.png'];
+exportgraphics(figSYN, name, 'Resolution', 1200);

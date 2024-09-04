@@ -24,8 +24,8 @@ Lighter requirements will be required in future releases, as ASTRA will be able 
 
 To use the repository, one finds different test scripts. These are listed here:
 
-1. Test script 1: [st_astra_main.m](/st1_astra_main.m), to optimize MGA missions. Refer to [this section](#Section_1).
-2. Test script 2: [st_astra_main_constrained.m](/st_astra_main_constrained.m), to optimized MGA missions using custom constraints and different planetary systems. Refer to [this section](#Section_2).
+1. Test script 1: [st1_astra_main.m](/st1_astra_main.m), to optimize MGA missions. Refer to [this section](#Section_1).
+2. Test script 2: [st2_astra_main_saturn_system.m](/st2_astra_main_saturn_system.m), to optimized MGA missions using custom constraints and different planetary systems. Refer to [this section](#Section_2).
 
 ### Test script 1: Run DP optimization with ASTRA  <a id="Section_1"></a> 
 
@@ -231,6 +231,142 @@ OUTPUTref = refineUsingASTRApath(path, INPUT);
 
 ### Test script 2: Run DP optimization with ASTRA using custom constraints <a id="Section_2"></a> 
 
+If one wants to set up specific constraints for a custom optimization scenario, it can write as follows:
+
+```matlab
+% --> specify custom bounds for TOFs and VINFs
+INPUT.TOF_LIM = [[30 60]; [20 40]; [20 40]];
+% INPUT.vInfLim = [ [0 XXX]; [0 XXX]; [0 XXX]; [0 XXX]; [0 XXX]];   % --> PL1, PL2, PL3, ...   
+```
+
+where the matrix ```INPUT.TOF_LIM``` refers to lower and upper bounds for TOFs per MGA leg, while the matrix ```INPUT.vInfLim``` refers to lower and upper bounds for infinity velocity at each fly-by body.
+
+With the current setup:
+
+```matlab
+%% --> input section
+
+% --> clear INPUT and define new ones
+try clear INPUT; catch; end; clc;
+
+% --> sequence to be optimized
+INPUT.idcentral = 6; % --> central body (Sun in this case)
+seq = [ 5 4 4 3 ]; res = [ 13 7 2 ];
+
+%%%%%%%%%% multi-rev. options %%%%%%%%%%
+maxrev                        = 3;                                                          % --> max. number of revolutions (round number)
+chosenRevs                    = differentRuns_v2(seq, maxrev);                              % --> generate successive runs
+[INPUT.chosenRevs, INPUT.res] = processResonances(chosenRevs, res);                         % --> process the resonances options
+[INPUT.chosenRevs]            = maxRevOuterPlanets(seq, INPUT.chosenRevs, INPUT.idcentral); % --> only zero revs. on outer planets
+%%%%%%%%%% multi-rev. options %%%%%%%%%%
+
+%%%%%%%%%% set departing options %%%%%%%%%%
+t0 = date2mjd2000([2023 1 1 0 0 0]); % --> initial date range (MJD2000)
+tf = t0 + 0.5*365.25;                  % --> final date range (MJD2000)
+dt = 0.1;                            % --> step size (days)
+INPUT.depOpts = [t0 tf dt];
+%%%%%%%%%% set departing options %%%%%%%%%%
+
+%%%%%%%%%% set options %%%%%%%%%%
+INPUT.opt      = 2;          % --> (1) is for SODP, (2) is for MODP, (3) is for DATES, (4) is for YEARS - MODP
+INPUT.vInfOpts = [0 2];      % --> min/max departing infinity velocities (km/s)
+INPUT.dsmOpts  = [1 Inf];    % --> max defect DSM, and total DSMs (km/s)
+INPUT.plot     = [1 1];      % --> plot(1) for Pareto front, plot(2) for best traj. DV
+INPUT.parallel = true;       % --> put true for parallel, false otherwise
+INPUT.tstep    = dt;         % --> step size for Time of flight            
+%%%%%%%%%% set options %%%%%%%%%%
+
+% --> specify custom bounds for TOFs and VINFs
+INPUT.TOF_LIM = [[30 60]; [20 40]; [20 40]]; 
+
+%% --> optimize using ASTRA
+
+% --> launch ASTRA optimization
+OUTPUT = ASTRA_DP(seq, INPUT);
+```
+
+one has the following resulting trajectories:
+
+| ![Pareto-front](./results/Images/figECIsat.png) | ![Pareto-front](./results/Images/figSYNsat.png) |
+|:--------------------------------------------:|:--------------------------------------------:|
+
+
+where the MGA mission is around Saturn, flying-by ```Titan-Rhea-Rhea-Dione```, with a ```13:7``` resonance on the ```Rhea-Rhea``` leg.
+
+The corresponding output is reported here:
+
+```
+
+          _/_/_/     _/_/_/  _/_/_/_/_/  _/_/_/    _/_/_/ 
+        _/    _/   _/           _/     _/    _/  _/    _/ 
+       _/_/_/_/     _/_/       _/     _/_/_/    _/_/_/_/  
+      _/    _/         _/     _/     _/    _/  _/    _/   
+     _/    _/    _/_/_/      _/     _/    _/  _/    _/    
+
+
+               - ASTRA solution - 
+
+-------------------------------------------------------------- 
+
+Departing body                 : Titan
+Distance from the central body : 20.9828 Rs 
+
+-------------------------------------------------------------- 
+
+Arrival body                   : Dione  
+Distance from the central body : 6.4809 Rs 
+Departing C3                   : 2.4048 km^2/s^2 
+Departing infinity velocity    : 1.5508 km/s 
+Arrival infinity velocity      : 1.7465 km/s 
+Total cost (DSMs)              : 0.7016 km/s 
+Total cost                     : 3.9988 km/s 
+Time of flight                 : 0.3065 years 
+
+-------------------------------------------------------------- 
+
+MGA Details : 
+
+Swing-by sequence      : -T--R--R--D-
+
+Departing date         : [2023   6  24  19  11  59]
+Arrival date           : [2023  10  14  17  51   0]
+Time of flight per leg : 31.6 days 
+                         58.7438 days 
+                         21.6 days 
+
+DSMs magnitudes        : 0 km/s 
+                         0 km/s 
+                         0 km/s 
+                         0.70157 km/s 
+
+Infinity velocities    : 
+Titan - Rhea         : 1.5508 - 3.4391 km/s 
+Rhea    - Rhea         : 3.4391 - 3.4391 km/s 
+Rhea    - Dione        : 3.2324 - 1.7465 km/s 
+
+State at departure/arrival (km and km/s) : 
+Titan                       : [230777.07612      1199878.4264                 0     -3.9470736019     0.76717345853                 0]  
+Rhea                          : [424287.5053     -312766.6167                0      8.215458564      5.523455913                0]  
+
+Rhea                          : [424287.5053     -312766.6167                0      8.174753313      5.428292303                0]  
+Rhea                          : [424287.5053     -312766.6167                0      8.174753313      5.428292303                0]  
+
+Rhea                          : [424287.5053     -312766.6167                0      7.602562939      4.866499723                0]  
+Dione                         : [-233098.6853     -296804.2178                0      9.251156872     -7.279494237                0]  
+
+Encounter dates        : 
+Jupiter                : [2023   6  24  19  11  59]
+Mars                   : [2023   7  26   9  35  59]
+Mars                   : [2023   9  23   3  27   0]
+Earth                  : [2023  10  14  17  51   0]
+
+Transfer types         : 
+Titan - Rhea         : outbound - outbound 
+Rhea    - Rhea         : outbound - outbound 
+Rhea    - Dione        : outbound - outbound 
+
+-------------------------------------------------------------- 
+```
 
 ## Contributing
 
