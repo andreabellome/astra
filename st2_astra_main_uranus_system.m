@@ -27,7 +27,7 @@ INPUT.depOpts = [t0 tf dt];
 %%%%%%%%%% set options %%%%%%%%%%
 INPUT.opt      = 1;          % --> (1) is for SODP, (2) is for MODP, (3) is for DATES, (4) is for YEARS - MODP
 INPUT.vInfOpts = [3.5 4];    % --> min/max departing infinity velocities (km/s)
-INPUT.dsmOpts  = [1 Inf];    % --> max defect DSM, and total DSMs (km/s)
+INPUT.dsmOpts  = [0.5 Inf];  % --> max defect DSM, and total DSMs (km/s)
 INPUT.plot     = [1 1];      % --> plot(1) for Pareto front, plot(2) for best traj. DV
 INPUT.parallel = true;       % --> put true for parallel, false otherwise
 INPUT.tstep    = dt;         % --> step size for Time of flight            
@@ -35,7 +35,9 @@ INPUT.tstep    = dt;         % --> step size for Time of flight
 
 % --> specify custom bounds for TOFs and VINFs
 INPUT.TOF_LIM = [[10 30]; [10 30]; [10 30]; [10 30]]; 
-INPUT.vInfLim = [[3.5 4]; [4 4.5]; [4 4.5]; [3.5 4]; [4 4.5]];   % --> PL1, PL2, PL3, ...   
+% INPUT.vInfLim = [[3.5 4]; [4 4.5]; [4 4.5]; [3.5 4]; [4 4.5]];   % --> PL1, PL2, PL3, ...   
+tol = 0.1;
+INPUT.vInfLim = [[3.75-tol 3.75+tol]; [4.25-tol 4.25+tol]; [4.2-tol 4.2+tol]; [3.65-tol 3.65+tol]; [4.45-tol 4.45+tol]];   % --> PL1, PL2, PL3, ...   
 
 %% --> optimize using ASTRA
 
@@ -47,10 +49,14 @@ OUTPUT = ASTRA_DP(seq, INPUT);
 close all; clc;
 
 % --> extract path from Pareto front
-[path, revs, res] = pathfromPF(OUTPUT);
+[path, revs, res] = pathfromPF(OUTPUT, INPUT.idcentral, 1, 2);
 
 % --> plot the Pareto front
 figPareto = plotPareto(OUTPUT(1).ovPF);
 
 % --> plot the path
 [figECI, STRUC, figSYN, figRSC, figVSC] = plotPath(path, INPUT.idcentral);
+
+% --> save the output
+generateOutputTXT(path, INPUT.idcentral, './results');
+
