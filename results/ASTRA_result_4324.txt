@@ -1,0 +1,71 @@
+
+          _/_/_/     _/_/_/  _/_/_/_/_/  _/_/_/    _/_/_/ 
+        _/    _/   _/           _/     _/    _/  _/    _/ 
+       _/_/_/_/     _/_/       _/     _/_/_/    _/_/_/_/  
+      _/    _/         _/     _/     _/    _/  _/    _/   
+     _/    _/    _/_/_/      _/     _/    _/  _/    _/    
+
+
+               - ASTRA solution - 
+
+-------------------------------------------------------------- 
+
+Departing body                 : Titania   
+Distance from the central body : 17.2029 Ru 
+
+-------------------------------------------------------------- 
+
+Arrival body                   : Titania   
+Distance from the central body : 17.2029 Ru 
+Departing C3                   : 12.5071 km^2/s^2 
+Departing infinity velocity    : 3.5365 km/s 
+Arrival infinity velocity      : 3.5025 km/s 
+Total cost (DSMs)              : 0.0081 km/s 
+Total cost                     : 7.0471 km/s 
+Time of flight                 : 0.2067 years 
+
+-------------------------------------------------------------- 
+
+MGA Details : 
+
+Swing-by sequence      : -T--U--A--T-
+
+Departing date         : [2023   5  30  12   0   0]
+Arrival date           : [2023   8  14   0   0   0]
+Time of flight per leg : 25 days 
+                         26.5 days 
+                         24 days 
+
+DSMs magnitudes        : 0 km/s 
+                         0 km/s 
+                         0.0013794 km/s 
+                         0.0067338 km/s 
+
+Infinity velocities    : 
+Titania    - Umbriel        : 3.5365 - 3.9335 km/s 
+Umbriel   - Ariel        : 3.9348 - 3.6113 km/s 
+Ariel   - Titania         : 3.6045 - 3.5025 km/s 
+
+State at departure/arrival (km and km/s) : 
+Titania                          : [234688.2615      367803.0858                0     -4.217443849     -1.385705331                0]  
+Umbriel                         : [-7876.42115     -265883.3616                0      4.490467598     -4.067769601                0]  
+
+Umbriel                         : [-7876.42115     -265883.3616                0      4.558260292     -4.071575817                0]  
+Ariel                         : [-86025.95333      170418.1485                0     -4.254761858     -6.032439714                0]  
+
+Ariel                         : [-86025.95333      170418.1485                0     -4.188416019     -6.012522944                0]  
+Titania                          : [212649.3675     -380969.7318                0       4.12299941     -1.597572858                0]  
+
+Encounter dates        : 
+Mars                   : [2023   5  30  12   0   0]
+Earth                  : [2023   6  24  12   0   0]
+Venus                  : [2023   7  21   0   0   0]
+Mars                   : [2023   8  14   0   0   0]
+
+Transfer types         : 
+Titania    - Umbriel        : inbound - outbound 
+Umbriel   - Ariel        : outbound - inbound 
+Ariel   - Titania         : inbound - outbound 
+
+-------------------------------------------------------------- 
+

@@ -7,7 +7,7 @@ function [muCentral, mupl, rpl, radpl, hmin, Tpl] = constants(idcentral, pl)
 %
 % INPUT
 % - idcentral : ID of the central body
-%               0:  Sun
+%               1:  Sun
 %               30: Earth
 %               5:  Jupiter
 %               6:  Saturn

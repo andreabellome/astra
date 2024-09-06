@@ -1,4 +1,4 @@
-function [path, revs, res] = pathfromPF(OUTPUT, outNumber, rowPF)
+function [path, revs, res] = pathfromPF(OUTPUT, idcentral, outNumber, rowPF)
 
 % DESCRIPTION
 % This function extracts a specific path and the associated parameters 
@@ -22,10 +22,10 @@ function [path, revs, res] = pathfromPF(OUTPUT, outNumber, rowPF)
 % 
 % -------------------------------------------------------------------------
 
-if nargin == 1
+if nargin == 2
     outNumber = 1;
     rowPF     = [];
-elseif nargin == 2
+elseif nargin == 3
     rowPF     = [];
 end
 
@@ -42,7 +42,7 @@ if ~isempty(rowPF)
     
     runOpts = generateDiffRuns(OUTPUT(outNumber).REVSovPF(rowPF,:), res);
     path    = OUTPUT(outNumber).LEGovPF(rowPF,:);
-    path    = ASTRA_wrapPath_DP(path(1:3:end-1), path(2), diff(path(2:3:end)), runOpts);
+    path    = ASTRA_wrapPath_DP(path(1:3:end-1), path(2), diff(path(2:3:end)), runOpts, idcentral);
 else
     resonances = cell2mat({OUTPUT.res}');
     costs      = [ OUTPUT.minCOST ]';

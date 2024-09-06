@@ -225,7 +225,7 @@ end
 
 fprintf(out, 'Encounter dates        : \n');
 for indp = 1:size(path,1)
-    name_pl_1 = planetIdToName(path(indp,7));
+    name_pl_1 = planetIdToName(path(indp,7), idcentral);
     fprintf(out, [name_pl_1 '                : [']); fprintf(out, num2str(floor(mjd20002date(path(indp,8))), '%d')); fprintf(out, ']'); fprintf(out,'\n');    
 end
 

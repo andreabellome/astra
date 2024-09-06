@@ -55,7 +55,7 @@ else
     elseif idcentral == 6
         xlabel('x [R_S]'); ylabel('y [R_S]');
     elseif idcentral == 7
-        xlabel('x [R_S]'); ylabel('y [R_S]');
+        xlabel('x [R_U]'); ylabel('y [R_U]');
     end
 end
 

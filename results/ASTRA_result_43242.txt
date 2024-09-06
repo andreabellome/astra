@@ -1,0 +1,79 @@
+
+          _/_/_/     _/_/_/  _/_/_/_/_/  _/_/_/    _/_/_/ 
+        _/    _/   _/           _/     _/    _/  _/    _/ 
+       _/_/_/_/     _/_/       _/     _/_/_/    _/_/_/_/  
+      _/    _/         _/     _/     _/    _/  _/    _/   
+     _/    _/    _/_/_/      _/     _/    _/  _/    _/    
+
+
+               - ASTRA solution - 
+
+-------------------------------------------------------------- 
+
+Departing body                 : Titania   
+Distance from the central body : 17.2029 Ru 
+
+-------------------------------------------------------------- 
+
+Arrival body                   : Ariel  
+Distance from the central body : 7.5270 Ru 
+Departing C3                   : 12.2959 km^2/s^2 
+Departing infinity velocity    : 3.5065 km/s 
+Arrival infinity velocity      : 4.3993 km/s 
+Total cost (DSMs)              : 0.7066 km/s 
+Total cost                     : 8.6124 km/s 
+Time of flight                 : 0.1561 years 
+
+-------------------------------------------------------------- 
+
+MGA Details : 
+
+Swing-by sequence      : -T--U--A--T--A-
+
+Departing date         : [2023   4  20   0   0   0]
+Arrival date           : [2023   6  16   0   0   0]
+Time of flight per leg : 14.5 days 
+                         13.5 days 
+                         18 days 
+                         11 days 
+
+DSMs magnitudes        : 0 km/s 
+                         0 km/s 
+                         0.11763 km/s 
+                         0.13164 km/s 
+                         0.45735 km/s 
+
+Infinity velocities    : 
+Titania    - Umbriel        : 3.5065 - 4.2005 km/s 
+Umbriel   - Ariel        : 4.0828 - 4.1402 km/s 
+Ariel   - Titania         : 4.0891 - 3.5587 km/s 
+Titania    - Ariel        : 3.2013 - 4.3993 km/s 
+
+State at departure/arrival (km and km/s) : 
+Titania                          : [-435741.6939     -22065.04521                0     -3.187723269     -2.677506862                0]  
+Umbriel                         : [-247719.7048      96906.90309                0     -5.380260232     -2.321090124                0]  
+
+Umbriel                         : [-247719.7048      96906.90309                0     -5.303973479     -2.427238597                0]  
+Ariel                         : [171081.6456     -84698.76357                0     -1.106352831      7.066644616                0]  
+
+Ariel                         : [171081.6456     -84698.76357                0    -0.9632295004      7.197600138                0]  
+Titania                          : [111952.9461     -421692.1008                0      1.671410175      3.974638236                0]  
+
+Titania                          : [111952.9461     -421692.1008                0      1.522696969       3.43517549                0]  
+Ariel                         : [-175250.6116      75696.98225                0     -6.169429728     -3.193598484                0]  
+
+Encounter dates        : 
+Titania                   : [2023   4  20   0   0   0]
+Umbriel                  : [2023   5   4  12   0   0]
+Ariel                  : [2023   5  18   0   0   0]
+Titania                   : [2023   6   5   0   0   0]
+Ariel                  : [2023   6  16   0   0   0]
+
+Transfer types         : 
+Titania    - Umbriel        : outbound - outbound 
+Umbriel   - Ariel        : outbound - inbound 
+Ariel   - Titania         : inbound - inbound 
+Titania    - Ariel        : inbound - outbound 
+
+-------------------------------------------------------------- 
+
