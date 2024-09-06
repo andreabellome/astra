@@ -7,7 +7,7 @@ clearDeleteAdd; % --> !!! ONLY CALL IT ONCE FOR SPEED
 try clear INPUT; catch; end; clc;
 
 % --> sequence to be optimized
-INPUT.idcentral = 6; % --> central body (Sun in this case)
+INPUT.idcentral = 6; % --> central body (Saturn in this case)
 seq = [ 5 4 4 3 ]; res = [ 13 7 2 ];
 
 %%%%%%%%%% multi-rev. options %%%%%%%%%%
