@@ -39,6 +39,14 @@ INPUT.TOF_LIM = [[10 30]; [10 30]; [10 30]; [10 30]];
 tol = 0.1;
 INPUT.vInfLim = [[3.75-tol 3.75+tol]; [4.25-tol 4.25+tol]; [4.2-tol 4.2+tol]; [3.65-tol 3.65+tol]; [4.45-tol 4.45+tol]];   % --> PL1, PL2, PL3, ...   
 
+% --> specify custom objective functions (SODP - INPUT.opt=3 (DATES))
+INPUT.costFunc1 = @(legn, vvf, vinff) costFunction1_DP_custom(legn, vvf, vinff);
+INPUT.costFunc2 = @(legn, vvf, vinff) costFunction2_DP_custom(legn, vvf, vinff);
+
+% % --> specify custom objective functions (SODP)
+% INPUT.costFunc1_MODP = @(legn, vvf, vinff) costFunction1_MODP(legn, vvf, vinff);
+% INPUT.costFunc2_MODP = @(legn, vvf, vinff) costFunction2_MODP(legn, vvf, vinff);
+
 %% --> optimize using ASTRA
 
 % --> launch ASTRA optimization
