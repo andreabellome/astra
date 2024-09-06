@@ -19,8 +19,8 @@ chosenRevs                    = differentRuns_v2(seq, maxrev);                  
 
 %%%%%%%%%% set departing options %%%%%%%%%%
 t0 = date2mjd2000([2023 1 1 0 0 0]); % --> initial date range (MJD2000)
-tf = t0 + 0.5*365.25;                  % --> final date range (MJD2000)
-dt = 0.1;                            % --> step size (days)
+tf = t0 + 1*365.25;                  % --> final date range (MJD2000)
+dt = 2.5;                            % --> step size (days)
 INPUT.depOpts = [t0 tf dt];
 %%%%%%%%%% set departing options %%%%%%%%%%
 
