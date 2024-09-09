@@ -57,7 +57,7 @@ OUTPUT = ASTRA_DP(seq, INPUT);
 close all; clc;
 
 % --> extract path from Pareto front
-[path, revs, res] = pathfromPF(OUTPUT, INPUT.idcentral, 3, 1);
+[path, revs, res] = pathfromPF(OUTPUT, INPUT.idcentral);
 
 % --> plot the Pareto front
 figPareto = plotPareto(OUTPUT(1).ovPF);
@@ -68,3 +68,13 @@ figPareto = plotPareto(OUTPUT(1).ovPF);
 % --> save the output
 generateOutputTXT(path, INPUT.idcentral, './results');
 
+%% --> futher refine around the optimal DV-solution
+
+INPUT.t0days  = 5;   % --> days around current solution departing epoch
+INPUT.tofdays = 5;   % --> days around current solution TOFs
+INPUT.dt      = 0.1;  % --> step size (days)
+INPUT.revs    = revs;
+INPUT.res     = res;
+
+% --> further refine using ASTRA
+OUTPUTref = refineUsingASTRApath(path, INPUT);

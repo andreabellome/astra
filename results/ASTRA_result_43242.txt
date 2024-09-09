@@ -17,12 +17,12 @@ Distance from the central body : 17.2029 Ru
 
 Arrival body                   : Ariel  
 Distance from the central body : 7.5270 Ru 
-Departing C3                   : 12.2959 km^2/s^2 
-Departing infinity velocity    : 3.5065 km/s 
-Arrival infinity velocity      : 4.3993 km/s 
-Total cost (DSMs)              : 0.7066 km/s 
-Total cost                     : 8.6124 km/s 
-Time of flight                 : 0.1561 years 
+Departing C3                   : 13.3954 km^2/s^2 
+Departing infinity velocity    : 3.6600 km/s 
+Arrival infinity velocity      : 4.5166 km/s 
+Total cost (DSMs)              : 0.2930 km/s 
+Total cost                     : 8.4696 km/s 
+Time of flight                 : 0.2218 years 
 
 -------------------------------------------------------------- 
 
@@ -30,49 +30,49 @@ MGA Details :
 
 Swing-by sequence      : -T--U--A--T--A-
 
-Departing date         : [2023   4  20   0   0   0]
-Arrival date           : [2023   6  16   0   0   0]
-Time of flight per leg : 14.5 days 
-                         13.5 days 
+Departing date         : [2023   1  16   0   0   0]
+Arrival date           : [2023   4   7   0   0   0]
+Time of flight per leg : 20 days 
                          18 days 
-                         11 days 
+                         17 days 
+                         26 days 
 
 DSMs magnitudes        : 0 km/s 
                          0 km/s 
-                         0.11763 km/s 
-                         0.13164 km/s 
-                         0.45735 km/s 
+                         0.060982 km/s 
+                         0.063174 km/s 
+                         0.1688 km/s 
 
 Infinity velocities    : 
-Titania    - Umbriel        : 3.5065 - 4.2005 km/s 
-Umbriel   - Ariel        : 4.0828 - 4.1402 km/s 
-Ariel   - Titania         : 4.0891 - 3.5587 km/s 
-Titania    - Ariel        : 3.2013 - 4.3993 km/s 
+Titania    - Umbriel        : 3.66 - 4.219 km/s 
+Umbriel   - Ariel        : 4.159 - 4.1783 km/s 
+Ariel   - Titania         : 4.1178 - 3.5559 km/s 
+Titania    - Ariel        : 3.4509 - 4.5166 km/s 
 
 State at departure/arrival (km and km/s) : 
-Titania                          : [-435741.6939     -22065.04521                0     -3.187723269     -2.677506862                0]  
-Umbriel                         : [-247719.7048      96906.90309                0     -5.380260232     -2.321090124                0]  
+Titania                          : [-103584.8578     -423825.2791                0      1.720342415     -4.040789322                0]  
+Umbriel                         : [225931.3451      140395.9661                0     -5.848214706      1.445675622                0]  
 
-Umbriel                         : [-247719.7048      96906.90309                0     -5.303973479     -2.427238597                0]  
-Ariel                         : [171081.6456     -84698.76357                0     -1.106352831      7.066644616                0]  
+Umbriel                         : [225931.3451      140395.9661                0     -5.754419658      1.421264298                0]  
+Ariel                         : [-159534.3807     -104840.7906                0    -0.2273806918      -7.22630588                0]  
 
-Ariel                         : [171081.6456     -84698.76357                0    -0.9632295004      7.197600138                0]  
-Titania                          : [111952.9461     -421692.1008                0      1.671410175      3.974638236                0]  
+Ariel                         : [-159534.3807     -104840.7906                0    -0.1277464356     -7.252116046                0]  
+Titania                          : [429187.5954       78458.2563                0     -3.821352287      1.965928598                0]  
 
-Titania                          : [111952.9461     -421692.1008                0      1.522696969       3.43517549                0]  
-Ariel                         : [-175250.6116      75696.98225                0     -6.169429728     -3.193598484                0]  
+Titania                          : [429187.5954       78458.2563                0     -3.590897452      1.770615191                0]  
+Ariel                         : [-105787.7988     -158907.9974                0      2.039403543     -6.783240641                0]  
 
 Encounter dates        : 
-Titania                   : [2023   4  20   0   0   0]
-Umbriel                  : [2023   5   4  12   0   0]
-Ariel                  : [2023   5  18   0   0   0]
-Titania                   : [2023   6   5   0   0   0]
-Ariel                  : [2023   6  16   0   0   0]
+Titania                   : [2023   1  16   0   0   0]
+Umbriel                  : [2023   2   5   0   0   0]
+Ariel                  : [2023   2  23   0   0   0]
+Titania                   : [2023   3  12   0   0   0]
+Ariel                  : [2023   4   7   0   0   0]
 
 Transfer types         : 
-Titania    - Umbriel        : outbound - outbound 
-Umbriel   - Ariel        : outbound - inbound 
-Ariel   - Titania         : inbound - inbound 
+Titania    - Umbriel        : outbound - inbound 
+Umbriel   - Ariel        : inbound - outbound 
+Ariel   - Titania         : outbound - inbound 
 Titania    - Ariel        : inbound - outbound 
 
 -------------------------------------------------------------- 
