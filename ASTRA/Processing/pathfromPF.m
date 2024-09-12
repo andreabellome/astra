@@ -22,6 +22,12 @@ function [path, revs, res] = pathfromPF(OUTPUT, idcentral, outNumber, rowPF)
 % 
 % -------------------------------------------------------------------------
 
+if nargin == 1
+    idcentral = 1;
+    outNumber = 1;
+    rowPF     = [];
+end
+
 if nargin == 2
     outNumber = 1;
     rowPF     = [];
