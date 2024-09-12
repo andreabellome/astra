@@ -1,0 +1,111 @@
+
+          _/_/_/     _/_/_/  _/_/_/_/_/  _/_/_/    _/_/_/ 
+        _/    _/   _/           _/     _/    _/  _/    _/ 
+       _/_/_/_/     _/_/       _/     _/_/_/    _/_/_/_/  
+      _/    _/         _/     _/     _/    _/  _/    _/   
+     _/    _/    _/_/_/      _/     _/    _/  _/    _/    
+
+
+               - ASTRA solution - 
+
+-------------------------------------------------------------- 
+
+Departing body                 : Titania   
+Distance from the central body : 17.2029 Ru 
+
+-------------------------------------------------------------- 
+
+Arrival body                   : Miranda
+Distance from the central body : 5.1218 Ru 
+Departing C3                   : 13.9861 km^2/s^2 
+Departing infinity velocity    : 3.7398 km/s 
+Arrival infinity velocity      : 4.4411 km/s 
+Total cost (DSMs)              : 0.7913 km/s 
+Total cost                     : 8.9722 km/s 
+Time of flight                 : 0.6023 years 
+
+-------------------------------------------------------------- 
+
+MGA Details : 
+
+Swing-by sequence      : -T--U--A--T--A--T--U--O-M-
+
+Departing date         : [2023   7   7  12   0   0]
+Arrival date           : [2024   2  12  12   0   0]
+Time of flight per leg : 25 days 
+                         34 days 
+                         28 days 
+                         39 days 
+                         16 days 
+                         14 days 
+                         38 days 
+                         26 days 
+
+DSMs magnitudes        : 0 km/s 
+                         0 km/s 
+                         0.041223 km/s 
+                         0.062262 km/s 
+                         0.22437 km/s 
+                         0.29573 km/s 
+                         0.10641 km/s 
+                         0.023867 km/s 
+                         0.037434 km/s 
+
+Infinity velocities    : 
+Titania    - Umbriel        : 3.7398 - 4.2429 km/s 
+Umbriel   - Ariel        : 4.2841 - 4.1551 km/s 
+Ariel   - Titania         : 4.0929 - 3.7322 km/s 
+Titania    - Ariel        : 3.9565 - 4.3868 km/s 
+Ariel   - Titania         : 4.0919 - 3.4972 km/s 
+Titania    - Umbriel        : 3.4825 - 4.3167 km/s 
+Umbriel   - Oberon      : 4.3406 - 2.9274 km/s 
+Oberon - Miranda      : 2.89 - 4.4411 km/s 
+
+State at departure/arrival (km and km/s) : 
+Titania                          : [-431336.3141     -65625.25553                0     -3.169042565     -3.191871367                0]  
+Umbriel                         : [227624.0963     -137634.5552                0     -1.349711923      5.950898102                0]  
+
+Umbriel                         : [227624.0963     -137634.5552                0     -1.357856531      6.023663956                0]  
+Ariel                         : [-139555.4032      130257.8191                0     -7.227709469     -1.739648959                0]  
+
+Ariel                         : [-139555.4032      130257.8191                0     -7.168770804      -1.76340591                0]  
+Titania                          : [-434024.9142     -44497.90883                0     -3.317254204      -3.05856209                0]  
+
+Titania                          : [-434024.9142     -44497.90883                0     -3.541135535     -3.038417827                0]  
+Ariel                         : [187186.8209     -37468.70778                0     -3.070680935      6.817949846                0]  
+
+Ariel                         : [187186.8209     -37468.70778                0     -2.816676166      6.646775196                0]  
+Titania                          : [217803.656      -378046.634                0     0.5936335525      4.197497659                0]  
+
+Titania                          : [217803.656      -378046.634                0     0.4346018434      3.990144512                0]  
+Umbriel                         : [-264012.5576     -32455.65325                0     -3.739530526     -4.373794728                0]  
+
+Umbriel                         : [-264012.5576     -32455.65325                0     -3.765208568     -4.405385678                0]  
+Oberon                       : [201917.1783      -547343.597                0     0.7780027266      3.046001489                0]  
+
+Oberon                       : [201917.1783      -547343.597                0     0.7489819767      2.955678381                0]  
+Miranda                       : [126503.2556      29511.63023                0     -5.957893639      6.568412565                0]  
+
+Encounter dates        : 
+Titania                   : [2023   7   7  12   0   0]
+Umbriel                  : [2023   8   1  12   0   0]
+Ariel                  : [2023   9   4  12   0   0]
+Titania                   : [2023  10   2  12   0   0]
+Ariel                  : [2023  11  10  12   0   0]
+Titania                   : [2023  11  26  12   0   0]
+Umbriel                  : [2023  12  10  12   0   0]
+Oberon                : [2024   1  17  12   0   0]
+Miranda                : [2024   2  12  12   0   0]
+
+Transfer types         : 
+Titania    - Umbriel        : outbound - inbound 
+Umbriel   - Ariel        : inbound - outbound 
+Ariel   - Titania         : outbound - outbound 
+Titania    - Ariel        : outbound - inbound 
+Ariel   - Titania         : inbound - inbound 
+Titania    - Umbriel        : inbound - outbound 
+Umbriel   - Oberon      : outbound - inbound 
+Oberon - Miranda      : inbound - inbound 
+
+-------------------------------------------------------------- 
+
