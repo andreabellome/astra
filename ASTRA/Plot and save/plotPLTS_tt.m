@@ -1,4 +1,4 @@
-function [fig] = plotPLTS_tt(pl, t0, tend, idcentral, holdon)
+function [fig] = plotPLTS_tt(pl, t0, tend, idcentral, holdon, colors, names, linewidth)
 
 % DESCRIPTION
 % This function plots the orbits of specified planets over a given time range 
@@ -6,10 +6,13 @@ function [fig] = plotPLTS_tt(pl, t0, tend, idcentral, holdon)
 % It also plots the Sun's position for reference.
 % 
 % INPUT
-% - pl    : Vector of planet IDs to plot.
-% - t0    : Start time for plotting (in days).
-% - tend  : End time for plotting (in days).
-% - holdon: Optional flag to determine whether to hold on to the current figure (1) or open a new one (0).
+% - pl     : Vector of planet IDs to plot.
+% - t0     : Start time for plotting (in days).
+% - tend   : End time for plotting (in days).
+% - holdon : Optional flag to determine whether to hold on to the current figure (1) or open a new one (0).
+% - colors : RGB triplet for the plot of the orbits. Default is black
+% - names  : cell with names of the planets. Default is empty. This is used
+% only for putting legend to the plot.
 % 
 % OUTPUT
 % - fig   : Handle to the figure created or used for plotting.
@@ -26,15 +29,56 @@ function [fig] = plotPLTS_tt(pl, t0, tend, idcentral, holdon)
 
 if nargin == 3 % --> open a new figure
     idcentral = 1;
-    fig = figure('Color', [1 1 1]);
+    fig       = figure('Color', [1 1 1]);
+
+    colors    = zeros( length(pl), 3 );
+    names     = {};
+    linewidth = 0.5;
+
 elseif nargin == 4
     fig = figure('Color', [1 1 1]);
-else % --> hold on with the current figure
+
+    colors    = zeros( length(pl), 3 );
+    names     = {};
+    linewidth = 0.5;
+
+elseif nargin == 5 % --> hold on with the current figure
     if holdon == 0
         fig = figure('Color', [1 1 1]);
     else
         fig = gcf;
     end
+
+    colors    = zeros( length(pl), 3 );
+    names     = {};
+    linewidth = 0.5;
+
+elseif nargin == 6
+    if holdon == 0
+        fig = figure('Color', [1 1 1]);
+    else
+        fig = gcf;
+    end
+
+    names     = {};
+    linewidth = 0.5;
+elseif nargin == 7
+    
+    if holdon == 0
+        fig = figure('Color', [1 1 1]);
+    else
+        fig = gcf;
+    end
+    linewidth = 0.5;
+
+elseif nargin == 8
+
+    if holdon == 0
+        fig = figure('Color', [1 1 1]);
+    else
+        fig = gcf;
+    end
+
 end
 
 if idcentral == 1
@@ -43,6 +87,7 @@ else
     tt = linspace(t0, tend, 5e3);
 end
 
+fig.Color = [ 1 1 1 ];
 axis equal; grid on;
 
 if idcentral == 1
@@ -67,8 +112,13 @@ for indi = 1:length(pl)
         [rrpl(indt,:), vvpl(indt,:)] = EphSS_cartesian(pl(indi), tt(indt), idcentral);
     end
     
-    hold on;
-    plot3(rrpl(:,1)./AU, rrpl(:,2)./AU, rrpl(:,3)./AU, 'k', 'linewidth', 0.5, 'handlevisibility', 'off');
+    if isempty(names)
+        hold on;
+        plot3(rrpl(:,1)./AU, rrpl(:,2)./AU, rrpl(:,3)./AU, 'Color', colors(indi,:), 'linewidth', linewidth, 'handlevisibility', 'off');
+    else
+        hold on;
+        plot3(rrpl(:,1)./AU, rrpl(:,2)./AU, rrpl(:,3)./AU, 'Color', colors(indi,:), 'linewidth', linewidth, 'DisplayName', names{indi});
+    end
 
 end
 

@@ -23,6 +23,7 @@ st = 1;
 %           - m0      : initial mass [kg]
 %           - mf      : final mass [kg]
 %           - tof     : time of flight [days]
+%           - DV      : DV of the low-thrust transfer [km/s]
 %           - param   : structure with relevant parameters for the solution
 %           - success : boolean to check if the solver has succeeded or not
 % 
@@ -98,10 +99,11 @@ end
 
 % --> start: STEP 0.1 --> then try random guess and rho = 1 and fuel-optimal
 if max(abs(Fsol)) > param.tol
+    param.rho = 1;
     pm = param;
     pm.fsolveoptions.MaxFunctionEvaluations = 5e3; % --> so not to stress too much in difficult cases
     fprintf( "Computing smooth profile Rho: %f, at iteration: %d \n", [param.rho, 0] );
-    initiallamba                = [ 0.5*rand(1,6), 1];
+    initiallamba                = [ 1*rand(1,6), 1];
     [initiallamba, Fsol, flag, OUTPUT] = ...
         fsolve(@(lambda0) propagateState_vA(lambda0, @propagateFopt_MEXIFY_mex, param), ...
         initiallamba, pm.fsolveoptions);
@@ -210,6 +212,7 @@ if max(abs(Fsol)) <= param.tol % flag >= 0
         LTsol.m0       = param.MU;
         LTsol.mf       = NaN;
         LTsol.tof      = ((param.tEnd - param.tStart)*param.TU)/86400;
+        LTsol.DV       = NaN;
         LTsol.param    = param;
         LTsol.success  = false;
     else
@@ -235,6 +238,7 @@ if max(abs(Fsol)) <= param.tol % flag >= 0
         LTsol.m0       = param.MU;
         LTsol.mf       = mass(end);
         LTsol.tof      = ((param.tEnd - param.tStart)*param.TU)/86400;
+        LTsol.DV       = param.Isp*param.g0*log( param.MU/LTsol.mf )/1000;
         LTsol.param    = param;
         LTsol.success  = true;
         
@@ -270,6 +274,7 @@ else
     LTsol.m0       = param.MU;
     LTsol.mf       = NaN;
     LTsol.tof      = ((param.tEnd - param.tStart)*param.TU)/86400;
+    LTsol.DV       = NaN;
     LTsol.param    = param;
     LTsol.success  = false;
 
