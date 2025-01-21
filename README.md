@@ -25,7 +25,9 @@ Lighter requirements will be required in future releases, as ASTRA will be able 
 To use the repository, one finds different test scripts. These are listed here:
 
 1. Test script 1: [st1_astra_main.m](/st1_astra_main.m), to optimize MGA missions. Refer to [this section](#Section_1).
-2. Test script 2: [st2_astra_main_saturn_system.m](/st2_astra_main_saturn_system.m), to optimized MGA missions using custom constraints and different planetary systems. Refer to [this section](#Section_2).
+2. Test script 2: [st2_astra_main_saturn_system.m](/st2_astra_main_saturn_system.m), to optimize MGA missions using custom constraints and different planetary systems. Refer to [this section](#Section_2).
+
+2. Test scripts 3-4: [st2_astra_main_uranus_system.m](/st2_astra_main_uranus_system.m) and [st21_astra_main_uranus_system_long_chain.m](./st21_astra_main_uranus_system_long_chain.m), to optimize MGA missions using custom constraints and Uranus planetary systems.
 
 ### Test script 1: Run DP optimization with ASTRA  <a id="Section_1"></a> 
 

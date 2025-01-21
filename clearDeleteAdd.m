@@ -69,5 +69,48 @@ end
 cd(currFolder);
 clear VI; clear VF; clear dv; clear alpha; clear alpha_A; clear currFolder; clear newFolder; clear ind;
 
+%%
+
+% --> mexify also the low-thrust propagation functions
+currFolder = pwd;
+newFolder = [ pwd '/ASTRA/Low thrust/Propagation_optimal_control' ];
+
+disp( 'Checking propagation functions for low-thrust module...' );
+try
+    propagateFopt_MEXIFY_mex(ones(1,1), ones(14,1), ones(1,5));
+    disp( 'Fuel-optimal propagation mex function available! All good.' );
+catch
+    cd(newFolder);
+
+    disp( 'No fuel-optimal propagation mex function available... ASTRA creates it!!' );
+    disp( 'Mexifying fuel-optimal propagation function...' );
+
+    codegen propagateFopt_MEXIFY -args {ones(1,1), ones(14,1), ones(1,5)};
+
+    cd(currFolder);
+    disp( 'Done!!' );
+end
+
+try
+    
+    propagateEopt_MEXIFY_mex(ones(1,1), ones(14,1), ones(1,5));
+    disp( 'Energy-optimal propagation mex function available! All good.' );
+catch
+    cd(newFolder);
+    
+    disp( 'No energy-optimal propagation mex function available... ASTRA creates it!!' );
+    disp( 'Mexifying energy-optimal propagation function...' );
+
+    codegen propagateEopt_MEXIFY -args {ones(1,1), ones(14,1), ones(1,5)};
+
+    cd(currFolder);
+    disp( 'Done!!' );
+end
+
+
+
+%%
+
 mu = 132724487690;
 AU = 149597870.7;
+
