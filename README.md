@@ -26,8 +26,8 @@ To use the repository, one finds different test scripts. These are listed here:
 
 1. Test script 1: [st1_astra_main.m](/st1_astra_main.m), to optimize MGA missions. Refer to [this section](#Section_1).
 2. Test script 2: [st2_astra_main_saturn_system.m](/st2_astra_main_saturn_system.m), to optimize MGA missions using custom constraints and different planetary systems. Refer to [this section](#Section_2).
-
-2. Test scripts 3-4: [st2_astra_main_uranus_system.m](/st2_astra_main_uranus_system.m) and [st21_astra_main_uranus_system_long_chain.m](./st21_astra_main_uranus_system_long_chain.m), to optimize MGA missions using custom constraints and Uranus planetary systems.
+3. Test scripts 3-4: [st2_astra_main_uranus_system.m](/st2_astra_main_uranus_system.m) and [st21_astra_main_uranus_system_long_chain.m](./st21_astra_main_uranus_system_long_chain.m), to optimize MGA missions using custom constraints and Uranus planetary systems.
+4. Test script 5: [low_thrust_trajectories.m](./low_thrust_trajectories.m). This contains a number of test cases for low-thrust trajectories. Please, refer to [this section](#Section_3).
 
 ### Test script 1: Run DP optimization with ASTRA  <a id="Section_1"></a> 
 
@@ -372,6 +372,83 @@ Rhea    - Dione        : outbound - outbound
 -------------------------------------------------------------- 
 ```
 
+### Test script 5: Low-thrust trajectories <a id="Section_3"></a> 
+
+[This script](./low_thrust_trajectories.m) provides a number of test cases for the solution of low-thrust trajectories using ASTRA. In particular, at the moment ASTRA module [Low thrust](./ASTRA/Low%20thrust/) can solve the following optimal control problems
+- **Energy-optimal** time-fixed optimal control problem using indirect optimization.
+- **Fuel-optimal** time-fixed optimal control problem using indirect optimization (energy-optimal solution is used as first guess).
+
+The script is well commented and should be intuitive to use.
+
+Please note that to run some of the test cases in the script one needs a ```csv``` file containing parameters of transfers (i.e., initial and final position and velocity vectors, initial mass and time of flight) that can be found in the ```fuel_optimal_db.csv``` provided by ESA on [Zenodo](https://data.niaid.nih.gov/resources?id=zenodo_10972837).
+
+Below, one reports the set-up and results for the Earth-Dionysus case (TEST CASE 5 from the [script](./low_thrust_trajectories.m)).
+
+One loads the parameters:
+
+```matlab
+% --> parameters
+idcentral = 1;        % --> 1) central body is the Sun
+Tmax      = 0.32;     % --> max. thrust                       [N]
+Isp       = 3000;     % --> specific impulse                  [s]
+m0        = 4000;     % --> initial mass                      [kg]          
+g0        = 9.80665;  % --> Earth acceleration at sea level   [m/s]
+
+% --> initialise the parameters
+param     = writeParamLT( Tmax, Isp, m0, g0, idcentral, true );
+```
+
+And selects initial and final states (expressed in Mean Equinoctial Elements (MEE)), as well as the time of flight. This is taken from [[3]](#3).
+
+```matlab
+% --> Earth-to-Dionysus
+tStart    = 0;
+tEnd      = 3534; % --> please note that in this case the tof is in [days] as this is already scaled!!!
+initState = [ 0.999316, -0.004023, 0.015873, -1.623e-5, 1.667e-5, 1.59491 ];
+finState  = [ 1.555261 0.152514 -0.519189 0.016353 0.117461 2.36696 ];
+```
+
+One finally sets-up the remaining parameters for the search (e.g., the smoothing parameter -- see again Ref. [[3]](#3)) and the number of revolutions:
+
+```matlab
+param.tStart = tStart;
+param.tEnd   = tEnd;
+param.x0     = initState;
+param.xf     = finState;
+
+param.plot    = true;
+param.rhoLim  = 0.0001;
+param.rho     = 1;
+param.gamma   = 0.1;
+param.iterMax = 5;
+param.tol     = 1e-8;
+
+while param.xf(end) < param.x0(end)
+    param.xf(end) = param.xf(end) + 2*pi;
+end
+
+Nrev            = 5;
+param.xf(end)   = param.xf(end) + 2*Nrev*pi;
+NrevCheck       = floor(( param.xf(end) - param.x0(end) )/(2*pi));
+```
+
+The solution to the fuel-optimal time-fixed control problem is provided by calling:
+
+```matlab
+% --> solve the problem
+LTsol = wrapSolveFopt( param );
+```
+
+The following lines plot the results, whose figures are reported below.
+
+```matlab
+% --> plot the solution
+transfer                      = LTsol.transfer;
+[figTRAJ, figMASS, figTHRmag] = plotLT( transfer, param );
+```
+
+**INCLUDE IMAGES**
+
 ## Contributing
 
 Currently, only invited developers can contribute to the repository.
@@ -389,3 +466,7 @@ https://dspace.lib.cranfield.ac.uk/items/711f45c8-e6e4-4f27-909d-94170df400e3
 <a id="2">[2]</a> 
 Bellome, A., et al. "Multiobjective design of gravity-assist trajectories via graph transcription and dynamic programming." Journal of Spacecraft and Rockets 60.5 (2023): 1381-1399.
 https://doi.org/10.2514/1.A35472.
+
+<a id="3">[3]</a>
+Junkins, John L., and Ehsan Taheri. "Exploration of alternative state vector choices for low-thrust trajectory optimization." Journal of Guidance, Control, and Dynamics 42.1 (2019): 47-64.
+https://doi.org/10.2514/1.G003686
