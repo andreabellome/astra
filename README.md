@@ -447,7 +447,14 @@ transfer                      = LTsol.transfer;
 [figTRAJ, figMASS, figTHRmag] = plotLT( transfer, param );
 ```
 
-**INCLUDE IMAGES**
+The following images show the optimal trajectory from Earth to Dionysus as well as the thrust profile and the mass evolution over time. 
+
+<p align="center">
+  <img src="./results/Images/earth_dionysus_traj.png" alt="Earth-Dionysus-traj" width="500"/>
+</p>
+
+| ![Earth-Dionysus-traj](./results/Images/earth_dionysus_thrust.png) | ![Pareto-front](./results/Images/earth_dionysus_mass.png) |
+|:--------------------------------------------:|:--------------------------------------------:|
 
 ## Contributing
 
