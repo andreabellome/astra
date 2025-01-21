@@ -39,6 +39,9 @@ function [muCentral, mupl, rpl, radpl, hmin, Tpl] = constants(idcentral, pl)
 if idcentral == 1
     muCentral                      = 132724487690;
     [mupl, radpl, rpl, ~, ~, hmin] = planetConstants(pl);
+elseif idcentral == 3
+    [mupl, radpl, rpl, ~, ~, hmin] = planetConstants(idcentral);
+    muCentral = mupl;
 elseif idcentral == 5
     muCentral                      = planetConstants(idcentral);
     [rpl, mupl, radpl, hmin]       = jupMoonsConstants(pl);

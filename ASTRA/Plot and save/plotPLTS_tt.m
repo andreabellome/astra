@@ -74,8 +74,8 @@ end
 
 plot3(0, 0, 0, 'o', 'markersize', 10, 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Yellow', 'handlevisibility', 'off');
 
-labelsDim = 16;
-axesDim   = 16;
+labelsDim = 12;
+axesDim   = 12;
 set(findall(gcf,'-property','FontSize'), 'FontSize',labelsDim)
 h = findall(gcf, 'type', 'text');
 set(h, 'fontsize', axesDim);
