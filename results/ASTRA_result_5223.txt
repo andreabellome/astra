@@ -1,0 +1,71 @@
+
+          _/_/_/     _/_/_/  _/_/_/_/_/  _/_/_/    _/_/_/ 
+        _/    _/   _/           _/     _/    _/  _/    _/ 
+       _/_/_/_/     _/_/       _/     _/_/_/    _/_/_/_/  
+      _/    _/         _/     _/     _/    _/  _/    _/   
+     _/    _/    _/_/_/      _/     _/    _/  _/    _/    
+
+
+               - ASTRA solution - 
+
+-------------------------------------------------------------- 
+
+Departing body                 : Oberon
+Distance from the central body : 23.0029 Ru 
+
+-------------------------------------------------------------- 
+
+Arrival body                   : Umbriel  
+Distance from the central body : 10.4881 Ru 
+Departing C3                   : 3.4222 km^2/s^2 
+Departing infinity velocity    : 1.8499 km/s 
+Arrival infinity velocity      : 2.5364 km/s 
+Total cost (DSMs)              : 0.0169 km/s 
+Total cost                     : 4.4033 km/s 
+Time of flight                 : 0.1533 years 
+
+-------------------------------------------------------------- 
+
+MGA Details : 
+
+Swing-by sequence      : -O-A--A--U-
+
+Departing date         : [2047   6  23   0  59  59]
+Arrival date           : [2047   8  18   0  59  59]
+Time of flight per leg : 8 days 
+                         10 days 
+                         38 days 
+
+DSMs magnitudes        : 0 km/s 
+                         0 km/s 
+                         0.0041701 km/s 
+                         0.012766 km/s 
+
+Infinity velocities    : 
+Oberon - Ariel        : 1.8499 - 1.4794 km/s 
+Ariel   - Ariel        : 1.4835 - 1.4835 km/s 
+Ariel   - Umbriel        : 1.4708 - 2.5364 km/s 
+
+State at departure/arrival (km and km/s) : 
+Oberon                       : [-564758.7919      146297.8705                0     -2.153941086     -1.800646502                0]  
+Ariel                         : [169043.0125      88697.63204                0     -3.084162094      6.261661143                0]  
+
+Ariel                         : [169043.0125      88697.63204                0     -3.007424444      6.292743617                0]  
+Ariel                         : [183227.5582       53576.7854                0     -2.206263451      6.616315107                0]  
+
+Ariel                         : [183227.5582       53576.7854                0     -2.274362163      6.565572531                0]  
+Umbriel                         : [161627.2485     -211264.3664                0      2.426405649      5.025351797                0]  
+
+Encounter dates        : 
+Oberon                : [2047   6  23   0  59  59]
+Ariel                  : [2047   7   1   0  59  59]
+Ariel                  : [2047   7  11   0  59  59]
+Umbriel                  : [2047   8  18   0  59  59]
+
+Transfer types         : 
+Oberon - Ariel        : outbound - outbound 
+Ariel   - Ariel        : outbound - inbound 
+Ariel   - Umbriel        : inbound - inbound 
+
+-------------------------------------------------------------- 
+
