@@ -380,7 +380,7 @@ Rhea    - Dione        : outbound - outbound
 
 The script is well commented and should be intuitive to use.
 
-Please note that to run some of the test cases in the script one needs a ```csv``` file containing parameters of transfers (i.e., initial and final position and velocity vectors, initial mass and time of flight) that can be found in the ```fuel_optimal_db.csv``` provided by ESA on [Zenodo](https://data.niaid.nih.gov/resources?id=zenodo_10972837).
+Please note that to run some of the test cases in the script one needs a specific file called ```fuel_optimal_db.csv```, containing parameters of transfers (i.e., initial and final position and velocity vectors, initial mass and time of flight). This can be found in ESA [Zenodo](https://data.niaid.nih.gov/resources?id=zenodo_10972837) repository.
 
 Below, one reports the set-up and results for the Earth-Dionysus case (TEST CASE 5 from the [script](./low_thrust_trajectories.m)).
 
