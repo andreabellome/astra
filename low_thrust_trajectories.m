@@ -224,7 +224,7 @@ param     = writeParamLT( Tmax, Isp, m0, g0, idcentral, true );
 
 % --> Earth-to-Dionysus
 tStart    = 0;
-tEnd      = 3534;
+tEnd      = 3534; % --> please note that in this case the tof is in [days] as this is already scaled!!!
 initState = [ 0.999316, -0.004023, 0.015873, -1.623e-5, 1.667e-5, 1.59491 ];
 finState  = [ 1.555261 0.152514 -0.519189 0.016353 0.117461 2.36696 ];
 
@@ -243,12 +243,12 @@ param.tol     = 1e-8;
 while param.xf(end) < param.x0(end)
     param.xf(end) = param.xf(end) + 2*pi;
 end
-NrevCheckBefore = floor(( param.xf(end) - param.x0(end) )/(2*pi));
 
 Nrev            = 5;
 param.xf(end)   = param.xf(end) + 2*Nrev*pi;
 NrevCheck       = floor(( param.xf(end) - param.x0(end) )/(2*pi));
 
+% --> solve the problem
 LTsol = wrapSolveFopt( param );
 
 % --> if you do not want to wait... UNCOMMENT the following code with the
@@ -276,7 +276,7 @@ param     = writeParamLT( Tmax, Isp, m0, g0, idcentral, true );
 
 % --> Earth-to-Tempel
 tStart    = 0;
-tEnd      = 420;
+tEnd      = 420; % --> please note that in this case the tof is in [days] as this is already scaled!!!
 initState = [ 1.000064, -0.003764, 0.015791, -1.211e-5, -4.514e-6, 5.51356 ];
 finState  = [2.328616, -0.191235, -0.472341,  0.033222,  0.085426,  4.96395];
 
