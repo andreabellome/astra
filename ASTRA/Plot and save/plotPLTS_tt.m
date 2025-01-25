@@ -1,4 +1,4 @@
-function [fig] = plotPLTS_tt(pl, t0, tend, idcentral, holdon, colors, names, linewidth)
+function [fig] = plotPLTS_tt(pl, t0, tend, idcentral, holdon, colors, names, linewidth, style)
 
 % DESCRIPTION
 % This function plots the orbits of specified planets over a given time range 
@@ -34,6 +34,7 @@ if nargin == 3 % --> open a new figure
     colors    = zeros( length(pl), 3 );
     names     = {};
     linewidth = 0.5;
+    style     = '-';
 
 elseif nargin == 4
     fig = figure('Color', [1 1 1]);
@@ -41,6 +42,7 @@ elseif nargin == 4
     colors    = zeros( length(pl), 3 );
     names     = {};
     linewidth = 0.5;
+    style     = '-';
 
 elseif nargin == 5 % --> hold on with the current figure
     if holdon == 0
@@ -52,6 +54,7 @@ elseif nargin == 5 % --> hold on with the current figure
     colors    = zeros( length(pl), 3 );
     names     = {};
     linewidth = 0.5;
+    style     = '-';
 
 elseif nargin == 6
     if holdon == 0
@@ -62,6 +65,8 @@ elseif nargin == 6
 
     names     = {};
     linewidth = 0.5;
+    style     = '-';
+
 elseif nargin == 7
     
     if holdon == 0
@@ -70,6 +75,7 @@ elseif nargin == 7
         fig = gcf;
     end
     linewidth = 0.5;
+    style     = '-';
 
 elseif nargin == 8
 
@@ -78,6 +84,15 @@ elseif nargin == 8
     else
         fig = gcf;
     end
+    style     = '-';
+elseif nargin == 9
+
+    if holdon == 0
+        fig = figure('Color', [1 1 1]);
+    else
+        fig = gcf;
+    end
+
 
 end
 
@@ -114,15 +129,22 @@ for indi = 1:length(pl)
     
     if isempty(names)
         hold on;
-        plot3(rrpl(:,1)./AU, rrpl(:,2)./AU, rrpl(:,3)./AU, 'Color', colors(indi,:), 'linewidth', linewidth, 'handlevisibility', 'off');
+        plot3(rrpl(:,1)./AU, rrpl(:,2)./AU, rrpl(:,3)./AU, style, ...
+            'Color', colors(indi,:), 'linewidth', linewidth,...
+            'handlevisibility', 'off');
     else
         hold on;
-        plot3(rrpl(:,1)./AU, rrpl(:,2)./AU, rrpl(:,3)./AU, 'Color', colors(indi,:), 'linewidth', linewidth, 'DisplayName', names{indi});
+        plot3(rrpl(:,1)./AU, rrpl(:,2)./AU, rrpl(:,3)./AU, style, ...
+            'Color', colors(indi,:), 'linewidth', linewidth,...
+            'DisplayName', names{indi});
     end
 
 end
 
-plot3(0, 0, 0, 'o', 'markersize', 10, 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Yellow', 'handlevisibility', 'off');
+plot3(0, 0, 0, 'o', 'markersize', 10, ...
+    'MarkerEdgeColor', 'Black',...
+    'MarkerFaceColor', 'Yellow',...
+    'handlevisibility', 'off');
 
 labelsDim = 12;
 axesDim   = 12;

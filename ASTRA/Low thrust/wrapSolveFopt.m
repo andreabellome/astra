@@ -29,6 +29,11 @@ st = 1;
 % 
 % -------------------------------------------------------------------------
 
+if param.plot == true
+    figure('Color', [1 1 1]);
+    hold on; grid on;
+end
+
 % --> start: STEP 0 --> first try energy-optimal guess with zero guess
 fprintf( "Computing energy-optimal profile \n" );
 initiallamba                = [zeros(1,7)];
