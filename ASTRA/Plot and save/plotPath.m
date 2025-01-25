@@ -1,4 +1,4 @@
-function [figECI, STRUC, figSYN, figRSC, figVSC] = plotPath(path, idcentral, holdon, color, firstL)
+function [figECI, STRUC, figSYN, figRSC, figVSC] = plotPath(path, idcentral, customEphemerides, holdon, color, firstL)
 
 % DESCRIPTION
 % This function plots the trajectory of a spacecraft and the orbits of 
@@ -13,6 +13,7 @@ function [figECI, STRUC, figSYN, figRSC, figVSC] = plotPath(path, idcentral, hol
 %               spacecraft at a given time. Columns represent position and 
 %               velocity in ECI frame, as well as time and planet IDs.
 % - idcentral : ID of the central body. See constants.m
+% - customEphemerides : user-defined custom ephemerides. See EphSS_cartesian.m for reference
 % - holdon    : optional flag to determine if the current figure should be 
 %               held for additional plotting. Default is 0 (create new figure).
 % - color     : optional color for the trajectory plot. Default is 'b' (blue).
@@ -43,17 +44,23 @@ function [figECI, STRUC, figSYN, figRSC, figVSC] = plotPath(path, idcentral, hol
 
 if nargin == 1
     idcentral = 1;
+    customEphemerides = @EphSS_cartesian;
     holdon = 0;   % --> open new figure
     color  = 'b'; % --> blue trajectory
     firstL = 1;   % --> highlight departing condition
 elseif nargin == 2
+    customEphemerides = @EphSS_cartesian;
     holdon = 0;   % --> open new figure
     color  = 'b'; % --> blue trajectory
     firstL = 1;   % --> highlight departing condition
 elseif nargin == 3
+    holdon = 0;
     color = 'b';
     firstL = 1;
 elseif nargin == 4
+    color = 'b';
+    firstL = 1;
+elseif nargin == 5
     firstL = 1;
 end
 
@@ -71,7 +78,7 @@ DTS  = [0; diff(TFBS)];
 %%%%% plot planets orbits %%%%%
 t0     = path(1,8);
 tend   = path(end,8);
-figECI = plotPLTS_tt(PLTS, t0, tend, idcentral, holdon);
+figECI = plotPLTS_tt(PLTS, t0, tend, idcentral, customEphemerides, holdon);
 %%%%% plot planets orbits %%%%%
 
 %%%%% plot trajectory %%%%%
@@ -134,7 +141,7 @@ for indj = 1:length(PLTS)
     pl               = PLTS(indj);
     PLANETS(indj).pl = pl;
     for indi = 1:length(TPLTS)
-        [rr, vv]                           = EphSS_cartesian(pl, TPLTS(indi), idcentral);
+        [rr, vv]                           = customEphemerides(pl, TPLTS(indi), idcentral);
         PLANETS(indj).statesPL_ECI(indi,:) = [rr, vv];
         PLANETS(indj).Tpl(indi,:)          = TPLTS(indi);
     end
@@ -156,8 +163,8 @@ STRUC.EpochsScFB = path(:,8);
 STRUC.Planets    = PLANETS;
 
 % --> from ECLIPTIC J2000 to SUN-EARTH SYNODIC reference frame
-[statesSC_SYN] = wrapECI2Synodic_SE(STRUC.StatesSC, STRUC.EpochsSC, idcentral);
-[statesPL_SYN] = wrapECI2Synodic_SE(STRUC.SatesScFB, STRUC.EpochsScFB, idcentral);
+[statesSC_SYN] = wrapECI2Synodic_SE(STRUC.StatesSC, STRUC.EpochsSC, idcentral, customEphemerides);
+[statesPL_SYN] = wrapECI2Synodic_SE(STRUC.SatesScFB, STRUC.EpochsScFB, idcentral, customEphemerides);
 
 STRUC.StatesSC_syn   = statesSC_SYN;
 STRUC.StatesScFB_syn = statesPL_SYN;

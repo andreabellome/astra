@@ -1,4 +1,4 @@
-function struc = postProcessPathASTRA_lowThrust(path, vdep, varr, idcentral)
+function struc = postProcessPathASTRA_lowThrust(path, vdep, varr, idcentral, customEphemerides)
 
 % DESCRIPTION
 % This function processes the output of a low-thrust trajectory optimization 
@@ -23,12 +23,14 @@ if nargin == 1
     vdep = 0;
     varr = 0;
     idcentral = 1;
+    customEphemerides = @EphSS_cartesian;
 elseif nargin == 2
     if isempty(vdep)
         vdep = 0;
     end
     varr = 0;
     idcentral = 1;
+    customEphemerides = @EphSS_cartesian;
 elseif nargin == 3
     if isempty(vdep)
         vdep = 0;
@@ -39,7 +41,17 @@ elseif nargin == 3
     end
 
     idcentral = 1;
+    customEphemerides = @EphSS_cartesian;
 elseif nargin == 4
+    if isempty(vdep)
+        vdep = 0;
+    end
+    
+    if isempty(varr)
+        varr = 0;
+    end
+    customEphemerides = @EphSS_cartesian;
+elseif nargin == 5
     if isempty(vdep)
         vdep = 0;
     end
@@ -56,7 +68,7 @@ epochs                  = [path(1:end-1,8) path(2:end,8) ];
 % --> start: first leg of the transfer
 p0           = legs(1,1);
 t0           = epochs(1,1);
-[~, vvga]    = EphSS_cartesian(p0, t0, idcentral);
+[~, vvga]    = customEphemerides(p0, t0, idcentral);
 if norm(vvga - vvd(1,:)) > vdep % --> DSM on the first leg
     vvinfPM = vvd(1,:) - vvga;
     vvinfPM = vdep.*vvinfPM./norm( vvinfPM ) ;
@@ -87,7 +99,7 @@ for indl = 1:size(legs,1)-1
         rpmin                     = radpl + hmin;
     end
 
-    [~, vvga] = EphSS_cartesian(plin, epochs(indl,2), idcentral);
+    [~, vvga] = customEphemerides(plin, epochs(indl,2), idcentral);
 
     vvin = vva(indl,:);
     vvou = vvd(indl+1,:);
@@ -117,9 +129,9 @@ dv     = [ norm( vvBM - vvd(1,:) ); dv ];
 statesObjDep = zeros( size(legs,1),6 );
 statesObjArr = zeros( size(legs,1),6 );
 for indl = 1:size(legs,1)
-    [rr, vv] = EphSS_cartesian(legs(indl,1), epochs(indl,1), idcentral);
+    [rr, vv] = customEphemerides(legs(indl,1), epochs(indl,1), idcentral);
     statesObjDep(indl,:) = [ rr, vv ];
-    [rr, vv] = EphSS_cartesian(legs(indl,2), epochs(indl,2), idcentral);
+    [rr, vv] = customEphemerides(legs(indl,2), epochs(indl,2), idcentral);
     statesObjArr(indl,:) = [ rr, vv ];
 end
 % --> end: objects ephemerides
@@ -127,7 +139,7 @@ end
 % --> start: last leg of the transfer
 p1           = legs(end,2);
 t1           = epochs(end,2);
-[~, vvga]    = EphSS_cartesian(p1, t1, idcentral);
+[~, vvga]    = customEphemerides(p1, t1, idcentral);
 if norm(vvga - vva(end,:)) > varr % --> DSM on the first leg
     dvv  = abs( norm(vvga - vva(end,:)) - varr ).*(vvga - vva(end,:))./norm(vvga - vva(end,:));
     vvPM = vva(end,:) + dvv;

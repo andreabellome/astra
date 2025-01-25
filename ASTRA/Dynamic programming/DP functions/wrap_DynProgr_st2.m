@@ -44,7 +44,7 @@ T0   = unique(LEGSnext(:,end), 'rows', 'stable');
 
 % --> find next nodes (i.e. couples of planets with their visiting epochs)
 [MAT, M1, M2] = generateMAT(pl1, pl2, T0, TOFS);
-[EPH]         = wrap_generateEPH(M1, M2, idcentral);
+[EPH]         = wrap_generateEPH(M1, M2, idcentral, INPUT.customEphemerides);
 
 if idcentral == 1 % --> central body is SUN
     if pl1 > 11 % --> perform the flyby with an asteroid/comet

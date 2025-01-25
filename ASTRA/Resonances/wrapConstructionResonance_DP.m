@@ -1,4 +1,4 @@
-function [LEGSn, VASn, VINFn] = wrapConstructionResonance_DP(LEGSnext, VASnext, VINFnext, legs, res, indl, tolINCL, parallel, idcentral)
+function [LEGSn, VASn, VINFn] = wrapConstructionResonance_DP(LEGSnext, VASnext, VINFnext, legs, res, indl, tolINCL, parallel, idcentral, customEphemerides)
 
 % DESCRIPTION
 % This function attempts to construct resonant orbits for a spacecraft trajectory
@@ -25,10 +25,13 @@ function [LEGSn, VASn, VINFn] = wrapConstructionResonance_DP(LEGSnext, VASnext, 
 
 if nargin == 8
     idcentral = 1;
+    customEphemerides = @EphSS_cartesian;
+elseif nargin == 9
+    customEphemerides = @EphSS_cartesian;
 end
 
 pl2 = legs(indl,2);
-[LEGSnext, VASnext, VINFnext] = checkResonance_DP(LEGSnext, VASnext, VINFnext, pl2, res, parallel, idcentral);
+[LEGSnext, VASnext, VINFnext] = checkResonance_DP(LEGSnext, VASnext, VINFnext, pl2, res, parallel, idcentral, customEphemerides);
 if isempty(LEGSnext) % --> if the resonance is not achievable, then end
     LEGSn = [];
     VASn  = [];
@@ -46,7 +49,7 @@ if parallel == true
         vasp  = VASnext(indl,:);
         vinfp = VINFnext(indl,:);
 
-        [legn, vasn, vinfn] = constructResonantOrbits_DP(legp, vasp, vinfp, pl2, res, tolINCL, idcentral);
+        [legn, vasn, vinfn] = constructResonantOrbits_DP(legp, vasp, vinfp, pl2, res, tolINCL, idcentral, customEphemerides);
 
         STRUC(indl).LEGSn = legn;
         STRUC(indl).VASn  = vasn;
@@ -62,7 +65,7 @@ else
         vasp  = VASnext(indl,:);
         vinfp = VINFnext(indl,:);
 
-        [legn, vasn, vinfn] = constructResonantOrbits_DP(legp, vasp, vinfp, pl2, res, tolINCL, idcentral);
+        [legn, vasn, vinfn] = constructResonantOrbits_DP(legp, vasp, vinfp, pl2, res, tolINCL, idcentral, customEphemerides);
 
         STRUC(indl).LEGSn = legn;
         STRUC(indl).VASn  = vasn;

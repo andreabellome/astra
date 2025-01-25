@@ -1,4 +1,4 @@
-function [out] = generateOutputTXT(path, idcentral, folder, nametemp)
+function [out] = generateOutputTXT(path, idcentral, customEphemerides, folder, nametemp)
 
 % DESCRIPTION
 % This function generates a text file containing detailed information about 
@@ -23,10 +23,24 @@ function [out] = generateOutputTXT(path, idcentral, folder, nametemp)
 
 if nargin == 1
     idcentral = 1;
+    customEphemerides = @EphSS_cartesian;
     if exist('results','dir') == 7 % --> the folder exists on the current path
     else % --> the folder does not exist on the current path
         mkdir('results');
     end
+elseif nargin == 2
+    customEphemerides = @EphSS_cartesian;
+    if exist('results','dir') == 7 % --> the folder exists on the current path
+    else % --> the folder does not exist on the current path
+        mkdir('results');
+    end
+elseif nargin == 3
+    if exist('results','dir') == 7 % --> the folder exists on the current path
+    else % --> the folder does not exist on the current path
+        mkdir('results');
+    end
+elseif nargin == 4
+    nametemp = [];
 end
 
 % --> variables and constants
@@ -38,7 +52,7 @@ end
 plts = path(:,7);
 
 % --> dep./arr. infinity velocities at each planet
-[VINFS, vvd, vva, rrd, rra] = path2Vinfs(path, idcentral);
+[VINFS, vvd, vva, rrd, rra] = path2Vinfs(path, idcentral, customEphemerides);
 
 % --> transfer types per leg
 [TYPES] = transferTypes(path, idcentral);
@@ -47,7 +61,7 @@ plts = path(:,7);
 seqName = seq2SeqName(plts, idcentral);
 
 % --> managing the inputs related to saving folder
-if nargin == 1 % --> the user has not specified the folder
+if nargin <= 3  % --> the user has not specified the folder
 
     if exist('results','dir') == 7 % --> the folder exists on the current path
         name = ['\results\ASTRA_result_' seqName '.txt'];
@@ -56,15 +70,7 @@ if nargin == 1 % --> the user has not specified the folder
         name = ['\results\ASTRA_result_' seqName '.txt'];
     end
 
-elseif nargin == 2 % --> the user has specified the folder
-
-    if exist('results','dir') == 7 % --> the folder exists on the current path
-        name = ['\results\ASTRA_result_' seqName '.txt'];
-    else % --> the folder does not exist on the current path
-        mkdir('results');
-        name = ['\results\ASTRA_result_' seqName '.txt'];
-    end
-elseif nargin == 3
+elseif nargin == 4
     if isempty(folder) % --> the user has not specified the folder
         if exist('results','dir') == 7 % --> the folder exists on the current path
             name = ['\results\ASTRA_result_' seqName '.txt'];
@@ -80,7 +86,7 @@ elseif nargin == 3
             name = [folder '\ASTRA_result_' seqName '.txt'];
         end
     end
-elseif nargin == 4 % --> the user has specified the folder AND the file name
+elseif nargin == 5 % --> the user has specified the folder AND the file name
 
     if isempty(nametemp) % --> the user has not specified the file name
         nametemp = [ 'ASTRA_result_' seqName '.txt' ];

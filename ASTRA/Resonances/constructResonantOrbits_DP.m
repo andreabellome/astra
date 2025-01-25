@@ -1,4 +1,4 @@
-function [legn, vasn, vinfn, MAT_VV] = constructResonantOrbits_DP(legp, vasp, vinfp, plt, res, tolINCL, idcentral)
+function [legn, vasn, vinfn, MAT_VV] = constructResonantOrbits_DP(legp, vasp, vinfp, plt, res, tolINCL, idcentral, customEphemerides)
 
 % DESCRIPTION
 % This function constructs resonant orbits for a spacecraft by evaluating potential 
@@ -30,6 +30,9 @@ function [legn, vasn, vinfn, MAT_VV] = constructResonantOrbits_DP(legp, vasp, vi
 
 if nargin == 6
     idcentral = 1;
+    customEphemerides = @EphSS_cartesian;
+elseif nargin == 7
+    customEphemerides = @EphSS_cartesian;
 end
 
 if idcentral == 1
@@ -56,9 +59,9 @@ tIN  = legp(end);
 vInf = vinfp(end);
 
 % --> planet state at the two encounters 
-[rrga1, vvga1] = EphSS_cartesian(plIN, tIN, idcentral);
+[rrga1, vvga1] = customEphemerides(plIN, tIN, idcentral);
 rrIN           = rrga1;
-[rrga2, vvga2] = EphSS_cartesian(plIN, tIN + res(1)*Tpl/86400, idcentral);
+[rrga2, vvga2] = customEphemerides(plIN, tIN + res(1)*Tpl/86400, idcentral);
 
 % --> incoming keplerian elements (before the first flyby)
 kepIN = car2kep([rrIN, vvIN], mu);
