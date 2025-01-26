@@ -5,3 +5,4 @@ mice/
 *.bsp
 *.csv
 *.mk
+*.mat

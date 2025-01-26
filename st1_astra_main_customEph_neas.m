@@ -8,7 +8,7 @@ try clear INPUT; catch; end; clc;
 
 % --> sequence to be optimized
 INPUT.idcentral = 1; % --> central body (Sun in this case)
-seq = [ 3 3054374 ]; res = [  ];
+seq = [ 3 3054374 ]; res = [  ];  % --> (OKAY)
 seq = [ 3 20099942 ]; res = [  ]; % --> APOPHIS
 seq = [ 3 20225312 ]; res = [];
 
@@ -21,32 +21,34 @@ chosenRevs                    = differentRuns_v2(seq, maxrev);                  
 
 %%%%%%%%%% set departing options %%%%%%%%%%
 t0 = date2mjd2000([2030 1 1 12 0 0]); % --> initial date range (MJD2000)
-tf = t0 + 1*365.25;                  % --> final date range (MJD2000)
+tf = t0 + 5*365.25;                  % --> final date range (MJD2000)
 dt = 2;                            % --> step size (days)
 INPUT.depOpts = [t0 tf dt];
 %%%%%%%%%% set departing options %%%%%%%%%%
 
 %%%%%%%%%% set options %%%%%%%%%%
 INPUT.opt      = 3;          % --> (1) is for SODP, (2) is for MODP, (3) is for DATES, (4) is for YEARS - MODP
-INPUT.vInfOpts = [0 5];      % --> min/max departing infinity velocities (km/s)
+INPUT.vInfOpts = [0 Inf];      % --> min/max departing infinity velocities (km/s)
 INPUT.dsmOpts  = [1 Inf];    % --> max defect DSM, and total DSMs (km/s)
-INPUT.plot     = [0 0];      % --> plot(1) for Pareto front, plot(2) for best traj. DV
-INPUT.parallel = true;       % --> put true for parallel, false otherwise
+INPUT.plot     = [1 1];      % --> plot(1) for Pareto front, plot(2) for best traj. DV
+INPUT.parallel = false;       % --> put true for parallel, false otherwise
 INPUT.tstep    = dt;         % --> step size for Time of flight            
 %%%%%%%%%% set options %%%%%%%%%%
 
 % --> specify custom bounds for TOFs and VINFs
-INPUT.TOF_LIM = [[10 800]];
-INPUT.vInfLim = [ 0 5; 0 4 ]; % --> PL1, PL2, PL3, ...   
+INPUT.TOF_LIM = [[10 300]];
+INPUT.vInfLim = [ 0 Inf; 0 Inf ]; % --> PL1, PL2, PL3, ...   
 
 %%
 
 % --> load custom ephemerides
-addpath(genpath([pwd '\mice'])); % --> always include this
-cspice_furnsh('data.mk');
+MICE_path = './MICE_TOOLBOX' ;
+addpath(genpath(MICE_path)); % --> always include this
+cspice_furnsh([MICE_path '/data.mk']);
 
 spk_dir = 'test_download';
 cspice_furnsh([ pwd '\' spk_dir '\' num2str(seq(end)) '.bsp']);
+
 INPUT.customEphemerides = @EphSS_NEOs;
 
 %% --> optimize using ASTRA
