@@ -14,6 +14,10 @@ INPUT.tofyMax                                = tofyMax;            % --> update 
 INPUT.costFunc1_MODP                         = costFunc1_MODP;     % --> update the INPUT
 INPUT.costFunc2_MODP                         = costFunc2_MODP;     % --> update the INPUT
 
+if ~isfield(INPUT, 'customEphemerides')
+    INPUT.customEphemerides = @EphSS_cartesian;
+end
+
 % --> run different optimizations for the chosen revolutions options
 chosenRevs = INPUT.chosenRevs;
 
@@ -95,7 +99,8 @@ if ~isempty(MSSTRUC(1).STRUC)
     
                 Nrev = rev2RevOpt(nextn, INPUT.res, indms);
                 if Nrev(3) ~= 0 % --> compute the resonant transfers
-                    [LEGSn, VASn, VINFn] = wrapConstructionResonance_DP(LEGSprev, VASprev, VINFprev, legs, Nrev(3:4), indms, deg2rad(1), INPUT.parallel, INPUT.idcentral);
+                    [LEGSn, VASn, VINFn] = wrapConstructionResonance_DP(LEGSprev, VASprev, VINFprev, legs, Nrev(3:4), indms, deg2rad(1),...
+                        INPUT.parallel, INPUT.idcentral, INPUT.customEphemerides);
                     nlp  = 0;
                     ndef = 0;
                 else % --> LP between two consecutive nodes
@@ -190,7 +195,7 @@ try
     if INPUT.plot(1) == 1
         [~, run] = min([OUTPUT.minCOST]');
         path     = OUTPUT(run).minPATH;
-        plotPath(path, INPUT.idcentral);
+        plotPath(path, INPUT.idcentral, INPUT.customEphemerides);
     end
 catch
 end
@@ -204,6 +209,14 @@ try
         figure('Color', [1 1 1]); hold on; grid on;
         xlabel( 'Time of flight - years' ); ylabel(' \Deltav - km/s ');
         plot( PF(:,1), PF(:,2), 'o', 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Red' );
+
+        labelsDim = 12;
+        axesDim   = 12;
+        set(findall(gcf,'-property','FontSize'), 'FontSize',labelsDim)
+        h = findall(gcf, 'type', 'text');
+        set(h, 'fontsize', axesDim);
+        ax          = gca; 
+        ax.FontSize = axesDim; 
 
     end
 catch

@@ -1,4 +1,4 @@
-function [path, fig] = ASTRA_wrapPath_DP(seq, t0, tofs, NREVS, idcentral)
+function [path, fig] = ASTRA_wrapPath_DP(seq, t0, tofs, NREVS, idcentral, customEphemerides)
 
 % DESCRIPTION :
 % this function allows for building the path matrix of an MGA sequence.
@@ -11,6 +11,7 @@ function [path, fig] = ASTRA_wrapPath_DP(seq, t0, tofs, NREVS, idcentral)
 %         options are passed. If NREVS(i,3)~=0, then a resonance is
 %         included in the transfer.
 % idcentral  : ID of the central body. See constants.m
+% customEphemerides : user-defined custom ephemerides. See EphSS_cartesian.m to define those
 % 
 % OUTPUT :
 % path : is the path matrix
@@ -19,7 +20,10 @@ function [path, fig] = ASTRA_wrapPath_DP(seq, t0, tofs, NREVS, idcentral)
 % -------------------------------------------------------------------------
 
 if nargin == 4
-    idcentral = 1;
+    idcentral         = 1;
+    customEphemerides = @EphSS_cartesian;
+elseif nargin == 5
+    customEphemerides = @EphSS_cartesian;
 end
 
 mu = constants(idcentral, 1);
@@ -44,15 +48,15 @@ for indi = 1:size(legs,1)
     t1 = T(indi);
     t2 = T(indi+1);
     
-    [r1, v1] = EphSS_cartesian(pl1, t1, idcentral);
-    [r2, v2] = EphSS_cartesian(pl2, t2, idcentral);
+    [r1, v1] = customEphemerides(pl1, t1, idcentral);
+    [r2, v2] = customEphemerides(pl2, t2, idcentral);
     
     if Nrev(3) ~= 0 % --> then construct resonant transfers
         res   = [Nrev(3), Nrev(4)];
         legp  = [pl1 t1];
         vasp  = vvIN;
         vinfp = norm(vvIN - v1);
-        [~, vasn, ~] = constructResonantOrbits_DP(legp, vasp, vinfp, pl2, res, deg2rad(1), idcentral);
+        [~, vasn, ~] = constructResonantOrbits_DP(legp, vasp, vinfp, pl2, res, deg2rad(1), idcentral, customEphemerides);
 
     else
         [v1Short, v2Short] = lambertMR_MEXIFY_mex(r1, r2, (t2 - t1)*86400, mu, Nrev(1), Nrev(2));
@@ -109,7 +113,7 @@ path(1,15)    = path(end,9);                               % --> arrival vinf (k
 path(1,16)    = sum(path(2:end,11))/365.25;                % --> TOF (years)
 
 if nargout > 1 % --> if requested from the user, plot the trajectory
-    [fig] = plotPath(path, idcentral);
+    fig = plotPath(path, idcentral);
 end
 
 end

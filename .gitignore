@@ -1,3 +1,7 @@
 tests/
 codegen/
+mice/
+
+*.bsp
 *.csv
+*.mk

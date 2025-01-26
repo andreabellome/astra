@@ -36,7 +36,6 @@ if idcentral == 1 % --> central body is SUN
 
     if pl <= 10
         [rr, vv] = EphSS_car(pl, t);
-    %     [rr, vv] = EphAA_car(pl, t);
     elseif pl >= 1 + 10 && pl <= 463 + 10 % --> JFC
         pl       = pl - 10;
         [rr, vv] = EphCA_car(pl, t);

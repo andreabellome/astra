@@ -1,4 +1,4 @@
-function [VINFS, vvd, vva, rrd, rra] = path2Vinfs(path, idcentral)
+function [VINFS, vvd, vva, rrd, rra] = path2Vinfs(path, idcentral, customEphemerides)
 
 % DESCRIPTION
 % This function computes the v-infinity vectors at each leg of a trajectory
@@ -22,6 +22,9 @@ function [VINFS, vvd, vva, rrd, rra] = path2Vinfs(path, idcentral)
 
 if nargin == 1
     idcentral = 1;
+    customEphemerides = @EphSS_cartesian;
+elseif nargin == 2
+    customEphemerides = @EphSS_cartesian;
 end
 
 mu = constants(idcentral, 1);
@@ -41,7 +44,7 @@ for row = 3:size(path,1)
     dt        = (tIN - path(row-1,8))*86400;
     [~, vvOU] = FGKepler_dt(kepIN, -dt, mu);
     
-    [~, vvga1] = EphSS_cartesian(path(row-1,7), path(row-1,8), idcentral);
+    [~, vvga1] = customEphemerides(path(row-1,7), path(row-1,8), idcentral);
 
     vvInfDep(row-2,:) = vvOU - vvga1;
     vInfDep(row-2,1)  = norm(vvInfDep(row-2,:));

@@ -25,13 +25,22 @@ INPUT.depOpts = [t0 tf dt];
 %%%%%%%%%% set departing options %%%%%%%%%%
 
 %%%%%%%%%% set options %%%%%%%%%%
-INPUT.opt      = 2;          % --> (1) is for SODP, (2) is for MODP, (3) is for DATES, (4) is for YEARS - MODP
+INPUT.opt      = 3;          % --> (1) is for SODP, (2) is for MODP, (3) is for DATES, (4) is for YEARS - MODP
 INPUT.vInfOpts = [0 5];      % --> min/max departing infinity velocities (km/s)
 INPUT.dsmOpts  = [1 Inf];    % --> max defect DSM, and total DSMs (km/s)
 INPUT.plot     = [1 1];      % --> plot(1) for Pareto front, plot(2) for best traj. DV
-INPUT.parallel = true;       % --> put true for parallel, false otherwise
+INPUT.parallel = false;       % --> put true for parallel, false otherwise
 INPUT.tstep    = dt;         % --> step size for Time of flight            
 %%%%%%%%%% set options %%%%%%%%%%
+
+%%
+
+% --> load custom ephemerides
+MICE_path = './MICE_TOOLBOX' ;
+addpath(genpath(MICE_path)); % --> always include this
+cspice_furnsh([MICE_path '/data.mk']);
+
+INPUT.customEphemerides = @EphSS_NEOs;
 
 %% --> optimize using ASTRA
 
@@ -43,16 +52,16 @@ OUTPUT = ASTRA_DP(seq, INPUT);
 close all; clc;
 
 % --> extract path from Pareto front
-[path, revs, res] = pathfromPF(OUTPUT);
+[path, revs, res] = pathfromPF(OUTPUT, 1, 1, [], INPUT.customEphemerides);
 
 % --> plot the Pareto front
 figPareto = plotPareto(OUTPUT(1).ovPF);
 
 % --> plot the path
-[figECI, STRUC, figSYN, figRSC, figVSC] = plotPath(path, INPUT.idcentral);
+[figECI, STRUC, figSYN, figRSC, figVSC] = plotPath(path, INPUT.idcentral, INPUT.customEphemerides);
 
-% % --> save the output
-% generateOutputTXT(path, INPUT.idcentral, './results');
+% --> save the output
+generateOutputTXT(path, INPUT.idcentral, INPUT.customEphemerides, './results', 'customEphRes_EVEEJ');
 
 % % --> save the figures
 % name = [pwd '/results/Images/figPareto.png'];

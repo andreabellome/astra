@@ -1,4 +1,4 @@
-function [path, revs, res] = pathfromPF(OUTPUT, idcentral, outNumber, rowPF)
+function [path, revs, res] = pathfromPF(OUTPUT, idcentral, outNumber, rowPF, customEphemerides)
 
 % DESCRIPTION
 % This function extracts a specific path and the associated parameters 
@@ -22,11 +22,20 @@ function [path, revs, res] = pathfromPF(OUTPUT, idcentral, outNumber, rowPF)
 % 
 % -------------------------------------------------------------------------
 
-if nargin == 2
+if nargin == 1
+    idcentral = 1;
     outNumber = 1;
     rowPF     = [];
+    customEphemerides = @EphSS_cartesian;
+elseif nargin == 2
+    outNumber = 1;
+    rowPF     = [];
+    customEphemerides = @EphSS_cartesian;
 elseif nargin == 3
     rowPF     = [];
+    customEphemerides = @EphSS_cartesian;
+elseif nargin == 4
+    customEphemerides = @EphSS_cartesian;
 end
 
 
@@ -42,7 +51,7 @@ if ~isempty(rowPF)
     
     runOpts = generateDiffRuns(OUTPUT(outNumber).REVSovPF(rowPF,:), res);
     path    = OUTPUT(outNumber).LEGovPF(rowPF,:);
-    path    = ASTRA_wrapPath_DP(path(1:3:end-1), path(2), diff(path(2:3:end)), runOpts, idcentral);
+    path    = ASTRA_wrapPath_DP(path(1:3:end-1), path(2), diff(path(2:3:end)), runOpts, idcentral, customEphemerides);
 else
     resonances = cell2mat({OUTPUT.res}');
     costs      = [ OUTPUT.minCOST ]';

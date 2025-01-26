@@ -1,4 +1,4 @@
-function [fig] = plotPLTS_tt(pl, t0, tend, idcentral, holdon, colors, names, linewidth, style)
+function [fig] = plotPLTS_tt(pl, t0, tend, idcentral, customEphemerides, holdon, colors, names, linewidth, style)
 
 % DESCRIPTION
 % This function plots the orbits of specified planets over a given time range 
@@ -29,6 +29,7 @@ function [fig] = plotPLTS_tt(pl, t0, tend, idcentral, holdon, colors, names, lin
 
 if nargin == 3 % --> open a new figure
     idcentral = 1;
+    customEphemerides = @EphSS_cartesian;
     fig       = figure('Color', [1 1 1]);
 
     colors    = zeros( length(pl), 3 );
@@ -37,6 +38,7 @@ if nargin == 3 % --> open a new figure
     style     = '-';
 
 elseif nargin == 4
+    customEphemerides = @EphSS_cartesian;
     fig = figure('Color', [1 1 1]);
 
     colors    = zeros( length(pl), 3 );
@@ -44,25 +46,21 @@ elseif nargin == 4
     linewidth = 0.5;
     style     = '-';
 
-elseif nargin == 5 % --> hold on with the current figure
-    if holdon == 0
-        fig = figure('Color', [1 1 1]);
-    else
-        fig = gcf;
-    end
-
+elseif nargin == 5 
+    fig       = figure('Color', [1 1 1]);
     colors    = zeros( length(pl), 3 );
     names     = {};
     linewidth = 0.5;
     style     = '-';
 
-elseif nargin == 6
+elseif nargin == 6 % --> hold on with the current figure
     if holdon == 0
         fig = figure('Color', [1 1 1]);
     else
         fig = gcf;
     end
-
+    
+    colors    = zeros( length(pl), 3 );
     names     = {};
     linewidth = 0.5;
     style     = '-';
@@ -74,6 +72,7 @@ elseif nargin == 7
     else
         fig = gcf;
     end
+    names     = {};
     linewidth = 0.5;
     style     = '-';
 
@@ -84,6 +83,7 @@ elseif nargin == 8
     else
         fig = gcf;
     end
+    linewidth = 0.5;
     style     = '-';
 elseif nargin == 9
 
@@ -92,8 +92,13 @@ elseif nargin == 9
     else
         fig = gcf;
     end
-
-
+    style     = '-';
+elseif nargin == 10
+    if holdon == 0
+        fig = figure('Color', [1 1 1]);
+    else
+        fig = gcf;
+    end
 end
 
 if idcentral == 1
@@ -124,7 +129,7 @@ for indi = 1:length(pl)
     rrpl = zeros(length(tt), 3);
     vvpl = zeros(length(tt), 3);
     for indt = 1:length(tt)
-        [rrpl(indt,:), vvpl(indt,:)] = EphSS_cartesian(pl(indi), tt(indt), idcentral);
+        [rrpl(indt,:), vvpl(indt,:)] = customEphemerides(pl(indi), tt(indt), idcentral);
     end
     
     if isempty(names)
