@@ -17,6 +17,10 @@ function [OUTPUT] = ASTRA_dates(INPUT, seq)
 % 
 % -------------------------------------------------------------------------
 
+if ~isfield(INPUT, 'customEphemerides')
+    INPUT.customEphemerides = @EphSS_cartesian;
+end
+
 % --> SODP 
 TT0        = [INPUT.depOpts(1):INPUT.depOpts(3):INPUT.depOpts(2)]'; % --> launch date vector
 input      = INPUT;
@@ -52,12 +56,20 @@ if exist('OUTPUT','var') == 1
         hold on; grid on;
         xlabel( 'Departing date [MJD2000]' ); ylabel( 'Cost [km/s]' );
         plot( mat(:,1), mat(:,2), 'o', 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Yellow' );
+
+        labelsDim = 12;
+        axesDim   = 12;
+        set(findall(gcf,'-property','FontSize'), 'FontSize',labelsDim)
+        h = findall(gcf, 'type', 'text');
+        set(h, 'fontsize', axesDim);
+        ax          = gca; 
+        ax.FontSize = axesDim; 
     end
     
     if INPUT.plot(2) == 1 % --> plot best traj.
         [~, row] = min( costs );
         path     = OUTPUT(row).minPATH;
-        plotPath(path, INPUT.idcentral);
+        plotPath(path, INPUT.idcentral, INPUT.customEphemerides);
     end
 
 else

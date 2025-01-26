@@ -27,11 +27,7 @@ end
 
 EPH = zeros( size(M,1) , 8);
 for indm1 = 1:size(M,1)
-    try
     [rr, vv]     = customEphemerides(M(indm1,1), M(indm1,2), idcentral);
-    catch
-        st = 1;
-    end
     EPH(indm1,:) = [M(indm1,:) rr vv];
 end
 

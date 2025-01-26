@@ -9,7 +9,8 @@ try clear INPUT; catch; end; clc;
 % --> sequence to be optimized
 INPUT.idcentral = 1; % --> central body (Sun in this case)
 seq = [ 3 3054374 ]; res = [  ];
-seq = [ 3 20216985 ]; res = [  ];
+seq = [ 3 20099942 ]; res = [  ]; % --> APOPHIS
+seq = [ 3 20225312 ]; res = [];
 
 %%%%%%%%%% multi-rev. options %%%%%%%%%%
 maxrev                        = 1;                                                          % --> max. number of revolutions (round number)
@@ -19,23 +20,24 @@ chosenRevs                    = differentRuns_v2(seq, maxrev);                  
 %%%%%%%%%% multi-rev. options %%%%%%%%%%
 
 %%%%%%%%%% set departing options %%%%%%%%%%
-t0 = date2mjd2000([2031 1 1 12 0 0]); % --> initial date range (MJD2000)
+t0 = date2mjd2000([2030 1 1 12 0 0]); % --> initial date range (MJD2000)
 tf = t0 + 1*365.25;                  % --> final date range (MJD2000)
 dt = 2;                            % --> step size (days)
 INPUT.depOpts = [t0 tf dt];
 %%%%%%%%%% set departing options %%%%%%%%%%
 
 %%%%%%%%%% set options %%%%%%%%%%
-INPUT.opt      = 2;          % --> (1) is for SODP, (2) is for MODP, (3) is for DATES, (4) is for YEARS - MODP
+INPUT.opt      = 3;          % --> (1) is for SODP, (2) is for MODP, (3) is for DATES, (4) is for YEARS - MODP
 INPUT.vInfOpts = [0 5];      % --> min/max departing infinity velocities (km/s)
 INPUT.dsmOpts  = [1 Inf];    % --> max defect DSM, and total DSMs (km/s)
-INPUT.plot     = [1 1];      % --> plot(1) for Pareto front, plot(2) for best traj. DV
-INPUT.parallel = false;       % --> put true for parallel, false otherwise
+INPUT.plot     = [0 0];      % --> plot(1) for Pareto front, plot(2) for best traj. DV
+INPUT.parallel = true;       % --> put true for parallel, false otherwise
 INPUT.tstep    = dt;         % --> step size for Time of flight            
 %%%%%%%%%% set options %%%%%%%%%%
 
 % --> specify custom bounds for TOFs and VINFs
-INPUT.TOF_LIM = [[10 300]];
+INPUT.TOF_LIM = [[10 800]];
+INPUT.vInfLim = [ 0 5; 0 4 ]; % --> PL1, PL2, PL3, ...   
 
 %%
 
@@ -43,7 +45,7 @@ INPUT.TOF_LIM = [[10 300]];
 addpath(genpath([pwd '\mice'])); % --> always include this
 cspice_furnsh('data.mk');
 
-spk_dir = 'test_download_moid_001';
+spk_dir = 'test_download';
 cspice_furnsh([ pwd '\' spk_dir '\' num2str(seq(end)) '.bsp']);
 INPUT.customEphemerides = @EphSS_NEOs;
 
@@ -62,8 +64,8 @@ close all; clc;
 % --> plot the Pareto front
 figPareto = plotPareto(OUTPUT(1).ovPF);
 
-% --> plot the path
-[figECI, STRUC, figSYN, figRSC, figVSC] = plotPath(path, INPUT.idcentral, INPUT.customEphemerides);
+% % --> plot the path
+% [figECI, STRUC, figSYN, figRSC, figVSC] = plotPath(path, INPUT.idcentral, INPUT.customEphemerides);
 
 % % --> save the output
 % generateOutputTXT(path, INPUT.idcentral, INPUT.customEphemerides, './results');
@@ -93,7 +95,9 @@ g0          = 9.80665;    % --> Earth acceleration at sea level   [m/s]
 useParallel = true;       % --> if true, uses parallel for fsolve
 
 % --> post-process the path
-struc = postProcessPathASTRA_lowThrust(path, 1.5, 0, INPUT.idcentral, INPUT.customEphemerides);
+vinfFree = 1.5;
+struc    = postProcessPathASTRA_lowThrust(path, vinfFree, 0, ...
+                    INPUT.idcentral, INPUT.customEphemerides);
 
 inds   = 1;
 state1 = struc(inds).xxDtar;
@@ -102,11 +106,12 @@ tof    = ( struc(inds).tA - struc(inds).tD ) * 86400;
 dvD    = struc(inds).dvD;
 dvA    = struc(inds).dvA;
 accel  = ( dvD + dvA )*1000/tof;
+revopt = rev2RevOpt(revs, res, inds);
 
 if accel * 2.2 <= Tmax/m0
 
     % --> initialise the parameters
-    param        = processDataAndWriteParam(m0, tof, state1, state2, Tmax, Isp, g0, 1, INPUT.idcentral, useParallel);
+    param        = processDataAndWriteParam(m0, tof, state1, state2, Tmax, Isp, g0, revopt(1), INPUT.idcentral, useParallel);
     param.plot   = true;    % --> this plots the thrust evolution over time for different rho (default is false)
     param.gamma  = 0.5;
     
