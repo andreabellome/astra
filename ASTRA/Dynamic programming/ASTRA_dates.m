@@ -54,8 +54,17 @@ if exist('OUTPUT','var') == 1
     if INPUT.plot(1) == 1 % --> plot cost w.r.t. launch date
         figure( 'Color', [1 1 1] );
         hold on; grid on;
-        xlabel( 'Departing date [MJD2000]' ); ylabel( 'Cost [km/s]' );
-        plot( mat(:,1), mat(:,2), 'o', 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Yellow' );
+        xlabel( 'Departing date' ); ylabel( 'Cost [km/s]' );
+        
+        N = zeros( size(mat,1),1 );
+        for indi = 1:size(mat,1)
+            date = mjd20002date(mat(indi,1));
+            date = date(1:3);
+            N(indi,1) = datenum(date);
+        end
+
+        plot( N, mat(:,2), 'o', 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Yellow' );
+        datetick('x','mmm.dd,yy' );
 
         labelsDim = 12;
         axesDim   = 12;
