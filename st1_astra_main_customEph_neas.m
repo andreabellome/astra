@@ -10,7 +10,7 @@ try clear INPUT; catch; end; clc;
 INPUT.idcentral = 1; % --> central body (Sun in this case)
 seq = [ 3 3054374 ]; res = [  ];  % --> (OKAY)
 seq = [ 3 20099942 ]; res = [  ]; % --> APOPHIS
-seq = [ 3 20225312 ]; res = [];
+% seq = [ 3 20225312 ]; res = [];
 
 %%%%%%%%%% multi-rev. options %%%%%%%%%%
 maxrev                        = 1;                                                          % --> max. number of revolutions (round number)
@@ -21,7 +21,7 @@ chosenRevs                    = differentRuns_v2(seq, maxrev);                  
 
 %%%%%%%%%% set departing options %%%%%%%%%%
 t0 = date2mjd2000([2030 1 1 12 0 0]); % --> initial date range (MJD2000)
-tf = t0 + 5*365.25;                  % --> final date range (MJD2000)
+tf = t0 + 60*365.25;                  % --> final date range (MJD2000)
 dt = 2;                            % --> step size (days)
 INPUT.depOpts = [t0 tf dt];
 %%%%%%%%%% set departing options %%%%%%%%%%
@@ -47,7 +47,9 @@ addpath(genpath(MICE_path)); % --> always include this
 cspice_furnsh([MICE_path '/data.mk']);
 
 spk_dir = 'test_download';
+spk_dir = pwd;
 cspice_furnsh([ pwd '\' spk_dir '\' num2str(seq(end)) '.bsp']);
+cspice_furnsh([ pwd '\' num2str(seq(end)) '.bsp']);
 
 INPUT.customEphemerides = @EphSS_NEOs;
 

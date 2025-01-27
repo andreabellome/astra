@@ -207,7 +207,7 @@ try
         % --> plot the overall Pareto front
         PF = OUTPUT.ovPF;
         figure('Color', [1 1 1]); hold on; grid on;
-        xlabel( 'Time of flight - years' ); ylabel(' \Deltav - km/s ');
+        xlabel( 'Time of flight [years]' ); ylabel(' \Deltav [km/s] ');
         plot( PF(:,1), PF(:,2), 'o', 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Red' );
 
         labelsDim = 12;

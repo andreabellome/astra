@@ -25,9 +25,10 @@ Lighter requirements will be required in future releases, as ASTRA will be able 
 To use the repository, one finds different test scripts. These are listed here:
 
 1. Test script 1: [st1_astra_main.m](/st1_astra_main.m), to optimize MGA missions. Refer to [this section](#Section_1).
-2. Test script 2: [st2_astra_main_saturn_system.m](/st2_astra_main_saturn_system.m), to optimize MGA missions using custom constraints and different planetary systems. Refer to [this section](#Section_2).
-3. Test scripts 3-4: [st2_astra_main_uranus_system.m](/st2_astra_main_uranus_system.m) and [st21_astra_main_uranus_system_long_chain.m](./st21_astra_main_uranus_system_long_chain.m), to optimize MGA missions using custom constraints and Uranus planetary systems.
+2. Test script 2: [st2_astra_main_saturn_system.m](/st2_astra_main_saturn_system.m), to optimize MGA missions using **custom constraints** and **different planetary systems**. Refer to [this section](#Section_2).
+3. Test scripts 3-4: [st2_astra_main_uranus_system.m](/st2_astra_main_uranus_system.m) and [st21_astra_main_uranus_system_long_chain.m](./st21_astra_main_uranus_system_long_chain.m), to optimize MGA missions using **custom constraints** and Uranus planetary systems.
 4. Test script 5: [low_thrust_trajectories.m](./low_thrust_trajectories.m). This contains a number of test cases for low-thrust trajectories. Please, refer to [this section](#Section_3).
+5. Test script 6: [astra_with_custom_eph_mice.m](). This script shows how to include custom ephemerides, including high-precision .bsp file integrating with [NASA SPICE toolkit](https://naif.jpl.nasa.gov/naif/toolkit.html). Refer to [this section](#Section_4).
 
 ### Test script 1: Run DP optimization with ASTRA  <a id="Section_1"></a> 
 
@@ -453,8 +454,16 @@ The following images show the optimal trajectory from Earth to Dionysus as well 
   <img src="./results/Images/earth_dionysus_traj.png" alt="Earth-Dionysus-traj" width="500"/>
 </p>
 
-| ![Earth-Dionysus-traj](./results/Images/earth_dionysus_thrust.png) | ![Pareto-front](./results/Images/earth_dionysus_mass.png) |
+| ![Earth-Dionysus-thrust](./results/Images/earth_dionysus_thrust.png) | ![Earth-Dionysus-mass](./results/Images/earth_dionysus_mass.png) |
 |:--------------------------------------------:|:--------------------------------------------:|
+
+### Test script 6: Integrating ASTRA with custom ephemerides and NASA SPICE Toolkit
+
+[This script]() shows how the user can define custom ephemerides. The test case shown here is for integrating high-precision NASA planetary ephemerides to be integrated with the [SPICE toolkit](https://naif.jpl.nasa.gov/naif/toolkit.html).
+
+**Currently, using the SPICE toolkit prevents ASTRA to be run in parallel mode.**
+
+
 
 ## Contributing
 

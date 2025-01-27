@@ -1,4 +1,6 @@
-function [path, revs, res] = pathfromPF(OUTPUT, idcentral, outNumber, rowPF, customEphemerides)
+function [path, revs, res] = pathfromPF(OUTPUT, idcentral, ...
+    outNumber, rowPF, ...
+    customEphemerides)
 
 % DESCRIPTION
 % This function extracts a specific path and the associated parameters 
@@ -11,6 +13,8 @@ function [path, revs, res] = pathfromPF(OUTPUT, idcentral, outNumber, rowPF, cus
 % - outNumber : row ID of the OUTPUT structure.
 % - rowPF  : Optional index specifying the row of the Pareto Front to extract. 
 %            If not provided, the function selects the best path based on cost.
+% - customEphemerides : user-defined custom ephemerides. See
+%                       EphSS_cartesian.m for reference.
 % 
 % OUTPUT
 % - path   : Matrix representing the trajectory path extracted from the specified 

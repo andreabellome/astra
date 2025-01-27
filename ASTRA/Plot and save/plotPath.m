@@ -189,8 +189,8 @@ if nargout >= 3
             'k', 'linewidth', 0.5, 'HandleVisibility', 'Off');
     end
 
-    labelsDim = 16;
-    axesDim   = 16;
+    labelsDim = 12;
+    axesDim   = 12;
     set(findall(figSYN,'-property','FontSize'), 'FontSize',labelsDim)
     h = findall(figSYN, 'type', 'text');
     set(h, 'fontsize', axesDim);
@@ -241,8 +241,8 @@ if nargout >= 3
 
         end
 
-        labelsDim = 16;
-        axesDim   = 16;
+        labelsDim = 12;
+        axesDim   = 12;
         set(findall(figRSC,'-property','FontSize'), 'FontSize',labelsDim)
         h = findall(figRSC, 'type', 'text');
         set(h, 'fontsize', axesDim);

@@ -64,26 +64,26 @@ seqName = seq2SeqName(plts, idcentral);
 if nargin <= 3  % --> the user has not specified the folder
 
     if exist('results','dir') == 7 % --> the folder exists on the current path
-        name = ['\results\ASTRA_result_' seqName '.txt'];
+        name = ['/results/ASTRA_result_' seqName '.txt'];
     else % --> the folder does not exist on the current path
         mkdir('results');
-        name = ['\results\ASTRA_result_' seqName '.txt'];
+        name = ['/results/ASTRA_result_' seqName '.txt'];
     end
 
 elseif nargin == 4
     if isempty(folder) % --> the user has not specified the folder
         if exist('results','dir') == 7 % --> the folder exists on the current path
-            name = ['\results\ASTRA_result_' seqName '.txt'];
+            name = ['/results/ASTRA_result_' seqName '.txt'];
         else % --> the folder does not exist on the current path
             mkdir('results');
-            name = ['\results\ASTRA_result_' seqName '.txt'];
+            name = ['/results/ASTRA_result_' seqName '.txt'];
         end
     else
         if exist(folder(2:end), 'dir') == 7 % --> the folder exists on the current path
-            name = [folder '\ASTRA_result_' seqName '.txt'];
+            name = [folder '/ASTRA_result_' seqName '.txt'];
         else % --> the folder does not exist on the current path
             mkdir(folder(2:end));
-            name = [folder '\ASTRA_result_' seqName '.txt'];
+            name = [folder '/ASTRA_result_' seqName '.txt'];
         end
     end
 elseif nargin == 5 % --> the user has specified the folder AND the file name
@@ -93,17 +93,17 @@ elseif nargin == 5 % --> the user has specified the folder AND the file name
     end
     if isempty(folder) % --> the user has not specified the folder
         if exist('results','dir') == 7 % --> the folder exists on the current path
-            name = ['\results\' nametemp '.txt'];
+            name = ['/results/' nametemp '.txt'];
         else % --> the folder does not exist on the current path
             mkdir('results');
-            name = ['\results\' nametemp '.txt'];
+            name = ['/results/' nametemp '.txt'];
         end
     else
         if exist(folder(2:end), 'dir') == 7 % --> the folder exists on the current path
-            name = [folder '\' nametemp '.txt'];
+            name = [folder '/' nametemp '.txt'];
         else % --> the folder does not exist on the current path
             mkdir(folder(2:end));
-            name = [folder '\' nametemp '.txt'];
+            name = [folder '/' nametemp '.txt'];
         end
     end
 
