@@ -43,7 +43,7 @@ OUTPUT = ASTRA_DP(seq, INPUT);
 close all; clc;
 
 % --> extract path from Pareto front
-[path, revs, res] = pathfromPF(OUTPUT);
+[path, revs, res] = pathfromPF(OUTPUT, INPUT.idcentral, 1, 1);
 
 % --> plot the Pareto front
 figPareto = plotPareto(OUTPUT(1).ovPF);
@@ -51,8 +51,13 @@ figPareto = plotPareto(OUTPUT(1).ovPF);
 % --> plot the path
 [figECI, STRUC, figSYN, figRSC, figVSC] = plotPath(path, INPUT.idcentral);
 
-% % --> save the output
-% generateOutputTXT(path, INPUT.idcentral, './results');
+%%
+
+% --> save the output
+generateOutputTXT(path, INPUT.idcentral, ...
+    @EphSS_cartesian, ...
+    '/results_test_compare_ai', ...
+    'min_tof_sol');
 
 % % --> save the figures
 % name = [pwd '/results/Images/figPareto.png'];
