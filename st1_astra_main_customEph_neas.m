@@ -8,9 +8,9 @@ try clear INPUT; catch; end; clc;
 
 % --> sequence to be optimized
 INPUT.idcentral = 1; % --> central body (Sun in this case)
-seq = [ 3 3054374 ]; res = [  ];  % --> (OKAY)
-seq = [ 3 20099942 ]; res = [  ]; % --> APOPHIS
-% seq = [ 3 20225312 ]; res = [];
+seq = [ 3 3054374 ]; res = [  ];  % -->  (2000 SG344) -- OKAY
+% seq = [ 3 20099942 ]; res = [  ]; % --> APOPHIS
+seq = [ 3 3794982 ]; res = [];
 
 %%%%%%%%%% multi-rev. options %%%%%%%%%%
 maxrev                        = 1;                                                          % --> max. number of revolutions (round number)
@@ -47,7 +47,6 @@ addpath(genpath(MICE_path)); % --> always include this
 cspice_furnsh([MICE_path '/data.mk']);
 
 spk_dir = 'test_download';
-spk_dir = pwd;
 cspice_furnsh([ pwd '\' spk_dir '\' num2str(seq(end)) '.bsp']);
 cspice_furnsh([ pwd '\' num2str(seq(end)) '.bsp']);
 
@@ -62,14 +61,20 @@ OUTPUT = ASTRA_DP(seq, INPUT);
 
 close all; clc;
 
+% --> process the OUTPUT
+[processed_OUTPUT] = postProcessOutputASTRA( OUTPUT );
+path = processed_OUTPUT.minPATH;
+revs = processed_OUTPUT.minREVS;
+res  = processed_OUTPUT.res;
+
 % --> extract path from Pareto front
 [path, revs, res] = pathfromPF(OUTPUT, 1, 1, [], INPUT.customEphemerides);
 
 % --> plot the Pareto front
 figPareto = plotPareto(OUTPUT(1).ovPF);
 
-% % --> plot the path
-% [figECI, STRUC, figSYN, figRSC, figVSC] = plotPath(path, INPUT.idcentral, INPUT.customEphemerides);
+% --> plot the path
+[figECI, STRUC, figSYN, figRSC, figVSC] = plotPath(path, INPUT.idcentral, INPUT.customEphemerides);
 
 % % --> save the output
 % generateOutputTXT(path, INPUT.idcentral, INPUT.customEphemerides, './results');
@@ -92,9 +97,9 @@ figPareto = plotPareto(OUTPUT(1).ovPF);
 
 %% --> find low-thrust trajectories
 
-Tmax        = 0.32;        % --> max. thrust                       [N]
+Tmax        = 0.2;        % --> max. thrust                       [N]
 Isp         = 3000;       % --> specific impulse                  [s]
-m0          = 1000;       % --> initial mass                      [kg]           
+m0          = 900;       % --> initial mass                      [kg]           
 g0          = 9.80665;    % --> Earth acceleration at sea level   [m/s]
 useParallel = true;       % --> if true, uses parallel for fsolve
 
@@ -112,7 +117,7 @@ dvA    = struc(inds).dvA;
 accel  = ( dvD + dvA )*1000/tof;
 revopt = rev2RevOpt(revs, res, inds);
 
-if accel * 2.2 <= Tmax/m0
+if accel * 1.5 <= Tmax/m0
 
     % --> initialise the parameters
     param        = processDataAndWriteParam(m0, tof, state1, state2, Tmax, Isp, g0, revopt(1), INPUT.idcentral, useParallel);

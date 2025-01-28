@@ -9,9 +9,10 @@ try clear INPUT; catch; end; clc;
 % --> sequence to be optimized
 INPUT.idcentral = 1; % --> central body (Sun in this case)
 seq = [ 3 2 3 3 5 ]; res = [ 2 1 3 ];
+seq = [ 3 2 3 4 3 5 ]; res = [  ];
 
 %%%%%%%%%% multi-rev. options %%%%%%%%%%
-maxrev                        = 0;                                                          % --> max. number of revolutions (round number)
+maxrev                        = 1;                                                          % --> max. number of revolutions (round number)
 chosenRevs                    = differentRuns_v2(seq, maxrev);                              % --> generate successive runs
 [INPUT.chosenRevs, INPUT.res] = processResonances(chosenRevs, res);                         % --> process the resonances options
 [INPUT.chosenRevs]            = maxRevOuterPlanets(seq, INPUT.chosenRevs, INPUT.idcentral); % --> only zero revs. on outer planets
@@ -19,13 +20,13 @@ chosenRevs                    = differentRuns_v2(seq, maxrev);                  
 
 %%%%%%%%%% set departing options %%%%%%%%%%
 t0 = date2mjd2000([2023 1 1 0 0 0]); % --> initial date range (MJD2000)
-tf = t0 + 1*365.25;                  % --> final date range (MJD2000)
+tf = t0 + 30*365.25;                  % --> final date range (MJD2000)
 dt = 2.5;                            % --> step size (days)
 INPUT.depOpts = [t0 tf dt];
 %%%%%%%%%% set departing options %%%%%%%%%%
 
 %%%%%%%%%% set options %%%%%%%%%%
-INPUT.opt      = 2;          % --> (1) is for SODP, (2) is for MODP, (3) is for DATES, (4) is for YEARS - MODP
+INPUT.opt      = 3;          % --> (1) is for SODP, (2) is for MODP, (3) is for DATES, (4) is for YEARS - MODP
 INPUT.vInfOpts = [0 5];      % --> min/max departing infinity velocities (km/s)
 INPUT.dsmOpts  = [1 Inf];    % --> max defect DSM, and total DSMs (km/s)
 INPUT.plot     = [1 1];      % --> plot(1) for Pareto front, plot(2) for best traj. DV
@@ -43,7 +44,7 @@ OUTPUT = ASTRA_DP(seq, INPUT);
 close all; clc;
 
 % --> extract path from Pareto front
-[path, revs, res] = pathfromPF(OUTPUT, INPUT.idcentral, 1, 1);
+[path, revs, res] = pathfromPF(OUTPUT, INPUT.idcentral, 1);
 
 % --> plot the Pareto front
 figPareto = plotPareto(OUTPUT(1).ovPF);

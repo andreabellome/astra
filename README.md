@@ -457,7 +457,7 @@ The following images show the optimal trajectory from Earth to Dionysus as well 
 | ![Earth-Dionysus-thrust](./results/Images/earth_dionysus_thrust.png) | ![Earth-Dionysus-mass](./results/Images/earth_dionysus_mass.png) |
 |:--------------------------------------------:|:--------------------------------------------:|
 
-### Test script 6: Integrating ASTRA with custom ephemerides and NASA SPICE Toolkit
+### Test script 6: Integrating ASTRA with custom ephemerides and NASA SPICE Toolkit <a id="Section_4"></a> 
 
 [This script]() shows how the user can define custom ephemerides. The test case shown here is for integrating high-precision NASA planetary ephemerides to be integrated with the [SPICE toolkit](https://naif.jpl.nasa.gov/naif/toolkit.html).
 
