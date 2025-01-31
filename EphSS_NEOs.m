@@ -2,6 +2,10 @@ function [rr, vv] = EphSS_NEOs(IDspk, t, idcentral)
 
 % t is in mjd2000
 
+if nargin == 2
+    idcentral = 1;
+end
+
 if idcentral == 1
 
     % --> Ephemeris Time (ET)
