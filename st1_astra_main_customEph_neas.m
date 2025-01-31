@@ -11,6 +11,7 @@ INPUT.idcentral = 1; % --> central body (Sun in this case)
 seq = [ 3 3054374 ]; res = [  ];  % -->  (2000 SG344) -- OKAY
 % seq = [ 3 20099942 ]; res = [  ]; % --> APOPHIS
 seq = [ 3 3794982 ]; res = [];
+seq = [ 3 54105488 ]; res = [];
 
 %%%%%%%%%% multi-rev. options %%%%%%%%%%
 maxrev                        = 1;                                                          % --> max. number of revolutions (round number)
@@ -66,6 +67,8 @@ close all; clc;
 path = processed_OUTPUT.minPATH;
 revs = processed_OUTPUT.minREVS;
 res  = processed_OUTPUT.res;
+cost = processed_OUTPUT.minCOST;
+tofy = processed_OUTPUT.minTOFY;
 
 % --> extract path from Pareto front
 [path, revs, res] = pathfromPF(OUTPUT, 1, 1, [], INPUT.customEphemerides);
@@ -97,9 +100,9 @@ figPareto = plotPareto(OUTPUT(1).ovPF);
 
 %% --> find low-thrust trajectories
 
-Tmax        = 0.2;        % --> max. thrust                       [N]
+Tmax        = 0.15;        % --> max. thrust                       [N]
 Isp         = 3000;       % --> specific impulse                  [s]
-m0          = 900;       % --> initial mass                      [kg]           
+m0          = 750;       % --> initial mass                      [kg]           
 g0          = 9.80665;    % --> Earth acceleration at sea level   [m/s]
 useParallel = true;       % --> if true, uses parallel for fsolve
 
@@ -134,7 +137,7 @@ if accel * 1.5 <= Tmax/m0
     figure(figTRAJ);
     colors = cool(2);
     plotPLTS_tt(3, 0, 0+365.25, 1, INPUT.customEphemerides, 1, 'k', {'Earth'}, 0.5, '--');  % --> plot the Earth
-    plotPLTS_tt(seq(end), t0, t0+365.25, 1, INPUT.customEphemerides, 1, 'red', {num2str(seq(end))}, 0.5, '--');  % --> plot the asteroid
+    plotPLTS_tt(struc(inds).idA, t0, t0+365.25, 1, INPUT.customEphemerides, 1, 'red', {num2str(struc(inds).idA)}, 0.5, '--');  % --> plot the asteroid
 
 else
     
