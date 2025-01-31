@@ -113,7 +113,7 @@ path(1,15)    = path(end,9);                               % --> arrival vinf (k
 path(1,16)    = sum(path(2:end,11))/365.25;                % --> TOF (years)
 
 if nargout > 1 % --> if requested from the user, plot the trajectory
-    fig = plotPath(path, idcentral);
+    fig = plotPath(path, idcentral, customEphemerides);
 end
 
 end
