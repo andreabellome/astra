@@ -45,8 +45,8 @@ vinf_Earth_arr_min = 1.5;
 dv_ast_arr_min     = 1.5;
 dv_ast_dep_min     = 1.5;
 
-min_dep_date       = date2mjd2000( [ 2034 1 1 12 0 0 ] );
-max_dep_date       = date2mjd2000( [ 2035 1 1 12 0 0 ] );
+min_dep_date       = date2mjd2000( [ 2036 1 1 12 0 0 ] );
+max_dep_date       = date2mjd2000( [ 2037 1 1 12 0 0 ] );
 
 %%
 
