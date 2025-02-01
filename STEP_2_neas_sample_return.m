@@ -190,6 +190,23 @@ end
 empty_indexes = find(arrayfun(@(SAMPLE_RETURN) isempty(SAMPLE_RETURN.LEG_TO_GO),SAMPLE_RETURN));
 SAMPLE_RETURN(empty_indexes) = [];
 
+%% --> SELECT THE ASTEROIDS TO ANALYSE
+
+moid_th      = 0.01;
+ecc_th       = 0.1;
+table        = readtable( ['sbdb_query_results.csv'] );
+table_pruned = table( table.moid <= moid_th & table.e <= ecc_th ,:);
+
+% --> clean names
+ind_row = find(table_pruned.spkid == SAMPLE_RETURN(1).seq_to_go(end));
+
+name   = table_pruned.full_name(ind_row);
+name   = name{1};
+cleaned_str = regexprep(name, '\s+', ' ');
+if cleaned_str(1) == ' '
+    cleaned_str(1) = [];
+end
+
 %%
 
 % --> now plot
@@ -224,6 +241,9 @@ dep_dates = leg_to_go(:,2);
 figure( 'Color', [1 1 1] );
 hold on; grid on;
 xlabel( 'Departing date' ); ylabel( 'Cost [km/s]' );
+
+title_name = ['Asteroid: ' cleaned_str];
+title(title_name);
 
 scatter(dep_dates, cost_tot, 50, tof_years_tot, 'filled');
 
