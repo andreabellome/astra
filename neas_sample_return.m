@@ -45,8 +45,8 @@ vinf_Earth_arr_min = 1.5;
 dv_ast_arr_min     = 1.5;
 dv_ast_dep_min     = 1.5;
 
-min_dep_date       = date2mjd2000( [ 2031 1 1 12 0 0 ] );
-max_dep_date       = date2mjd2000( [ 2032 1 1 12 0 0 ] );
+min_dep_date       = date2mjd2000( [ 2034 1 1 12 0 0 ] );
+max_dep_date       = date2mjd2000( [ 2035 1 1 12 0 0 ] );
 
 %%
 
@@ -72,7 +72,7 @@ SAMPLE_RETURN = struct( ...
 
 %%
 
-for inds = 54:length(SOLUTIONS_to_go) % 1:length(SOLUTIONS_to_go)
+for inds = 1:length(SOLUTIONS_to_go) % 1:length(SOLUTIONS_to_go)
 
     % --> extract the solutions
     LEGS_to_go  = SOLUTIONS_to_go(inds).OUTPUT.LEGS;
@@ -295,7 +295,7 @@ if accel * 2 <= Tmax/m0
                     revopt(1), INPUT.idcentral, useParallel);
     param.plot   = true;    % --> this plots the thrust evolution over time for different rho (default is false)
     param.gamma  = 0.5;
-    param.rhoLim = 1e-8;
+    param.rhoLim = 1e-5;
     
     % --> solve the problem
     LTsol_to_go = wrapSolveFopt( param );
@@ -341,7 +341,8 @@ if accel * 2 <= Tmax/m0
                     revopt(1), INPUT.idcentral, useParallel);
     param.plot   = true;    % --> this plots the thrust evolution over time for different rho (default is false)
     param.gamma  = 0.5;
-    
+    param.rhoLim = 1e-5;
+
     % --> solve the problem
     LTsol_to_re = wrapSolveFopt( param );
     
