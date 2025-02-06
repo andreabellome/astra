@@ -3,6 +3,8 @@
 % --> load ASTRA
 clearDeleteAdd;
 
+%%
+
 % --> load MICE and kernels
 MICE_path = './MICE_TOOLBOX' ;
 addpath(genpath(MICE_path)); 
@@ -35,18 +37,21 @@ indices        = find(ismember(ASTEROID_to_ret, missing_values));
 
 %%
 
-min_days_asteroid  = 20;
+min_days_asteroid  = 30;
 
-tofy_max           = 2;
+tofy_max           = 1;
 
-vinf_Earth_dep_min = 1.5;
-vinf_Earth_arr_min = 1.5;
+vinf_Earth_dep_min = 3;
+vinf_Earth_arr_min = 3;
 
 dv_ast_arr_min     = 1.5;
 dv_ast_dep_min     = 1.5;
 
-min_dep_date       = date2mjd2000( [ 2039 1 1 12 0 0 ] );
-max_dep_date       = date2mjd2000( [ 2040 1 1 12 0 0 ] );
+min_dep_date       = date2mjd2000( [ 2028 1 1 12 0 0 ] );
+max_dep_date       = date2mjd2000( [ 2029 1 1 12 0 0 ] );
+
+
+max_ret_date       = date2mjd2000( [ 2028 12 31 12 0 0 ] );
 
 %%
 
@@ -89,10 +94,10 @@ for inds = 1:length(SOLUTIONS_to_go) % 1:length(SOLUTIONS_to_go)
     [LEGS_to_go, REVS_to_go, VINFd_to_go, VINFa_to_go, ...
     LEGS_to_ret, REVS_to_ret, VINFd_to_ret, VINFa_to_ret] = ...
     prune_sample_return(LEGS_to_go, REVS_to_go, VINFd_to_go, VINFa_to_go, ...
-    LEGS_to_ret, REVS_to_ret, VINFd_to_ret, VINFa_to_ret, ...
-    vinf_Earth_dep_min, dv_ast_arr_min, ...
-    dv_ast_dep_min, vinf_Earth_arr_min, ...
-    min_dep_date, max_dep_date );
+        LEGS_to_ret, REVS_to_ret, VINFd_to_ret, VINFa_to_ret, ...
+        vinf_Earth_dep_min, dv_ast_arr_min, ...
+        dv_ast_dep_min, vinf_Earth_arr_min, ...
+        min_dep_date, max_dep_date, max_ret_date );
 
     st = 1;
 
@@ -114,7 +119,7 @@ for inds = 1:length(SOLUTIONS_to_go) % 1:length(SOLUTIONS_to_go)
             'STAY_DAYS', cell(1, num_elements), ...
             'TOF_YEARS_TOT', cell(1, num_elements) ...
         );
-        parfor indleg = 1:size( LEGS_to_go,1 )
+        for indleg = 1:size( LEGS_to_go,1 )
 
             indleg/size(LEGS_to_go,1)*100
 
@@ -282,6 +287,11 @@ path_to_re = leg_to_re(row,:);
 
 [path_to_re] = ASTRA_wrapPath_DP(path_to_re(1:3:end-1), path_to_re(2), ...
     diff(path_to_re(2:3:end)),  generateDiffRuns(revs_to_re(row,:), res_to_re), 1, customEphemerides);
+
+
+% --> plot the path
+figECI_to_go = plotPath(path_to_go, 1, customEphemerides);
+figECI_to_re = plotPath(path_to_re, 1, customEphemerides);
 
 %% --> LOW THRUST TO GO
 

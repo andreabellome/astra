@@ -1,13 +1,6 @@
 
 % --> INFO : this script downloads the kernel files from NASA SPKID
-
-clear all; close all; clc; format long g;
-warning('off','all');
-currentPath = pwd;
-rmpath(genpath(currentPath));
-
-addpath(genpath([pwd '\Functions Toolbox']));
-addpath(genpath([pwd '\mice'])); % --> always include this
+clearDeleteAdd;
 
 %%
 
@@ -17,7 +10,7 @@ table = readtable( ['sbdb_query_results_' objs '.csv'] );
 spkid = table2array(table(:,1));
 
 t0    = [ 2025 1 1 12 0 0 ];
-tf    = [ 2035 1 1 12 0 0 ];
+tf    = [ 2100 1 1 12 0 0 ];
 
 % --> select the folder where to save the kernels
 spk_dir = ['Ephemerides_' objs '_' num2str(t0(1)) '_' num2str(tf(1)) '_v2' ];

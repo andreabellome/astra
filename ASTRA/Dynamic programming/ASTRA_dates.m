@@ -17,6 +17,7 @@ function [OUTPUT] = ASTRA_dates(INPUT, seq)
 % 
 % -------------------------------------------------------------------------
 
+clc;
 if ~isfield(INPUT, 'customEphemerides')
     INPUT.customEphemerides = @EphSS_cartesian;
 end
@@ -27,6 +28,8 @@ input      = INPUT;
 input.plot = [ 0 0 ];
 indl       = 1;
 for indt = 1:length(TT0)
+
+    fprintf( "Computing at: %.1f/100 \n", indt/length(TT0)*100 );
     
     input.depOpts = [TT0(indt) TT0(indt) 1];
     output        = ASTRA_SODP_v2(input, seq);

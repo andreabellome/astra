@@ -22,7 +22,7 @@ chosenRevs = INPUT.chosenRevs;
 
 %% --> start the search
 
-clc;
+% clc;
 % --> step 1
 T0  = [INPUT.depOpts(1):INPUT.depOpts(3):INPUT.depOpts(2)]'; % --> launch date vector
 

@@ -4,7 +4,7 @@ function [LEGS_to_go, REVS_to_go, VINFd_to_go, VINFa_to_go, ...
     LEGS_to_ret, REVS_to_ret, VINFd_to_ret, VINFa_to_ret, ...
     vinf_Earth_dep_min, dv_ast_arr_min, ...
     dv_ast_dep_min, vinf_Earth_arr_min, ...
-    min_dep_date, max_dep_date )
+    min_dep_date, max_dep_date, max_ret_date )
 
 % --> prune by VINF-DEP-EARTH and by DV-ARR-AST
 indxs1                = find( VINFd_to_go >= vinf_Earth_dep_min | VINFa_to_go >= dv_ast_arr_min );
@@ -31,5 +31,17 @@ LEGS_to_ret(indxs2,:)  = [];
 REVS_to_ret(indxs2,:)  = [];
 VINFd_to_ret(indxs2,:) = [];
 VINFa_to_ret(indxs2,:) = [];
+
+% --> prune by ARRIVAL DATE at EARTH RETURN
+if ~isempty(LEGS_to_ret)
+
+    indxs3 = find( LEGS_to_ret(:,end) > max_ret_date );
+
+    LEGS_to_ret(indxs3,:)  = [];
+    REVS_to_ret(indxs3,:)  = [];
+    VINFd_to_ret(indxs3,:) = [];
+    VINFa_to_ret(indxs3,:) = [];
+
+end
 
 end
