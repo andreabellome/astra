@@ -2,6 +2,7 @@ tests/
 codegen/
 mice/
 transASTRA_analysis/
+MICE_TOOLBOX/
 
 *.bsp
 *.csv
