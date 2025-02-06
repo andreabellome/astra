@@ -50,7 +50,6 @@ dv_ast_dep_min     = 1.5;
 min_dep_date       = date2mjd2000( [ 2028 1 1 12 0 0 ] );
 max_dep_date       = date2mjd2000( [ 2029 1 1 12 0 0 ] );
 
-
 max_ret_date       = date2mjd2000( [ 2028 12 31 12 0 0 ] );
 
 %%
