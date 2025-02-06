@@ -119,7 +119,7 @@ for inds = 1:length(SOLUTIONS_to_go) % 1:length(SOLUTIONS_to_go)
             'STAY_DAYS', cell(1, num_elements), ...
             'TOF_YEARS_TOT', cell(1, num_elements) ...
         );
-        for indleg = 1:size( LEGS_to_go,1 )
+        parfor indleg = 1:size( LEGS_to_go,1 )
 
             indleg/size(LEGS_to_go,1)*100
 
