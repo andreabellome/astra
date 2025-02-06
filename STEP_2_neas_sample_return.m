@@ -213,6 +213,8 @@ end
 
 %%
 
+close all; clc;
+
 % --> now plot
 
 ind_sample = 1;
@@ -242,6 +244,120 @@ tof_days_to_re  = SAMPLE_RETURN(ind_sample).tof_days_to_re;
 cost_tot  = vinf_dep_to_go + vinf_arr_to_go + vinf_dep_to_re + vinf_arr_to_re;
 dep_dates = leg_to_go(:,2);
 
+%%
+
+figure( 'Color', [1 1 1] );
+hold on; grid on;
+xlabel( 'Launch date' ); ylabel( 'Infinity velocity leaving Earth [km/s]' );
+
+title_name = ['Asteroid: ' cleaned_str];
+title(title_name);
+
+scatter(dep_dates, vinf_dep_to_go, 50, [leg_to_go(:,end) - leg_to_go(:,2)], 'filled');
+
+colormap('cool'); % Seleziona una colormap (es. 'jet', 'parula', 'hot', etc.)
+cb = colorbar; % Mostra la barra dei colori per riferimento
+ylabel(cb, 'Time to asteroid [days]'); % Aggiungi l'etichetta alla barra dei colori
+
+datetick('x','mmm.dd,yy' );
+
+labelsDim = 12;
+axesDim   = 12;
+set(findall(gcf,'-property','FontSize'), 'FontSize',labelsDim)
+h = findall(gcf, 'type', 'text');
+set(h, 'fontsize', axesDim);
+ax          = gca; 
+ax.FontSize = axesDim; 
+
+name = [pwd '/results/Images/transASTRA_analysis/launch_window_vinf_dep_earth.png'];
+exportgraphics(gcf, name, 'Resolution', 1200);
+
+%%
+
+figure( 'Color', [1 1 1] );
+hold on; grid on;
+xlabel( 'Launch date' ); ylabel( 'Delta-v arriving at asteroid [km/s]' );
+
+title_name = ['Asteroid: ' cleaned_str];
+title(title_name);
+
+scatter(dep_dates, vinf_arr_to_go, 50, [leg_to_go(:,end) - leg_to_go(:,2)], 'filled');
+
+colormap('cool'); % Seleziona una colormap (es. 'jet', 'parula', 'hot', etc.)
+cb = colorbar; % Mostra la barra dei colori per riferimento
+ylabel(cb, 'Time to asteroid [days]'); % Aggiungi l'etichetta alla barra dei colori
+
+datetick('x','mmm.dd,yy' );
+
+labelsDim = 12;
+axesDim   = 12;
+set(findall(gcf,'-property','FontSize'), 'FontSize',labelsDim)
+h = findall(gcf, 'type', 'text');
+set(h, 'fontsize', axesDim);
+ax          = gca; 
+ax.FontSize = axesDim; 
+
+name = [pwd '/results/Images/transASTRA_analysis/launch_window_dv_at_ast.png'];
+exportgraphics(gcf, name, 'Resolution', 1200);
+
+%%
+
+figure( 'Color', [1 1 1] );
+hold on; grid on;
+xlabel( 'Launch date' ); ylabel( 'Delta-v leaving asteroid orbit [km/s]' );
+
+title_name = ['Asteroid: ' cleaned_str];
+title(title_name);
+
+scatter(dep_dates, vinf_dep_to_re, 50, [leg_to_re(:,end) - leg_to_re(:,2)], 'filled');
+
+colormap('cool'); % Seleziona una colormap (es. 'jet', 'parula', 'hot', etc.)
+cb = colorbar; % Mostra la barra dei colori per riferimento
+ylabel(cb, 'Time to Earth [days]'); % Aggiungi l'etichetta alla barra dei colori
+
+datetick('x','mmm.dd,yy' );
+
+labelsDim = 12;
+axesDim   = 12;
+set(findall(gcf,'-property','FontSize'), 'FontSize',labelsDim)
+h = findall(gcf, 'type', 'text');
+set(h, 'fontsize', axesDim);
+ax          = gca; 
+ax.FontSize = axesDim; 
+
+name = [pwd '/results/Images/transASTRA_analysis/launch_window_dv_leav_ast.png'];
+exportgraphics(gcf, name, 'Resolution', 1200);
+
+%%
+
+figure( 'Color', [1 1 1] );
+hold on; grid on;
+xlabel( 'Launch date' ); ylabel( 'Infinity velocity arriving at Earth [km/s]' );
+
+title_name = ['Asteroid: ' cleaned_str];
+title(title_name);
+
+scatter(dep_dates, vinf_arr_to_re, 50, [leg_to_re(:,end) - leg_to_re(:,2)], 'filled');
+
+colormap('cool'); % Seleziona una colormap (es. 'jet', 'parula', 'hot', etc.)
+cb = colorbar; % Mostra la barra dei colori per riferimento
+ylabel(cb, 'Time to Earth [days]'); % Aggiungi l'etichetta alla barra dei colori
+
+datetick('x','mmm.dd,yy' );
+
+labelsDim = 12;
+axesDim   = 12;
+set(findall(gcf,'-property','FontSize'), 'FontSize',labelsDim)
+h = findall(gcf, 'type', 'text');
+set(h, 'fontsize', axesDim);
+ax          = gca; 
+ax.FontSize = axesDim; 
+
+name = [pwd '/results/Images/transASTRA_analysis/launch_window_vinf_arr_earth.png'];
+exportgraphics(gcf, name, 'Resolution', 1200);
+
+%%
+
 figure( 'Color', [1 1 1] );
 hold on; grid on;
 xlabel( 'Departing date' ); ylabel( 'Cost [km/s]' );
@@ -249,11 +365,11 @@ xlabel( 'Departing date' ); ylabel( 'Cost [km/s]' );
 title_name = ['Asteroid: ' cleaned_str];
 title(title_name);
 
-scatter(dep_dates, cost_tot, 50, tof_years_tot, 'filled');
+scatter(dep_dates, cost_tot, 50, tof_years_tot.*365.25, 'filled');
 
 colormap('cool'); % Seleziona una colormap (es. 'jet', 'parula', 'hot', etc.)
 cb = colorbar; % Mostra la barra dei colori per riferimento
-ylabel(cb, 'ToF [years]'); % Aggiungi l'etichetta alla barra dei colori
+ylabel(cb, 'Mission duration [days]'); % Aggiungi l'etichetta alla barra dei colori
 
 datetick('x','mmm.dd,yy' );
 
@@ -270,13 +386,19 @@ ax.FontSize = axesDim;
 % --> now process the path
 customEphemerides = @EphSS_NEOs;
 
-t0    = [ 2030 1 1 12 0 0 ];
+t0    = [ 2025 1 1 12 0 0 ];
 tf    = [ 2100 1 1 12 0 0 ];
-objs    = 'NEOs';
-spk_dir = ['Ephemerides_' objs '_' num2str(t0(1)) '_' num2str(tf(1)) ];
-cspice_furnsh([ pwd '\' spk_dir '\' num2str(seq_to_go(end)) '.bsp']);
+% objs    = 'NEOs';
+% spk_dir = ['Ephemerides_' objs '_' num2str(t0(1)) '_' num2str(tf(1)) ];
+% cspice_furnsh([ pwd '\' spk_dir '\' num2str(seq_to_go(end)) '.bsp']);
 
-[ min_cost, row ] = min(cost_tot);
+MICE_path = './MICE_TOOLBOX' ;
+cspice_furnsh( { [MICE_path '/' num2str(max(seq_to_go)) '.bsp'],...
+    [MICE_path '/de435.bsp'], [MICE_path '/naif0012.tls'] } );
+
+[ min_cost, row ]  = min(cost_tot);
+tof_years_min_cost = tof_years_tot(row);
+stay_days_min_cost = stay_days(row);
 
 path_to_go = leg_to_go(row,:);
 path_to_re = leg_to_re(row,:);
@@ -286,7 +408,6 @@ path_to_re = leg_to_re(row,:);
 
 [path_to_re] = ASTRA_wrapPath_DP(path_to_re(1:3:end-1), path_to_re(2), ...
     diff(path_to_re(2:3:end)),  generateDiffRuns(revs_to_re(row,:), res_to_re), 1, customEphemerides);
-
 
 % --> plot the path
 figECI_to_go = plotPath(path_to_go, 1, customEphemerides);
