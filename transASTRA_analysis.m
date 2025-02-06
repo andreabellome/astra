@@ -1,8 +1,6 @@
 
 clearDeleteAdd; % --> !!! ONLY CALL IT ONCE FOR SPEED
 
-
-
 %% --> input section
 
 % --> clear INPUT and define new ones
