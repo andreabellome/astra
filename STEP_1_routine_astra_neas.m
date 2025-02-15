@@ -62,7 +62,7 @@ for row = 1:size(table_pruned,1)
 end
 id_not_succ(id_not_succ==0,:) = [];
 
-%% --> ASTRA ROUTINE FOR ALL THE ASTEROIDS
+%% --> ASTRA ROUTINE FOR ALL THE ASTEROIDS -- TO GO
 
 % --> clear INPUT and define new ones
 try clear INPUT; catch; end; clc;
@@ -74,8 +74,85 @@ inputParam.maxrev    = 1;
 %%%%%%%%%% set default options %%%%%%%%%%
 
 %%%%%%%%%% set departing options %%%%%%%%%%
-t0 = date2mjd2000([2030 1 1 12 0 0]); % --> initial date range (MJD2000)
-tf = t0 + 25*365.25;                  % --> final date range (MJD2000)
+t0 = date2mjd2000([2034 1 1 12 0 0]); % --> initial date range (MJD2000)
+tf = t0 + 1*365.25;                  % --> final date range (MJD2000)
+dt = 2;                               % --> step size (days)
+inputParam.depOpts = [t0 tf dt];
+%%%%%%%%%% set departing options %%%%%%%%%%
+
+%%%%%%%%%% set options %%%%%%%%%%
+inputParam.opt      = 3;          % --> (1) is for SODP, (2) is for MODP, (3) is for DATES, (4) is for YEARS - MODP
+inputParam.vInfOpts = [0 5];      % --> min/max departing infinity velocities (km/s)
+inputParam.dsmOpts  = [1 Inf];    % --> max defect DSM, and total DSMs (km/s)
+inputParam.plot     = [1 1];      % --> plot(1) for Pareto front, plot(2) for best traj. DV
+inputParam.parallel = false;      % --> put true for parallel, false otherwise
+inputParam.tstep    = dt;         % --> step size for Time of flight            
+%%%%%%%%%% set options %%%%%%%%%%
+
+%%%%%%%%%% additional input options %%%%%%%%%%
+% --> specify custom bounds for TOFs and VINFs
+inputParam.vInfMaxEnd        = Inf;                                % --> max. DV at asteroid
+inputParam.TOF_LIM           = [[10 300]];                         % --> TOF limits
+inputParam.vInfLim           = [ 0 Inf; 0 inputParam.vInfMaxEnd ]; % --> PL1, PL2, PL3, ...   
+inputParam.customEphemerides = @EphSS_NEOs; % --> custom ephemerides
+%%%%%%%%%% additional input options %%%%%%%%%%
+
+% --> perform the search for all the asteroids
+files     = dir(fullfile(spk_dir, '*.bsp')); % Get all .bsp files
+bsp_files = {files.name}; % Extract file names into a cell array
+
+%%
+
+% --> perform the search
+SOLUTIONS = struct( 'OUTPUT', cell(1, length(bsp_files)) );
+for ind_bsp = 1:length(bsp_files)
+
+    % --> load the ephemerides
+    bsp_ast  = bsp_files{ind_bsp};
+    name_ast = bsp_ast(1:end-4);
+    cspice_furnsh([ pwd '\' spk_dir '\' bsp_ast]);
+
+    % --> sequence
+    pl1 = 3;
+    pl2 = str2double(name_ast);
+    seq = [ pl1 pl2 ];
+
+    % --> write the input
+    INPUT = writeInputASTRA(seq, res, inputParam);
+
+    % --> launch ASTRA optimization
+    OUTPUT = ASTRA_DP(seq, INPUT);
+    
+    % --> save the results
+    if ~isempty(OUTPUT)
+
+        if ~isempty(OUTPUT(1).LEGSpf)
+            % --> process the OUTPUT and save
+            processed_OUTPUT = postProcessOutputASTRA( OUTPUT );
+            SOLUTIONS(ind_bsp).OUTPUT = processed_OUTPUT;
+            save -v7.3 SOLUTIONS_to_go SOLUTIONS
+        end
+
+    end
+
+    st = 1;
+    
+end
+
+%% --> ASTRA ROUTINE FOR ALL THE ASTEROIDS -- TO RETURN
+
+% --> clear INPUT and define new ones
+try clear INPUT; catch; end; clc;
+
+%%%%%%%%%% set default options %%%%%%%%%%
+inputParam.idcentral = 1;
+res                  = [];
+inputParam.maxrev    = 1;
+%%%%%%%%%% set default options %%%%%%%%%%
+
+%%%%%%%%%% set departing options %%%%%%%%%%
+t0 = date2mjd2000([2034 1 1 12 0 0]); % --> initial date range (MJD2000)
+tf = t0 + 5*365.25;                  % --> final date range (MJD2000)
 dt = 2;                               % --> step size (days)
 inputParam.depOpts = [t0 tf dt];
 %%%%%%%%%% set departing options %%%%%%%%%%
@@ -111,8 +188,8 @@ for ind_bsp = 1:length(bsp_files)
     cspice_furnsh([ pwd '\' spk_dir '\' bsp_ast]);
 
     % --> sequence
-    pl1 = 3;
-    pl2 = str2double(name_ast);
+    pl2 = 3;
+    pl1 = str2double(name_ast);
     seq = [ pl1 pl2 ];
 
     % --> write the input
@@ -128,7 +205,7 @@ for ind_bsp = 1:length(bsp_files)
             % --> process the OUTPUT and save
             processed_OUTPUT = postProcessOutputASTRA( OUTPUT );
             SOLUTIONS(ind_bsp).OUTPUT = processed_OUTPUT;
-            save -v7.3 SOLUTIONS_to_go SOLUTIONS
+            save -v7.3 SOLUTIONS_to_ret SOLUTIONS
         end
 
     end

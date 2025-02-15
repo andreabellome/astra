@@ -48,45 +48,53 @@ function [processed_OUTPUT] = postProcessOutputASTRA( OUTPUT )
 %
 % -------------------------------------------------------------------------
 
-% --> parameters
-processed_OUTPUT.seq = OUTPUT(1).minPATH(:,7)'; % --> MGA sequence
-processed_OUTPUT.res = OUTPUT(1).res;           % --> resonances (empty if not present)
+if ~isempty(OUTPUT)
 
-% --> overall solutions -- in this way you can do queries
-processed_OUTPUT.LEGS     = cell2mat({OUTPUT.LEGS}');
-processed_OUTPUT.VAS      = cell2mat({OUTPUT.VAS}');            % --> arrival velocity vectors (km/s)
-processed_OUTPUT.VINFd    = processed_OUTPUT.LEGS(:,3);         % --> departing infinity velocity (km/s)
-processed_OUTPUT.VINFa    = cell2mat({OUTPUT.VINFa}');          % --> arrival infinity velocity (km/s)
-processed_OUTPUT.REVS     = cell2mat({OUTPUT.chosenRevs}');
+    % --> parameters
+    processed_OUTPUT.seq = OUTPUT(1).minPATH(:,7)'; % --> MGA sequence
+    processed_OUTPUT.res = OUTPUT(1).res;           % --> resonances (empty if not present)
+    
+    % --> overall solutions -- in this way you can do queries
+    processed_OUTPUT.LEGS     = cell2mat({OUTPUT.LEGS}');
+    processed_OUTPUT.VAS      = cell2mat({OUTPUT.VAS}');            % --> arrival velocity vectors (km/s)
+    processed_OUTPUT.VINFd    = processed_OUTPUT.LEGS(:,3);         % --> departing infinity velocity (km/s)
+    processed_OUTPUT.VINFa    = cell2mat({OUTPUT.VINFa}');          % --> arrival infinity velocity (km/s)
+    processed_OUTPUT.REVS     = cell2mat({OUTPUT.chosenRevs}');
+    
+    processed_OUTPUT.depDates      = processed_OUTPUT.LEGS(:,2);         % --> departing dates (MJD2000)
+    processed_OUTPUT.arrDates      = processed_OUTPUT.LEGS(:,end);       % --> arrival dates (MJD2000)
+    
+    if size(processed_OUTPUT.LEGS,2) > 5
+        processed_OUTPUT.defectsPerLeg = processed_OUTPUT.LEGS(:,6:3:end-2); % --> defects per leg (km/s)
+    else
+        processed_OUTPUT.defectsPerLeg = [];                                 % --> no defects are present
+    end
+    
+    % --> cost function and time-of-flight
+    processed_OUTPUT.COSTS = cell2mat({OUTPUT.COSTS}'); % --> overall cost function (typically km/s -- depends upon the user)
+    processed_OUTPUT.TOFYS = cell2mat({OUTPUT.TOFYS}'); % --> overall time of fligth (years)
+    
+    % --> Pareto-front solutions
+    processed_OUTPUT.PARETO_FRONT = OUTPUT(1).ovPF;
+    processed_OUTPUT.LEGSpf       = OUTPUT(1).LEGovPF;
+    processed_OUTPUT.VASpf        = OUTPUT(1).VASovPF;
+    processed_OUTPUT.VINFapf      = OUTPUT(1).VINFovPF;
+    processed_OUTPUT.REVSpf       = OUTPUT(1).REVSovPF;
+    
+    % --> path with minimum cost
+    [~, row] = min( [OUTPUT.minCOST]' );
+    
+    processed_OUTPUT.minPATH  = OUTPUT(row).minPATH;
+    processed_OUTPUT.minCOST  = OUTPUT(row).minCOST;
+    processed_OUTPUT.minTOFY  = OUTPUT(row).minTOFy;
+    processed_OUTPUT.minVINFd = OUTPUT(row).minVINFd;
+    processed_OUTPUT.minVINFa = OUTPUT(row).minVINFa;
+    processed_OUTPUT.minREVS  = OUTPUT(row).chosenRevs(1,:);
 
-processed_OUTPUT.depDates      = processed_OUTPUT.LEGS(:,2);         % --> departing dates (MJD2000)
-processed_OUTPUT.arrDates      = processed_OUTPUT.LEGS(:,end);       % --> arrival dates (MJD2000)
-
-if size(processed_OUTPUT.LEGS,2) > 5
-    processed_OUTPUT.defectsPerLeg = processed_OUTPUT.LEGS(:,6:3:end-2); % --> defects per leg (km/s)
 else
-    processed_OUTPUT.defectsPerLeg = [];                                 % --> no defects are present
+
+    processed_OUTPUT = [];
+
 end
-
-% --> cost function and time-of-flight
-processed_OUTPUT.COSTS = cell2mat({OUTPUT.COSTS}'); % --> overall cost function (typically km/s -- depends upon the user)
-processed_OUTPUT.TOFYS = cell2mat({OUTPUT.TOFYS}'); % --> overall time of fligth (years)
-
-% --> Pareto-front solutions
-processed_OUTPUT.PARETO_FRONT = OUTPUT(1).ovPF;
-processed_OUTPUT.LEGSpf       = OUTPUT(1).LEGovPF;
-processed_OUTPUT.VASpf        = OUTPUT(1).VASovPF;
-processed_OUTPUT.VINFapf      = OUTPUT(1).VINFovPF;
-processed_OUTPUT.REVSpf       = OUTPUT(1).REVSovPF;
-
-% --> path with minimum cost
-[~, row] = min( [OUTPUT.minCOST]' );
-
-processed_OUTPUT.minPATH  = OUTPUT(row).minPATH;
-processed_OUTPUT.minCOST  = OUTPUT(row).minCOST;
-processed_OUTPUT.minTOFY  = OUTPUT(row).minTOFy;
-processed_OUTPUT.minVINFd = OUTPUT(row).minVINFd;
-processed_OUTPUT.minVINFa = OUTPUT(row).minVINFa;
-processed_OUTPUT.minREVS  = OUTPUT(row).chosenRevs(1,:);
 
 end

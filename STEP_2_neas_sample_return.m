@@ -37,9 +37,9 @@ indices        = find(ismember(ASTEROID_to_ret, missing_values));
 
 %%
 
-min_days_asteroid  = 30;
+min_days_asteroid  = 20;
 
-tofy_max           = 1;
+tofy_max           = 2;
 
 vinf_Earth_dep_min = 3;
 vinf_Earth_arr_min = 3;
@@ -47,10 +47,10 @@ vinf_Earth_arr_min = 3;
 dv_ast_arr_min     = 1.5;
 dv_ast_dep_min     = 1.5;
 
-min_dep_date       = date2mjd2000( [ 2028 1 1 12 0 0 ] );
-max_dep_date       = date2mjd2000( [ 2029 1 1 12 0 0 ] );
+min_dep_date       = date2mjd2000( [ 2034 1 1 12 0 0 ] );
+max_dep_date       = date2mjd2000( [ 2035 1 1 12 0 0 ] );
 
-max_ret_date       = date2mjd2000( [ 2028 12 31 12 0 0 ] );
+max_ret_date       = Inf;
 
 %%
 
@@ -193,15 +193,34 @@ end
 empty_indexes = find(arrayfun(@(SAMPLE_RETURN) isempty(SAMPLE_RETURN.LEG_TO_GO),SAMPLE_RETURN));
 SAMPLE_RETURN(empty_indexes) = [];
 
-%% --> SELECT THE ASTEROIDS TO ANALYSE
-
 moid_th      = 0.01;
 ecc_th       = 0.1;
 table        = readtable( ['sbdb_query_results.csv'] );
 table_pruned = table( table.moid <= moid_th & table.e <= ecc_th ,:);
 
+
+for inds = 1:length(SAMPLE_RETURN)
+    
+    seq_to_go = SAMPLE_RETURN(inds).seq_to_go;
+    ast_id = seq_to_go(end);
+
+    ind_row = find(table_pruned.spkid == SAMPLE_RETURN(inds).seq_to_go(end));
+    
+    name   = table_pruned.full_name(ind_row);
+    name   = name{1};
+    cleaned_str = regexprep(name, '\s+', ' ');
+    if cleaned_str(1) == ' '
+        cleaned_str(1) = [];
+    end
+    cleaned_str
+end
+
+%% --> SELECT THE ASTEROIDS TO ANALYSE
+
 % --> clean names
-ind_row = find(table_pruned.spkid == SAMPLE_RETURN(1).seq_to_go(end));
+ind_sample_name = 8;
+
+ind_row = find(table_pruned.spkid == SAMPLE_RETURN(ind_sample_name).seq_to_go(end));
 
 name   = table_pruned.full_name(ind_row);
 name   = name{1};
@@ -216,7 +235,7 @@ close all; clc;
 
 % --> now plot
 
-ind_sample = 1;
+ind_sample = ind_sample_name;
 
 [seq_to_go, seq_to_re, res_to_go, res_to_re, leg_to_go, revs_to_go, ...
  vinf_dep_to_go, vinf_arr_to_go, leg_to_re, revs_to_re, vinf_dep_to_re, ...
@@ -272,7 +291,6 @@ fprintf( 'Saving figures... \n' )
 exportgraphics(fig0, [pwd target_folder name_fig_0 '_' cleaned_str '.png' ], 'Resolution', 1200);
 fprintf( 'Done! \n' );
 
-
 %%
 
 % --> generate plots and save
@@ -294,6 +312,9 @@ exportgraphics(fig3, [pwd target_folder name_fig_3 '_' cleaned_str '.png' ], 'Re
 exportgraphics(fig4, [pwd target_folder name_fig_4 '_' cleaned_str '.png' ], 'Resolution', 1200);
 exportgraphics(fig5, [pwd target_folder name_fig_5 '_' cleaned_str '.png' ], 'Resolution', 1200);
 fprintf( 'Done! \n' );
+
+name = [pwd '/results/Images/transASTRA_analysis/launch_window_total_cost_' cleaned_str '.png'];
+exportgraphics(gcf, name, 'Resolution', 1200);
 
 %%
 
