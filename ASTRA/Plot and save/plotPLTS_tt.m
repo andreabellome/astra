@@ -72,6 +72,11 @@ elseif nargin == 7
     else
         fig = gcf;
     end
+    
+    if isempty(colors)
+        colors    = zeros( length(pl), 3 );
+    end
+
     names     = {};
     linewidth = 0.5;
     style     = '-';
@@ -83,6 +88,15 @@ elseif nargin == 8
     else
         fig = gcf;
     end
+
+    if isempty(colors)
+        colors    = zeros( length(pl), 3 );
+    end
+
+    if isempty(names)
+        names = {};
+    end
+
     linewidth = 0.5;
     style     = '-';
 elseif nargin == 9
@@ -92,6 +106,15 @@ elseif nargin == 9
     else
         fig = gcf;
     end
+
+    if isempty(colors)
+        colors    = zeros( length(pl), 3 );
+    end
+
+    if isempty(names)
+        names = {};
+    end
+
     style     = '-';
 elseif nargin == 10
     if holdon == 0
@@ -99,6 +122,15 @@ elseif nargin == 10
     else
         fig = gcf;
     end
+
+    if isempty(colors)
+        colors    = zeros( length(pl), 3 );
+    end
+
+    if isempty(names)
+        names = {};
+    end
+
 end
 
 if idcentral == 1
