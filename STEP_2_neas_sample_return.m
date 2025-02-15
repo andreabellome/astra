@@ -10,6 +10,8 @@ MICE_path = './MICE_TOOLBOX' ;
 addpath(genpath(MICE_path)); 
 cspice_furnsh([MICE_path '/data.mk']);
 
+%%
+
 % --> from EARTH to ASTEROID
 load('SOLUTIONS_to_go.mat');
 SOLUTIONS_to_go = SOLUTIONS;
@@ -76,7 +78,7 @@ SAMPLE_RETURN = struct( ...
 
 %%
 
-for inds = 1:length(SOLUTIONS_to_go) % 1:length(SOLUTIONS_to_go)
+for inds = 1:length(SOLUTIONS_to_go)
 
     % --> extract the solutions
     LEGS_to_go  = SOLUTIONS_to_go(inds).OUTPUT.LEGS;
@@ -198,7 +200,6 @@ ecc_th       = 0.1;
 table        = readtable( ['sbdb_query_results.csv'] );
 table_pruned = table( table.moid <= moid_th & table.e <= ecc_th ,:);
 
-
 for inds = 1:length(SAMPLE_RETURN)
     
     seq_to_go = SAMPLE_RETURN(inds).seq_to_go;
@@ -218,7 +219,7 @@ end
 %% --> SELECT THE ASTEROIDS TO ANALYSE
 
 % --> clean names
-ind_sample_name = 8;
+ind_sample_name = 1;
 
 ind_row = find(table_pruned.spkid == SAMPLE_RETURN(ind_sample_name).seq_to_go(end));
 
