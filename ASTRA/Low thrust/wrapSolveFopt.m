@@ -64,7 +64,7 @@ end
 if max(abs(Fsol)) <= param.tol
     
     pm = param;
-    pm.fsolveoptions.MaxFunctionEvaluations = 1.5e3;
+    pm.fsolveoptions.MaxFunctionEvaluations = 2e3;
 
     param.rho = 0.1;
     fprintf( "Computing smooth profile Rho: %f, at iteration: %d \n", [param.rho, 0] );
@@ -106,7 +106,7 @@ end
 if max(abs(Fsol)) > param.tol
     param.rho = 1;
     pm = param;
-    pm.fsolveoptions.MaxFunctionEvaluations = 5e3; % --> so not to stress too much in difficult cases
+    pm.fsolveoptions.MaxFunctionEvaluations = 8e3; % --> so not to stress too much in difficult cases
     fprintf( "Computing smooth profile Rho: %f, at iteration: %d \n", [param.rho, 0] );
     initiallamba                = [ 1*rand(1,6), 1];
     [initiallamba, Fsol, flag, OUTPUT] = ...
