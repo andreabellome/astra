@@ -1,5 +1,6 @@
 tests/
-tests_and_future_releases
+tests_and_future_releases/
+astra_optimization/
 
 codegen/
 mice/
