@@ -92,9 +92,7 @@ if ~isempty(OUTPUT)
     processed_OUTPUT.minREVS  = OUTPUT(row).chosenRevs(1,:);
 
 else
-
     processed_OUTPUT = [];
-
 end
 
 end

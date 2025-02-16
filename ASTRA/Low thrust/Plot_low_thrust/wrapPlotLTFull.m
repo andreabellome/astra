@@ -1,4 +1,4 @@
-function [figTRAJ, figMASS, figTHRmag] = wrapPlotLTFull(LT_TRANSFER, param)
+function [figTRAJ, figMASS, figTHRmag] = wrapPlotLTFull(LT_SOLUTION, param)
 
 % DESCRIPTION
 % This function generates trajectory plots for a low-thrust transfer, including 
@@ -6,12 +6,10 @@ function [figTRAJ, figMASS, figTHRmag] = wrapPlotLTFull(LT_TRANSFER, param)
 % the primary plots and overlays initial and final states on the trajectory plot.
 
 % INPUT
-% - LT_TRANSFER : structure containing low-thrust transfer data
-%   - TRANSFER : structure with trajectory data
-%   - ST_12    : matrix of initial and final states [state1, state2]
+% - LT_SOLUTION : structure containing low-thrust transfer data for all the
+%                 legs of an MGA transfer
 % - param : structure containing parameters
-%   - AU : astronomical unit (km)
-
+%
 % OUTPUT
 % - figTRAJ   : figure handle for the trajectory plot
 % - figMASS   : figure handle for the mass evolution plot
@@ -19,7 +17,31 @@ function [figTRAJ, figMASS, figTHRmag] = wrapPlotLTFull(LT_TRANSFER, param)
 %
 % -------------------------------------------------------------------------
 
+% --> start: process the low-thrust solution
+strucToSave = LT_SOLUTION;
+tEnd = 0;
+TRANSFER = [];
+ST_12    = [];
+for inds = 1:length(strucToSave)
+    
+    transfer = strucToSave(inds).LTsol.transfer;
+    
+    if inds > 1
+        tEnd = tEnd + strucToSave(inds-1).LTsol.param.tEnd;
+        transfer(:,1) = transfer(:,1) + tEnd;
+    end
 
+    TRANSFER = [TRANSFER; transfer];
+    state1   = transfer(1,2:7);
+    state2   = transfer(end,2:7);
+    ST_12    = [ ST_12; state1 state2 ];
+
+end
+LT_TRANSFER.TRANSFER = TRANSFER;
+LT_TRANSFER.ST_12    = ST_12;
+% --> end: process the low-thrust solution
+
+% --> plot the trajectory, mass and thrust evolutions
 [figTRAJ, figMASS, figTHRmag] = plotLT( LT_TRANSFER.TRANSFER, param );
 
 st12 = LT_TRANSFER.ST_12;
