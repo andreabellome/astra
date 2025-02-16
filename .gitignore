@@ -1,8 +1,11 @@
 tests/
+tests_and_future_releases
+
 codegen/
 mice/
-transASTRA_analysis/
 MICE_TOOLBOX/
+
+transASTRA_analysis/
 
 *.bsp
 *.csv
