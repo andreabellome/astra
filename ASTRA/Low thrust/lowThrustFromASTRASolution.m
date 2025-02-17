@@ -1,4 +1,4 @@
-function [LT_SOLUTION] = lowThrustFromASTRASolution( astraSolution, lowThrustParameters, idcentral, customEphemerides )
+function [LT_SOLUTION, struc] = lowThrustFromASTRASolution( astraSolution, lowThrustParameters, idcentral, customEphemerides )
 
 % DESCRIPTION
 % This function is used to process the ASTRA solution for low-thrust trajectory optimization.
