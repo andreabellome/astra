@@ -130,6 +130,15 @@ for inds = 1:length(struc)
             if dvD + dvA <= 0.1
                 param.rhoLim = 0.01;
             end
+
+            if dvD + dvA >= 1
+                param.rhoGuess1 = 0.5;
+                param.rhoGuess2 = 0.75;
+                
+                if param.Nrev > 0
+                    param.gamma     = 0.9;
+                end
+            end
             
             % --> solve the problem
             LTsol = wrapSolveFopt( param );
@@ -148,7 +157,7 @@ for inds = 1:length(struc)
 
     else % --> there is a resonance in this leg
         
-        param        = processDataAndWriteParam(m0, tof, state1, state2, Tmax, Isp, g0, revopt(1), INPUT.idcentral, useParallel);
+        param        = processDataAndWriteParam(m0, tof, state1, state2, Tmax, Isp, g0, revopt(1), idcentral, useParallel);
 
         % --> simple propagation without thrusting
         [tt, yy] = propagateKepler(state1(1:3), state1(4:6), linspace(0, tof, 1e3), param.mu);
