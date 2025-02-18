@@ -65,18 +65,31 @@ if max(abs(Fsol)) <= param.tol
     
     pm = param;
     pm.fsolveoptions.MaxFunctionEvaluations = 2e3;
+    
+    if isfield(param, 'rhoGuess1')
+        rhoGuess1 = param.rhoGuess1;
+    else
+        rhoGuess1 = 0.1;
+    end
 
-    param.rho = 0.1;
+    param.rho = rhoGuess1;
     fprintf( "Computing smooth profile Rho: %f, at iteration: %d \n", [param.rho, 0] );
-    [initiallamba, Fsol, flag] = ...
+    [initiallamba, Fsol] = ...
             fsolve(@(lambda0) propagateState_vA(lambda0, @propagateFopt_MEXIFY_mex, param), ...
             initiallamba, pm.fsolveoptions);
 
     if max(abs(Fsol)) > param.tol
         initiallamba = initiallambaEOPT; % --> re-initialize the search
-        param.rho = 0.5;
+
+        if isfield(param, 'rhoGuess2')
+            rhoGuess2 = param.rhoGuess2;
+        else
+            rhoGuess2 = 0.5;
+        end
+
+        param.rho = rhoGuess2;
         fprintf( "Computing smooth profile Rho: %f, at iteration: %d \n", [param.rho, 0] );
-        [initiallamba, Fsol, flag] = ...
+        [initiallamba, Fsol] = ...
                 fsolve(@(lambda0) propagateState_vA(lambda0, @propagateFopt_MEXIFY_mex, param), ...
                 initiallamba, pm.fsolveoptions);
     end
