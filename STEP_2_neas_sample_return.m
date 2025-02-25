@@ -39,20 +39,20 @@ indices        = find(ismember(ASTEROID_to_ret, missing_values));
 
 %%
 
-min_days_asteroid  = 20;
+min_days_asteroid  = 30;
 
-tofy_max           = 2;
+tofy_max           = 1;
 
-vinf_Earth_dep_min = 3;
+vinf_Earth_dep_min = 10;
 vinf_Earth_arr_min = 3;
 
-dv_ast_arr_min     = 1.5;
-dv_ast_dep_min     = 1.5;
+dv_ast_arr_min     = 2;
+dv_ast_dep_min     = 2;
 
-min_dep_date       = date2mjd2000( [ 2034 1 1 12 0 0 ] );
-max_dep_date       = date2mjd2000( [ 2035 1 1 12 0 0 ] );
+min_dep_date       = date2mjd2000( [ 2028 1 1 12 0 0 ] );
+max_dep_date       = date2mjd2000( [ 2028 12 31 12 0 0 ] );
 
-max_ret_date       = Inf;
+max_ret_date       = date2mjd2000( [ 2028 12 31 12 0 0 ] );
 
 %%
 
@@ -245,19 +245,70 @@ ind_sample = ind_sample_name;
 
 %%
 
+% --> compute the DV leaving the Earth
+[~, mu_earth, ~, radpl] = constants(1, 3);
+
+% --> sma and ecc
+semi_major_axis = @( rp, ra ) 0.5*( rp + ra );
+eccentricity    = @( rp, ra ) ( ra - rp )/( ra + rp );
+vel_peri        = @( rp, ra, mu ) sqrt( ( 2*mu )/(rp + ra)*( ra/rp ) );
+vel_apo         = @( rp, ra, mu ) sqrt( ( 2*mu )/(rp + ra)*( rp/ra ) );
+
+rp_gto  = 200 + radpl;
+ra_gto  = 42163.84;
+sma_gto = semi_major_axis( rp_gto, ra_gto );
+ecc_gto = eccentricity( rp_gto, ra_gto );
+vp_gto  = vel_peri( rp_gto, ra_gto, mu_earth );
+va_gto  = vel_apo( rp_gto, ra_gto, mu_earth );
+
+[~, vpip]          = Vinf2Hyperbola(vinf_dep_to_go, rp_gto, mu_earth);
+dv_orbit_dep_to_go = vpip - vp_gto;
+
+fig00 = figure( 'Color', [1 1 1] );
+hold on; grid on;
+xlabel( 'Launch date' ); ylabel( 'Delta-v for Earth escape [km/s]' );
+
+scatter(dep_dates, dv_orbit_dep_to_go, 50, [leg_to_re(:,end) - leg_to_re(:,2)], 'filled');
+
+colormap('cool'); % Seleziona una colormap (es. 'jet', 'parula', 'hot', etc.)
+cb = colorbar; % Mostra la barra dei colori per riferimento
+ylabel(cb, 'Time to Asteroid [days]'); % Aggiungi l'etichetta alla barra dei colori
+
+datetick('x','mmm.dd,yy' );
+
+labelsDim = 12;
+axesDim   = 12;
+set(findall(gcf,'-property','FontSize'), 'FontSize',labelsDim)
+h = findall(gcf, 'type', 'text');
+set(h, 'fontsize', axesDim);
+ax          = gca; 
+ax.FontSize = axesDim; 
+
+title_name = [ 'Earth orbit: ' num2str(rp_gto) ' km x ' num2str(ra_gto) ' km' ];
+title(title_name);
+
+target_folder = '/results/Images/transASTRA_analysis/';
+
+name_fig_0 = ['dv_orbit_dep_to_go_' num2str(rp_gto) '_' num2str(ra_gto)];
+
+fprintf( 'Saving figures... \n' )
+exportgraphics(fig00, [pwd target_folder name_fig_0 '_' cleaned_str '.png' ], 'Resolution', 1200);
+fprintf( 'Done! \n' );
+
+%%
+
 % --> compute the DV for the target orbit around Earth
 [~, mu_earth] = constants(1, 3);
 
 rpt = 500e3;
 rat = 1e6;
-sma = 0.5 * ( rat + rpt );
-ecc = ( rat - rpt )/( rat + rpt );
 
-vp = sqrt( ( 2*mu_earth )/(rpt + rat)*( rat/rpt ) );
-va = sqrt( ( 2*mu_earth )/(rpt + rat)*( rpt/rat ) );
+sma = semi_major_axis( rpt, rat );
+ecc = eccentricity( rpt, rpt );
+vp  = vel_peri( rpt, rat, mu_earth );
+va  = vel_apo( rpt, rat, mu_earth );
 
-vinf = vinf_arr_to_re;
-[delta, vpip, eip, Eip, aip] = Vinf2Hyperbola(vinf, rpt, mu_earth);
+[delta, vpip, eip, Eip, aip] = Vinf2Hyperbola(vinf_arr_to_re, rpt, mu_earth);
 
 dv_orbit_arr_to_re = vpip - vp;
 
@@ -292,11 +343,36 @@ fprintf( 'Saving figures... \n' )
 exportgraphics(fig0, [pwd target_folder name_fig_0 '_' cleaned_str '.png' ], 'Resolution', 1200);
 fprintf( 'Done! \n' );
 
+cost_tot = dv_orbit_dep_to_go + vinf_arr_to_go + vinf_dep_to_re + dv_orbit_arr_to_re ;
+
 %%
 
 % --> generate plots and save
 [fig1, fig2, fig3, fig4, fig5] = ...
     plot_csr_launch_window(SAMPLE_RETURN, ind_sample, cleaned_str);
+
+fig5 = figure( 'Color', [1 1 1] );
+hold on; grid on;
+xlabel( 'Departing date' ); ylabel( 'Cost [km/s]' );
+
+title_name = ['Asteroid: ' cleaned_str];
+title(title_name);
+
+scatter(dep_dates, cost_tot, 50, tof_years_tot.*365.25, 'filled');
+
+colormap('cool'); % Seleziona una colormap (es. 'jet', 'parula', 'hot', etc.)
+cb = colorbar; % Mostra la barra dei colori per riferimento
+ylabel(cb, 'Mission duration [days]'); % Aggiungi l'etichetta alla barra dei colori
+
+datetick('x','mmm.dd,yy' );
+
+labelsDim = 12;
+axesDim   = 12;
+set(findall(gcf,'-property','FontSize'), 'FontSize',labelsDim)
+h = findall(gcf, 'type', 'text');
+set(h, 'fontsize', axesDim);
+ax          = gca; 
+ax.FontSize = axesDim; 
 
 name_fig_1 = 'launch_window_vinf_dep_earth';
 name_fig_2 = 'launch_window_dv_at_ast';
@@ -332,7 +408,15 @@ MICE_path = './MICE_TOOLBOX' ;
 cspice_furnsh( { [MICE_path '/' num2str(max(seq_to_go)) '.bsp'],...
     [MICE_path '/de435.bsp'], [MICE_path '/naif0012.tls'] } );
 
-[ min_cost, row ]  = min(cost_tot);
+[ min_cost, row ]  = min( cost_tot );
+
+% indxs = find( cost_tot < 2.53 & leg_to_go(:,2) >= date2mjd2000([2028 4 1 0 0 0]) );
+% row   = indxs(1);
+% 
+indxs = find( vinf_arr_to_go < 0.6 & leg_to_go(:,1) <= date2mjd2000([2028 2 1 0 0 0]) & ...
+              vinf_dep_to_re < 0.3 );
+row   = indxs(1);
+
 tof_years_min_cost = tof_years_tot(row);
 stay_days_min_cost = stay_days(row);
 
@@ -348,6 +432,12 @@ path_to_re = leg_to_re(row,:);
 % --> plot the path
 figECI_to_go = plotPath(path_to_go, 1, customEphemerides);
 figECI_to_re = plotPath(path_to_re, 1, customEphemerides);
+
+name = [pwd '/results/Images/transASTRA_analysis/traj_to_go_min_cost' cleaned_str '.png'];
+exportgraphics(figECI_to_go, name, 'Resolution', 1200);
+
+name = [pwd '/results/Images/transASTRA_analysis/traj_to_re_min_cost' cleaned_str '.png'];
+exportgraphics(figECI_to_re, name, 'Resolution', 1200);
 
 %% --> LOW THRUST TO GO
 

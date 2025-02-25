@@ -1,6 +1,8 @@
 
 close all; clc;
 
+INPUT.idcentral = 1;
+
 % --> extract ASTRA solution
 astraSolution.path      = path;             % --> ASTRA solution
 astraSolution.revs      = revs;             % --> revolutions' options from ASTRA solution
@@ -20,7 +22,7 @@ lowThrustParameters.plot        = true;     % --> this plots the thrust evolutio
 lowThrustParameters.useParallel = true;     % --> if true, uses parallel for fsolve (default is false)
 
 % --> find low-thrust transfers from ASTRA solution      
-LT_SOLUTION = lowThrustFromASTRASolution( astraSolution, lowThrustParameters, INPUT.idcentral, INPUT.customEphemerides );
+[LT_SOLUTION, struc] = lowThrustFromASTRASolution( astraSolution, lowThrustParameters, INPUT.idcentral, INPUT.customEphemerides );
 
 %%
 
@@ -31,7 +33,7 @@ planets = [struc.idD, struc(end).idA];
 t0      = struc(1).tD;
 tend    = struc(end).tA;
 
-[figTRAJ, figMASS, figTHRmag] = wrapPlotLTFull(LT_SOLUTION, param);
+[figTRAJ, figMASS, figTHRmag] = wrapPlotLTFull(LT_SOLUTION, LT_SOLUTION(1).LTsol.param);
 
 figure(figTRAJ);
 plotPLTS_tt(planets, t0, tend, INPUT.idcentral, INPUT.customEphemerides, 1, [], [], 0.5, '--');

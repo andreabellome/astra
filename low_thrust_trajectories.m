@@ -43,7 +43,7 @@ transfer = LTsol.transfer;
 
 % --> add Mars and Earth orbits to the plot
 figure(figTRAJ);
-plotPLTS_tt([3 4], 0, 3*365.25, idcentral, 1);
+plotPLTS_tt([3 4], 0, 3*365.25, idcentral, @EphSS_cartesian, 1);
 
 %% TEST CASE 2: Asteroid-to-asteroid (this is very fast)
 
@@ -130,8 +130,11 @@ param.plot                                  = true;    % --> this plots the thru
 param.rhoLim                                = 1e-8;
 param.rho                                   = 1;
 param.gamma                                 = 0.5;
+param.rhoGuess1                             = 0.75; % --> transition between energy-optimal and fuel-optimal (default is 0.1)
 param.fsolveoptions.MaxFunctionEvaluations  = 5e3;
 param.fsolveoptions.MaxIterations           = 5e3;
+
+param.rhoGuess1 = 0.75;
 
 % --> solve the problem
 LTsol = wrapSolveFopt( param );
@@ -147,7 +150,7 @@ transfer = LTsol.transfer;
 
 % --> add Mercury orbit to the plot
 figure(figTRAJ);
-plotPLTS_tt(1, 0, 2*365.25, idcentral, 1);
+plotPLTS_tt(1, 0, 2*365.25, idcentral, @EphSS_cartesian, 1);
 
 %% TEST CASE 4: Asteroid-to-asteroid (this might require some time...)
 
@@ -260,6 +263,10 @@ LTsol = wrapSolveFopt( param );
 transfer                      = LTsol.transfer;
 [figTRAJ, figMASS, figTHRmag] = plotLT( transfer, param );
 
+figure(figTRAJ)
+plotPLTS_tt(3, 0, 2*365.25, idcentral, @EphSS_cartesian, 1);
+view( [-19 13] );
+
 %% TEST CASE 7: Earth-to-Tempel1
 
 close all; clc;
@@ -308,6 +315,10 @@ LTsol = wrapSolveFopt( param );
 transfer                      = LTsol.transfer;
 [figTRAJ, figMASS, figTHRmag] = plotLT( transfer, param );
 
+figure(figTRAJ);
+plotPLTS_tt(3, 0, 2*365.25, idcentral, @EphSS_cartesian, 1);
+view( [-19 13] );
+
 %% TEST CASE 8: Asteroid-to-Asteroid (HARD: high mass, high TOF, multi-rev.)
 
 close all; clc;
@@ -344,6 +355,7 @@ param.plot                                  = true;    % --> this plots the thru
 param.rhoLim                                = 0.01;    % --> this is high (0.01), but still the solution is very close to optimal one...
 param.rho                                   = 1;
 param.gamma                                 = 0.7;
+param.rhoGuess1                             = 0.75;    % --> transition between energy-optimal and fuel-optimal (default is 0.1)
 param.fsolveoptions.MaxFunctionEvaluations  = 100e3;
 param.fsolveoptions.MaxIterations           = 100e3;
 
@@ -366,3 +378,8 @@ end
 % --> plot the solution
 transfer                      = LTsol.transfer;
 [figTRAJ, figMASS, figTHRmag] = plotLT( transfer, param );
+
+figure(figTRAJ);
+colors = cool(2);
+plotPLTS_tt([3 4], 0, 12*365.25, idcentral, @EphSS_cartesian, 1, colors, {'Earth', 'Mars'}, 2);
+view( [-19 13] );
