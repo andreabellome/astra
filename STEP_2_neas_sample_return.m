@@ -300,8 +300,8 @@ fprintf( 'Done! \n' );
 % --> compute the DV for the target orbit around Earth
 [~, mu_earth] = constants(1, 3);
 
-rpt = 500e3;
-rat = 1e6;
+rpt = 1e6;
+rat = 3e6;
 
 sma = semi_major_axis( rpt, rat );
 ecc = eccentricity( rpt, rpt );
@@ -343,7 +343,7 @@ fprintf( 'Saving figures... \n' )
 exportgraphics(fig0, [pwd target_folder name_fig_0 '_' cleaned_str '.png' ], 'Resolution', 1200);
 fprintf( 'Done! \n' );
 
-cost_tot = dv_orbit_dep_to_go + vinf_arr_to_go + vinf_dep_to_re + dv_orbit_arr_to_re ;
+cost_tot = 0.*dv_orbit_dep_to_go + vinf_arr_to_go + vinf_dep_to_re + dv_orbit_arr_to_re ;
 
 %%
 
@@ -390,7 +390,7 @@ exportgraphics(fig4, [pwd target_folder name_fig_4 '_' cleaned_str '.png' ], 'Re
 exportgraphics(fig5, [pwd target_folder name_fig_5 '_' cleaned_str '.png' ], 'Resolution', 1200);
 fprintf( 'Done! \n' );
 
-name = [pwd '/results/Images/transASTRA_analysis/launch_window_total_cost_' cleaned_str '.png'];
+name = [pwd '/results/Images/transASTRA_analysis/launch_window_total_cost_no_launcher_' cleaned_str '.png'];
 exportgraphics(gcf, name, 'Resolution', 1200);
 
 %%

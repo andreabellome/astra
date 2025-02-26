@@ -36,7 +36,7 @@ close all; clc;
 
 t01 = date2mjd2000( [2028 1 1 12 0 0] );
 
-T0   = t01:1:t01+1*365;
+T0   = t01:1:t01+2*365;
 tofs = 1:1:300;
 
 for indt0 = 1:length(T0)
@@ -63,8 +63,6 @@ plot( T0, distance, '-.', 'LineWidth', 2 );
 hline(earth_moon_hill_radius);
 
 datetick('x','mmm.dd,yy' );
-
-
 
 %%
 
@@ -142,7 +140,17 @@ end
 
 close all; clc;
 
-fig = plotPorkChop(dvApprox, meshTDEP, meshTOF, [0.5, 9]);
+cleaned_str = '(2006) RH120';
+
+fig00 = plotPorkChop(dvApprox, meshTDEP, meshTOF, [0.5, 9]);
+
+target_folder = '/results/Images/transASTRA_analysis/';
+
+name_fig_0 = ['orb_approx_to_re_'];
+
+fprintf( 'Saving figures... \n' )
+exportgraphics(fig00, [pwd target_folder name_fig_0 '_' cleaned_str '.png' ], 'Resolution', 1200);
+fprintf( 'Done! \n' );
 
 %%
 
@@ -180,22 +188,22 @@ abs(dvtrue - minVal)
 
 %%
 
-tarr = date2mjd2000( [ 2028 3 22 12 0 0 ] );
-tof  = 100;
-
-tdep = tarr - tof;
-
-customEphemerides = INPUT.customEphemerides;
-
-[rrga1, vvga1] = customEphemerides( seq(1), tdep, 1 );
-[rrga2, vvga2] = customEphemerides( seq(2), tarr, 1 );
-
-Nrev = [ 0 0 ];
-
-[vvd, vva] = lambertMR_MEXIFY(rrga1, rrga2, tof*86400, mu, Nrev(1), Nrev(1))
-
-vinfd = norm(vvd - vvga1)
-vinfa = norm(vvga2 - vva)
+% tarr = date2mjd2000( [ 2028 3 22 12 0 0 ] );
+% tof  = 100;
+% 
+% tdep = tarr - tof;
+% 
+% customEphemerides = INPUT.customEphemerides;
+% 
+% [rrga1, vvga1] = customEphemerides( seq(1), tdep, 1 );
+% [rrga2, vvga2] = customEphemerides( seq(2), tarr, 1 );
+% 
+% Nrev = [ 0 0 ];
+% 
+% [vvd, vva] = lambertMR_MEXIFY(rrga1, rrga2, tof*86400, mu, Nrev(1), Nrev(1))
+% 
+% vinfd = norm(vvd - vvga1)
+% vinfa = norm(vvga2 - vva)
 
 %%
 
@@ -219,10 +227,10 @@ epsMax = 0.99;
 etaMin = []; etaMax = [];
 rpMin  = [];  rpMax = [];
 
-lb               = [ t0Min TOFMin dv1Min dvsMin epsMin etaMin rpMin ];
-ub               = [ t0Max TOFMax dv1Max dvsMax epsMax etaMax rpMax ];
+lb = [ t0Min TOFMin dv1Min dvsMin epsMin etaMin rpMin ];
+ub = [ t0Max TOFMax dv1Max dvsMax epsMax etaMax rpMax ];
 
-costFun    = @(x) wrap_mga_nDSM(seq, x, NmanLeg, INPUT.customEphemerides);
+costFun    = @(x) wrap_mga_nDSM_transastra_to_go(seq, x, NmanLeg, INPUT.customEphemerides);
 
 %%
 
@@ -239,7 +247,45 @@ end
 minsol      = sol(row,:);
 
 close all; clc;
-[DV, dv, t0, tofs, MAT, output] = wrap_mga_nDSM(seq, minsol, NmanLeg, INPUT.customEphemerides, 1);
+[DV, dv, t0, tofs, MAT, output] = wrap_mga_nDSM_transastra_to_go(seq, minsol, NmanLeg, INPUT.customEphemerides, 1);
+
+name = [pwd '/results/Images/transASTRA_analysis/traj_to_go_fast_' cleaned_str '.png'];
+exportgraphics(gcf, name, 'Resolution', 1200);
+
+% plotPLTS_tt(3, 0, 2*365.25, 1, customEphemerides, 1, 'b', {'Earth'}, 2)
+% legend('Location', 'Best')
+
+%%
+
+NmanLeg = 1;
+
+t0Min = date2mjd2000( [2028 9 30 12 0 0] );
+t0Max = date2mjd2000( [2028 10 31 12 0 0] );
+
+TOFMin = 10;
+TOFMax = 90;
+
+dv1Min = [ 0 0 0 ];
+dv1Max = [ 1 2*pi 2*pi ];
+
+dvsMin = [ 0 0 0 ];
+dvsMax = [ 0 0 0 ];
+
+epsMin = 0.01;
+epsMax = 0.99;
+
+etaMin = []; etaMax = [];
+rpMin  = [];  rpMax = [];
+
+lb = [ t0Min TOFMin dv1Min dvsMin epsMin etaMin rpMin ];
+ub = [ t0Max TOFMax dv1Max dvsMax epsMax etaMax rpMax ];
+
+costFun    = @(x) wrap_mga_nDSM_transastra_to_re(seq, x, NmanLeg, INPUT.customEphemerides);
+
+name = [pwd '/results/Images/transASTRA_analysis/traj_to_re_fast_' cleaned_str '.png'];
+exportgraphics(gcf, name, 'Resolution', 1200);
+
+[DV, dv, t0, tofs, MAT, output] = wrap_mga_nDSM_transastra_to_re(seq, minsol, NmanLeg, INPUT.customEphemerides, 1);
 
 %%
 

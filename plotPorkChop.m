@@ -57,7 +57,7 @@ if ~isnan(min(min(DV0)))
     hcb.Ticks        = V_inf_levels;
     
     % set(gca, 'YDir','reverse');
-    ylabel('Time of flight - days'); xlabel('Departing date');
+    ylabel('Time of flight [days]'); xlabel('Departing date');
     
     % datetick('y','mmm.dd,yy' );
     datetick('x','mmm.dd,yy' );
