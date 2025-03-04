@@ -41,7 +41,7 @@ indices        = find(ismember(ASTEROID_to_ret, missing_values));
 
 min_days_asteroid  = 30;
 
-tofy_max           = 1;
+tofy_max           = Inf;
 
 vinf_Earth_dep_min = 10;
 vinf_Earth_arr_min = 3;
@@ -49,7 +49,7 @@ vinf_Earth_arr_min = 3;
 dv_ast_arr_min     = 2;
 dv_ast_dep_min     = 2;
 
-min_dep_date       = date2mjd2000( [ 2028 1 1 12 0 0 ] );
+min_dep_date       = date2mjd2000( [ 2027 1 1 12 0 0 ] );
 max_dep_date       = date2mjd2000( [ 2028 12 31 12 0 0 ] );
 
 max_ret_date       = date2mjd2000( [ 2028 12 31 12 0 0 ] );
@@ -180,7 +180,7 @@ for inds = 1:length(SOLUTIONS_to_go)
             SAMPLE_RETURN(inds).tof_days_to_go = tof_days_to_go;
             SAMPLE_RETURN(inds).tof_days_to_re = tof_days_to_re;
             
-            save -v7.3 SAMPLE_RETURN SAMPLE_RETURN
+            save -v7.3 SAMPLE_RETURN_2027 SAMPLE_RETURN
 
             st = 1;
 
@@ -409,6 +409,7 @@ cspice_furnsh( { [MICE_path '/' num2str(max(seq_to_go)) '.bsp'],...
     [MICE_path '/de435.bsp'], [MICE_path '/naif0012.tls'] } );
 
 [ min_cost, row ]  = min( cost_tot );
+[ min_cost, row ]  = min( [ vinf_dep_to_re + vinf_arr_to_re ] );
 
 % indxs = find( cost_tot < 2.53 & leg_to_go(:,2) >= date2mjd2000([2028 4 1 0 0 0]) );
 % row   = indxs(1);

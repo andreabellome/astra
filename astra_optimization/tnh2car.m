@@ -1,4 +1,4 @@
-function x_car = tnh2car(x_tnh,s_car)
+function [x_car, A] = tnh2car(x_tnh,s_car)
 
 % tnh2car.m - Vector reference frame transformation:
 % Tangential-normal-h to Cartesian reference frame.

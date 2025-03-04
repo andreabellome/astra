@@ -207,13 +207,19 @@ abs(dvtrue - minVal)
 
 %%
 
+close all; clc;
+
 NmanLeg = 1;
 
 t0Min = date2mjd2000( [2028 7 1 12 0 0] );
 t0Max = date2mjd2000( [2028 8 1 12 0 0] );
 
+t0Min   = date2mjd2000( [ 2027 10 1 0 0 0 ] );
+t0Max   = date2mjd2000( [ 2028 1 1 0 0 0 ] );
+tfMax   = ( date2mjd2000( [ 2028 1 1 0 0 0 ] ) + 150 );
+
 TOFMin = 1;
-TOFMax = 30;
+TOFMax = 200;
 
 dv1Min = [ 0 0 0 ];
 dv1Max = [ 5 2*pi 2*pi ];
@@ -230,27 +236,27 @@ rpMin  = [];  rpMax = [];
 lb = [ t0Min TOFMin dv1Min dvsMin epsMin etaMin rpMin ];
 ub = [ t0Max TOFMax dv1Max dvsMax epsMax etaMax rpMax ];
 
+seq        = [ 3 3403148 ];
 costFun    = @(x) wrap_mga_nDSM_transastra_to_go(seq, x, NmanLeg, INPUT.customEphemerides);
 
-%%
+% --> optimize using PSO
+[minsol, sol, fval] = wrap_optimization_pso( costFun, lb, ub, 1 );
 
-% --> optimize
-maxit       = 1;
-optionsPSO = optPSO(lb, ub);
-sol        = zeros(maxit, length(lb));
-fval       = zeros(maxit, 1);
-for ind = 1:maxit
-    [sol(ind,:), fval(ind,:)] = particleswarm(costFun, length(lb), lb, ub, optionsPSO);
-end
-
-[minc, row] = min(fval);
-minsol      = sol(row,:);
-
+% --> plot the result
 close all; clc;
 [DV, dv, t0, tofs, MAT, output] = wrap_mga_nDSM_transastra_to_go(seq, minsol, NmanLeg, INPUT.customEphemerides, 1);
 
-name = [pwd '/results/Images/transASTRA_analysis/traj_to_go_fast_' cleaned_str '.png'];
-exportgraphics(gcf, name, 'Resolution', 1200);
+dv1                 = extract_dv1( minsol, seq );
+[ rrga1, vvga1 ]    = INPUT.customEphemerides(seq(1), t0);
+
+vvinf               = v02dv1(dv1, rrga1, vvga1);
+vvsc                = vvga1 + vvinf;
+[Dec, Asc]          = findDeclinationLaunch(vvsc, vvga1);
+declination_deg     = rad2deg(Dec)
+right_ascension_deg = rad2deg(Asc)
+
+% name = [pwd '/results/Images/transASTRA_analysis/traj_to_go_fast_' cleaned_str '.png'];
+% exportgraphics(gcf, name, 'Resolution', 1200);
 
 % plotPLTS_tt(3, 0, 2*365.25, 1, customEphemerides, 1, 'b', {'Earth'}, 2)
 % legend('Location', 'Best')
@@ -263,9 +269,9 @@ t0Min = date2mjd2000( [2028 9 30 12 0 0] );
 t0Max = date2mjd2000( [2028 10 31 12 0 0] );
 
 TOFMin = 10;
-TOFMax = 90;
+TOFMax = 200;
 
-dv1Min = [ 0 0 0 ];
+dv1Min = [ 1e-3 0 0 ];
 dv1Max = [ 1 2*pi 2*pi ];
 
 dvsMin = [ 0 0 0 ];
@@ -280,12 +286,25 @@ rpMin  = [];  rpMax = [];
 lb = [ t0Min TOFMin dv1Min dvsMin epsMin etaMin rpMin ];
 ub = [ t0Max TOFMax dv1Max dvsMax epsMax etaMax rpMax ];
 
+seq        = [ 3403148 3 ];
 costFun    = @(x) wrap_mga_nDSM_transastra_to_re(seq, x, NmanLeg, INPUT.customEphemerides);
 
-name = [pwd '/results/Images/transASTRA_analysis/traj_to_re_fast_' cleaned_str '.png'];
-exportgraphics(gcf, name, 'Resolution', 1200);
+[minsol, sol, fval] = wrap_optimization_pso( costFun, lb, ub, 1 );
 
+% name = [pwd '/results/Images/transASTRA_analysis/traj_to_re_fast_' cleaned_str '.png'];
+% exportgraphics(gcf, name, 'Resolution', 1200);
+
+close all; clc;
 [DV, dv, t0, tofs, MAT, output] = wrap_mga_nDSM_transastra_to_re(seq, minsol, NmanLeg, INPUT.customEphemerides, 1);
+
+dv1                 = extract_dv1( minsol, seq );
+[ rrga1, vvga1 ]    = INPUT.customEphemerides(seq(1), t0);
+
+vvinf               = v02dv1(dv1, rrga1, vvga1);
+vvsc                = vvga1 + vvinf;
+[Dec, Asc]          = findDeclinationLaunch(vvsc, vvga1);
+declination_deg     = rad2deg(Dec)
+right_ascension_deg = rad2deg(Asc)
 
 %%
 

@@ -9,6 +9,7 @@ try clear INPUT; catch; end; clc;
 % --> sequence to be optimized
 INPUT.idcentral = 1; % --> central body (Sun in this case)
 seq             = [ 3403148 3 ]; res = []; % --> (2006 RH120)
+% seq             = [ 3 3403148 ]; res = []; % --> (2006 RH120)
 
 %%%%%%%%%% multi-rev. options %%%%%%%%%%
 maxrev                        = 1;                                                          % --> max. number of revolutions (round number)
@@ -18,9 +19,9 @@ chosenRevs                    = differentRuns_v2(seq, maxrev);                  
 %%%%%%%%%% multi-rev. options %%%%%%%%%%
 
 %%%%%%%%%% set departing options %%%%%%%%%%
-t0 = date2mjd2000([2028 1 1 12 0 0]); % --> initial date range (MJD2000)
-tf = t0 + 5*365.25;                  % --> final date range (MJD2000)
-dt = 2;                            % --> step size (days)
+t0 = date2mjd2000([2027 1 1 12 0 0]); % --> initial date range (MJD2000)
+tf = t0 + 6*365.25;                   % --> final date range (MJD2000)
+dt = 2;                               % --> step size (days)
 INPUT.depOpts = [t0 tf dt];
 %%%%%%%%%% set departing options %%%%%%%%%%
 
@@ -34,7 +35,7 @@ INPUT.tstep    = dt;         % --> step size for Time of flight
 %%%%%%%%%% set options %%%%%%%%%%
 
 % --> specify custom bounds for TOFs and VINFs
-INPUT.TOF_LIM = [[10 500]];
+INPUT.TOF_LIM = [[5 500]];
 INPUT.vInfLim = [ 0 Inf; 0 Inf ]; % --> PL1, PL2, PL3, ...   
 
 %%

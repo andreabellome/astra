@@ -44,12 +44,18 @@ try
 
 %     DV = dv(end);
 
-    if dv(2) > 4
-        DV = 1e99;
+    tf = t0 + sum(tofs);
+
+    if tf < 10376.5
+        if dv(2) > 4 || tf > 10376.5
+            DV = 1e99;
+        else
+            DV = dv(end);
+        end
+        DV = sum(dv(2:end));
     else
-        DV = dv(end);
+        DV = 1e99;
     end
-    DV = sum(dv(2:end));
 
 %     muPlanet = 62.68;
 %     sma      = 2487.3;

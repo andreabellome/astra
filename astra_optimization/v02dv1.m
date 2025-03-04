@@ -8,6 +8,6 @@ R_T=[cos(psi), -cos(theta)*sin(psi),  sin(theta)*sin(psi);...
      sin(psi),  cos(theta)*cos(psi), -sin(theta)*cos(psi);...
         0    ,       sin(theta)    ,       cos(theta)    ];
 v_rel_tnh = R_T*[0;mod_v;0]; % Relative velocity in the tangent-normal-binormal (h) reference frame
-dv1       = tnh2car(v_rel_tnh,[xp1,vp1])'; % --> this is the initial DV
+dv1       = tnh2car(v_rel_tnh, [xp1, vp1] )'; % --> this is the initial DV
 
 end
