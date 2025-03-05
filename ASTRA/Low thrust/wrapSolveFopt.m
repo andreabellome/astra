@@ -56,7 +56,7 @@ if max(abs(Fsol)) <= param.tol
     if param.plot == true
         transfer = postProcessLT( time, states, @propagateEopt_MEXIFY_mex, param );
         hold on;
-        plotLT_Th( transfer, param, 1 );
+        plotLT_Th( transfer, param, 1, 'Energy-optimal solution' );
     end
 
 end

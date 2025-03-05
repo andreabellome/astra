@@ -1,4 +1,4 @@
-function figTHRmag = plotLT_Th( transfer, param, holdon )
+function figTHRmag = plotLT_Th( transfer, param, holdon, name )
 
 % DESCRIPTION
 % This function generates a plot of the thrust magnitude over time for a 
@@ -12,6 +12,8 @@ function figTHRmag = plotLT_Th( transfer, param, holdon )
 % - holdon   : optional binary input. If set to 0 (default), a new figure is 
 %              created for the plot. If set to 1, the plot is overlaid onto 
 %              the current figure.
+% - name     : optional string input. This is the name of the curve for the
+%              legend display.
 %
 % OUTPUT
 % - figTHRmag : handle to the figure containing the thrust magnitude plot.
@@ -20,7 +22,13 @@ function figTHRmag = plotLT_Th( transfer, param, holdon )
 
 if nargin == 2
     holdon = 0;
+    name = ['\rho: ' num2str(param.rho) ];
 elseif nargin == 3
+    if isempty(holdon)
+        holdon = 0;
+    end
+    name = ['\rho: ' num2str(param.rho) ];
+elseif nargin == 4
     if isempty(holdon)
         holdon = 0;
     end
@@ -40,7 +48,7 @@ end
 tt    = transfer(:,1);
 thMag = transfer(:,9);
 
-name = ['\rho: ' num2str(param.rho) ];
+% name = ['\rho: ' num2str(param.rho) ];
 
 % --> start: plot the mass evolution
 figure(fig);
