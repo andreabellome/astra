@@ -236,12 +236,13 @@ param.tEnd   = tEnd;
 param.x0     = initState;
 param.xf     = finState;
 
-param.plot    = true;
-param.rhoLim  = 0.0001;
-param.rho     = 1;
-param.gamma   = 0.1;
-param.iterMax = 5;
-param.tol     = 1e-8;
+param.rhoGuess1 = 0.75;
+param.plot      = true;
+param.rhoLim    = 0.0001;
+param.rho       = 1;
+param.gamma     = 0.1;
+param.iterMax   = 5;
+param.tol       = 1e-8;
 
 while param.xf(end) < param.x0(end)
     param.xf(end) = param.xf(end) + 2*pi;
