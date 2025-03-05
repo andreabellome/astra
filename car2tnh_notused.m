@@ -1,4 +1,4 @@
-function x_car = car2tnh(x_tnh,s_car)
+function x_car = car2tnh_notused(x_tnh,s_car)
 
 x_tnh = x_tnh(:);
 s = s_car(:);

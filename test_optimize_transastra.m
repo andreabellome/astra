@@ -28,7 +28,7 @@ cspice_furnsh( { [MICE_path '/' num2str(max(seq)) '.bsp'],...                   
 
 % --> define custom ephemerides
 INPUT.customEphemerides = @EphSS_NEOs;
-customEphemerides = INPUT.customEphemerides;
+customEphemerides       = INPUT.customEphemerides;
 
 %%
 
@@ -53,14 +53,18 @@ for indt0 = 1:length(T0)
 
 end
 
-earth_hill_radius       = 1.496e8*((5.972e24)/1.989e30*3)^(1/3);
-earth_moon_hill_radius  = 1.496e8*((5.972e24+7.348e24)/1.989e30*3)^(1/3);
+earth_hill_radius       = 1.496e8*((5.972e24)/(1.989e30*3))^(1/3);
+earth_moon_hill_radius  = 1.496e8*((5.972e24+7.348e24)/(1.989e30*3))^(1/3);
+
+earth_soi = 1.496e8*((5.972e24)/(1.989e30))^(2/5);
 
 figure( 'Color', [1 1 1] );
 hold on; grid on;
 plot( T0, distance, '-.', 'LineWidth', 2 );
 
-hline(earth_moon_hill_radius);
+hline(3e6);
+
+hline(earth_soi);
 
 datetick('x','mmm.dd,yy' );
 
@@ -265,8 +269,14 @@ right_ascension_deg = rad2deg(Asc)
 
 NmanLeg = 1;
 
+t0 = date2mjd2000( [ 2028 8 1 12 0 0 ] );
+tof1 = 30;
+tstay = 30;
+mjd20002date( t0 + tof1 + tstay )
+
+
 t0Min = date2mjd2000( [2028 9 30 12 0 0] );
-t0Max = date2mjd2000( [2028 10 31 12 0 0] );
+t0Max = date2mjd2000( [2028 10 1 12 0 0] );
 
 TOFMin = 10;
 TOFMax = 200;

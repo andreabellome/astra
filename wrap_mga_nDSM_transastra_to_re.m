@@ -38,7 +38,7 @@ x(1:nfbs) = [];
 try
     [DV, dv, MAT, output] = mga_nDSM_customEph(seq, t0, tofs, dv1, dvs, eps, eta, rps, NmanLeg, customEphemerides, plotsol);
 
-    [ dv_end ] = deltaV_hyperbola( dv(end), 1e6, 3e6, 398600.446192176 );
+    [ dv_end ] = deltaV_hyperbola( dv(end), 500e3, 1e6, 398600.446192176 );
     dv(end)    = dv_end;
     DV         = sum(dv);
 

@@ -261,8 +261,8 @@ ecc_gto = eccentricity( rp_gto, ra_gto );
 vp_gto  = vel_peri( rp_gto, ra_gto, mu_earth );
 va_gto  = vel_apo( rp_gto, ra_gto, mu_earth );
 
-[~, vpip]          = Vinf2Hyperbola(vinf_dep_to_go, rp_gto, mu_earth);
-dv_orbit_dep_to_go = vpip - vp_gto;
+% --> Delta-v to leave the Earth from GTO
+dv_orbit_dep_to_go = deltaV_hyperbola( vinf_dep_to_go, rp_gto, ra_gto, mu_earth );
 
 fig00 = figure( 'Color', [1 1 1] );
 hold on; grid on;
@@ -300,17 +300,24 @@ fprintf( 'Done! \n' );
 % --> compute the DV for the target orbit around Earth
 [~, mu_earth] = constants(1, 3);
 
-rpt = 1e6;
-rat = 3e6;
+rpt = rp_gto;
+rat = 384e3;
+
+% --> check if the radius is 
+rsoi = sphere_of_influence( 1, 3 );
+if rat >= rsoi || rpt >= rsoi
+    warning( 'on','all' );
+    warning( 'Apoapsis is greater than the SOI!!' );
+    warning( 'off','all' );
+end
 
 sma = semi_major_axis( rpt, rat );
 ecc = eccentricity( rpt, rpt );
 vp  = vel_peri( rpt, rat, mu_earth );
 va  = vel_apo( rpt, rat, mu_earth );
 
-[delta, vpip, eip, Eip, aip] = Vinf2Hyperbola(vinf_arr_to_re, rpt, mu_earth);
-
-dv_orbit_arr_to_re = vpip - vp;
+% [delta, vpip, eip, Eip, aip] = Vinf2Hyperbola(vinf_arr_to_re, rpt, mu_earth);
+dv_orbit_arr_to_re           = deltaV_hyperbola( vinf_arr_to_re, rpt, rat, mu_earth );
 
 fig0 = figure( 'Color', [1 1 1] );
 hold on; grid on;
