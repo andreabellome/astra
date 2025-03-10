@@ -110,7 +110,7 @@ close all; clc;
 
 % --> parameters
 idcentral   = 1;          % --> 1) central body is the Sun
-Tmax        = 0.32;       % --> max. thrust                       [N]
+Tmax        = 0.1;        % --> max. thrust                       [N]
 Isp         = 3000;       % --> specific impulse                  [s]
 m0          = 4000;       % --> initial mass                      [kg]           
 g0          = 9.80665;    % --> Earth acceleration at sea level   [m/s]
