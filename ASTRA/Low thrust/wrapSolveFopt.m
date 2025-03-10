@@ -36,11 +36,15 @@ end
 
 % --> start: STEP 0 --> first try energy-optimal guess with zero guess
 fprintf( "Computing energy-optimal profile \n" );
-initiallamba                = [zeros(1,7)];
-[initiallamba, Fsol, flag]  = fsolve(@(lambda0)...
-    propagateState_vA(lambda0, @propagateEopt_MEXIFY_mex,...
-    param),initiallamba,param.fsolveoptions);
-initiallambaEOPT = initiallamba;
+try
+    initiallamba                = [zeros(1,7)];
+    [initiallamba, Fsol, flag]  = fsolve(@(lambda0)...
+        propagateState_vA(lambda0, @propagateEopt_MEXIFY_mex,...
+        param),initiallamba,param.fsolveoptions);
+    initiallambaEOPT = initiallamba;
+catch
+    Fsol = 1e99;
+end
 
 if max(abs(Fsol)) <= param.tol
     
