@@ -83,7 +83,11 @@ if INPUT.parallel == true
         tof        = MAT(indm,4) - MAT(indm,2);
         
         % --> solve the LP
-        [vvd, vva] = lambertMR_MEXIFY_mex(rr1, rr2, tof*86400, mu, optMR(1), optMR(2));
+        try
+            [vvd, vva]         = lambertMR_MEXIFY_mex(rr1, rr2, tof*86400, mu, optMR(1), optMR(2));
+        catch
+            [~,~,~,~,vvd, vva] = lambertMR_CER(rr1, rr2, tof*86400, mu, 0, optMR(1), optMR(2), 0);
+        end
 
         % --> apply DP principles
         indxs   = find(LEGSnext(:,end-1) == pl1 & LEGSnext(:,end) == t1);
@@ -123,7 +127,12 @@ else
         tof        = MAT(indm,4) - MAT(indm,2);
         
         % --> solve the LP
-        [vvd, vva] = lambertMR_MEXIFY_mex(rr1, rr2, tof*86400, mu, optMR(1), optMR(2));
+        try
+            [vvd, vva]         = lambertMR_MEXIFY_mex(rr1, rr2, tof*86400, mu, optMR(1), optMR(2));
+        catch
+            [~,~,~,~,vvd, vva] = lambertMR_CER(rr1, rr2, tof*86400, mu, 0, optMR(1), optMR(2), 0);
+        end
+
 
         % --> apply DP principles
         indxs   = find(LEGSnext(:,end-1) == pl1 & LEGSnext(:,end) == t1);
