@@ -1,4 +1,7 @@
-function [DV, dv, MAT, output] = mga_nDSM_customEph(seq, t0, tofs, dv1, dvs, eps, eta, rps, NmanLeg, customEphemerides, plotsol)
+function [DV, dv, MAT, output] = mga_nDSM_customEph(seq, t0, tofs, dv1, dvs, eps, eta, rps, struc_revs_man, customEphemerides, plotsol)
+
+NmanLeg = struc_revs_man.NmanLeg;
+revs    = struc_revs_man.revs;
 
 if nargin == 9
     customEphemerides = @EphSS_cartesian;
@@ -95,6 +98,23 @@ end
 [xp1, vp1] = customEphemerides( MAT(1,1), MAT(1,2) );
 MAT(1,5:7) = v02dv1(dv1, xp1, vp1);
 
+if norm(dv1) == 0 % --> then there is no manoeuvre
+    
+    MAT_p              = MAT;
+    indxs              = find(MAT_p(:,3) < 1e99);
+    indxs              = indxs(1);
+
+    MAT_p(1:indxs-1,:) = [];
+    MAT_p(1,1:2)       = MAT(1,1:2);
+    
+    if revs(1) == 0
+        nrev_first_leg = [ 0 0 ];
+    else
+        nrev_first_leg = arrayfun(@(x) str2double(x), num2str(revs(1)));
+    end
+    MAT = MAT_p;
+end
+
 dv = [];
 for indm = 1:size(MAT,1)
 
@@ -117,7 +137,7 @@ for indm = 1:size(MAT,1)
             rrd        = rrga1;
             rra        = rrga2;
 
-            [vvd, vva] = lambertMR_MEXIFY(rrd, rra, (t2 - t1)*86400, mu, 0, 0);
+            [vvd, vva] = lambertMR_MEXIFY(rrd, rra, (t2 - t1)*86400, mu, nrev_first_leg(1), nrev_first_leg(2));
             dv         = [ dv; norm(vvd - vvga1) ];
 
             if indm == size(MAT,1)

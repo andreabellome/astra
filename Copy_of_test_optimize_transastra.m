@@ -13,7 +13,7 @@ addpath(genpath(astra_opt_path)); % --> always include this
 %         126331554.492258	-83416971.1296190	0	30.3615543521565	17.6280672494083	-0.365668684224592	3	-134.500000000000	16.0968190941379	0.658951169481211	51	NaN	NaN	NaN	NaN	NaN
 %         266187532.507116	706946599.622507	-8874306.82949551	-3.64600959999793	11.1058937908336	-0.0874493787117127	5	367.500000000000	10.5436321370543	0.125502222171885	502	NaN	NaN	NaN	NaN	NaN
 %        -354519980.553090	1304210598.47627	-8676311.97379129	-5.39848604507999	0.693955660111735	0.0427963357571683	6	1607.50000000000	5.51743490947101	0.0933469933208819	1240	NaN	NaN	NaN	NaN	NaN];
-% revs = [ 0 0 0 0 0 ]; res = []; INPUT.customEphemerides = @EphSS_cartesian;
+% revs = [ 0 0 0 0 0 ]; res = []; INPUT.customEphemerides = @EphSS_cartesian; idcentral = 1; INPUT.idcentral = idcentral;
 
 % -- EVVEJS GO 10y (CASE 2 , maxDEF = 2)
 path = [95882013.1410819	112841173.625676	0	-19.0532136867464	18.6454670759556	1.33708506978717	3	-780.500000000000	4.37706569165528	0	NaN	10.6244229538681	NaN	4.37706569165528	4.22203334902512	9.67556468172485
@@ -22,62 +22,73 @@ path = [95882013.1410819	112841173.625676	0	-19.0532136867464	18.6454670759556	1
         126331554.492258	-83416971.1296190	0	29.7982607311388	17.6392009259240	-0.508725518057614	3	-134.500000000000	15.5927194504147	0.0691467780447326	54	NaN	NaN	NaN	NaN	NaN
         160900297.934110	742710038.065352	-6667751.08538494	-5.74719179261507	7.44460217383964	-0.0286652281350589	5	463.500000000000	8.25805572223440	0.00580444582955053	598	NaN	NaN	NaN	NaN	NaN
         -1161237706.06952	745006175.919138	33168418.2494910	-2.19733509516937	-5.86667230124414	0.0805845654609753	6	2753.50000000000	4.22203334902512	0.00362725300177402	2290	NaN	NaN	NaN	NaN	NaN];
-revs = [ 0 0 0 0 0 ]; INPUT.customEphemerides = @EphSS_cartesian;
- 
-% % --> EVEMEJ
-% path = [-76334299.4312702	-130732017.274372	0	23.2728724026795	-13.5856921471995	1.65663579639871	3	8540.50000000000	3.00410543379235	0	NaN	9.01819367002004	NaN	3.00410543379235	5.57290557463875	6.50513347022587
-%         40145027.9116257	100129151.837831	-972584.984234705	-34.8080783553674	14.8028415323870	-2.30674440671013	2	8692.50000000000	5.25059099882475	0	152	NaN	NaN	NaN	NaN	NaN
-%         140111145.166747	-56334396.0682418	0	2.20084013297227	29.8483681852273	-0.257079598175526	3	9008.50000000000	8.74648062860619	0.413483773556785	316	NaN	NaN	NaN	NaN	NaN
-%         -151254658.253900	194034559.363643	7776113.68944067	-23.4033007584764	-4.41323122537737	-0.806855690346797	4	9172.50000000000	9.93767589962071	0.0128302993723590	164	NaN	NaN	NaN	NaN	NaN
-%         67683770.4888032	131263396.467816	0	-25.2945340380378	24.6170210602324	1.17545514269314	3	9824.50000000000	11.2658075273830	0.0117060408938698	652	NaN	NaN	NaN	NaN	NaN
-%         -627180430.004490	-515970308.477369	16184675.9619501	5.05303226255913	-4.84943937222679	-0.338527219679586	5	10916.5000000000	5.57290557463875	0.00316254776592828	1092	NaN	NaN	NaN	NaN	NaN];
-% revs = [ 0 0 0 0 0 ]; res = []; INPUT.customEphemerides = @EphSS_cartesian;
+revs = [ 0 0 0 0 0 ]; res = []; INPUT.customEphemerides = @EphSS_cartesian; idcentral = 1; INPUT.idcentral = idcentral;
+
+% --> EVEMEJ
+path = [-76334299.4312702	-130732017.274372	0	23.2728724026795	-13.5856921471995	1.65663579639871	3	8540.50000000000	3.00410543379235	0	NaN	9.01819367002004	NaN	3.00410543379235	5.57290557463875	6.50513347022587
+        40145027.9116257	100129151.837831	-972584.984234705	-34.8080783553674	14.8028415323870	-2.30674440671013	2	8692.50000000000	5.25059099882475	0	152	NaN	NaN	NaN	NaN	NaN
+        140111145.166747	-56334396.0682418	0	2.20084013297227	29.8483681852273	-0.257079598175526	3	9008.50000000000	8.74648062860619	0.413483773556785	316	NaN	NaN	NaN	NaN	NaN
+        -151254658.253900	194034559.363643	7776113.68944067	-23.4033007584764	-4.41323122537737	-0.806855690346797	4	9172.50000000000	9.93767589962071	0.0128302993723590	164	NaN	NaN	NaN	NaN	NaN
+        67683770.4888032	131263396.467816	0	-25.2945340380378	24.6170210602324	1.17545514269314	3	9824.50000000000	11.2658075273830	0.0117060408938698	652	NaN	NaN	NaN	NaN	NaN
+        -627180430.004490	-515970308.477369	16184675.9619501	5.05303226255913	-4.84943937222679	-0.338527219679586	5	10916.5000000000	5.57290557463875	0.00316254776592828	1092	NaN	NaN	NaN	NaN	NaN];
+revs = [ 0 0 0 0 0 ]; res = []; INPUT.customEphemerides = @EphSS_cartesian; idcentral = 1; INPUT.idcentral = idcentral;
+
+% --> MERCURY
+path = [ 94291826.1071534	-119025638.282577	0	20.0778714782710	16.2934405258686	-1.44466310969689	3	2038	3.77363084179249	0	NaN	11.4055073660187	NaN	3.77363084179249	3.81155730148189	5.84804928131417
+        -103519158.171651	-29876705.1044851	5570416.83652407	3.05487152031187	-37.0448359607597	1.15150680393998	2	2480	7.51163408558769	0	442	NaN	NaN	NaN	NaN	NaN
+        -66109723.6132968	-85790081.8530333	2651020.83245534	25.2632904213834	-13.6694541664251	-1.64421856674665	2	2952	8.18555275343221	1.23972958146915	472	NaN	NaN	NaN	NaN	NaN
+        53306847.3025174	-2298488.98996823	-5088229.41679820	-10.6516292886920	55.9788545874131	3.30867748779935	1	3286	6.31513785801622	0.394622409698778	334	NaN	NaN	NaN	NaN	NaN
+        47729952.3576664	15458485.1653753	-3128834.41387822	-25.2253522525467	53.4075160939301	6.67030343775173	1	3554	4.99245521215563	1.09443599923291	268	NaN	NaN	NaN	NaN	NaN
+        51085790.9704228	7297356.28511674	-4103280.61673098	-18.4763859167580	54.7595340337823	6.16670311946911	1	3816	4.91666506166948	0.193070415475354	262	NaN	NaN	NaN	NaN	NaN
+        35563029.8365665	31567492.7783662	-699207.059392240	-43.2155963737057	42.0570050219717	7.39922291584013	1	4174	3.81155730148189	0.898460816868162	358	NaN	NaN	NaN	NaN	NaN ];
+revs = [ 10 31 21	21 10 31 ]; res = []; INPUT.customEphemerides = @EphSS_cartesian; idcentral = 1; INPUT.idcentral = idcentral;
 
 %%
 
-idcentral = 1;
-
-% load('wksp_ceres_2041_emC.mat');
-load('wksp_ceres_2041_eveejC.mat');
-% load('wksp.mat'); revs = [ 0 0 ];
-
-load('wksp_transastra.mat');
-to_go = true;
-if to_go == true
-    path = path_to_go;
-    revs = revs_to_go(row,:);
-else
-    path = path_to_re;
-    revs = revs_to_re(row,:);
-end
-
-% --> load custom ephemerides
-MICE_path = './MICE_TOOLBOX' ;
-addpath(genpath(MICE_path)); % --> always include this
-
-astra_opt_path = './astra_optimization';
-addpath(genpath(astra_opt_path)); % --> always include this
-
-% --> load the kernels
-cspice_furnsh( { [MICE_path '/' num2str(max(seq)) '_new.bsp'],...                         % --> this is for the asteroid
-                 [MICE_path '/de435.bsp'],...                                         % --> this is for Earth
-                 [MICE_path '/mar097.bsp'],...                                        % --> this is for Mars
-                 [MICE_path '/naif0012.tls'] } );                                     % --> this is for time system
+% idcentral = 1;
+% 
+% % load('wksp_ceres_2041_emC.mat');
+% load('wksp_ceres_2041_eveejC.mat');
+% % load('wksp.mat'); revs = [ 0 0 ];
+% 
+% load('wksp_transastra.mat');
+% to_go = true;
+% if to_go == true
+%     path = path_to_go;
+%     revs = revs_to_go(row,:);
+% else
+%     path = path_to_re;
+%     revs = revs_to_re(row,:);
+% end
+% 
+% % --> load custom ephemerides
+% MICE_path = './MICE_TOOLBOX' ;
+% addpath(genpath(MICE_path)); % --> always include this
+% 
+% astra_opt_path = './astra_optimization';
+% addpath(genpath(astra_opt_path)); % --> always include this
+% 
+% % --> load the kernels
+% cspice_furnsh( { [MICE_path '/' num2str(max(seq)) '_new.bsp'],...                         % --> this is for the asteroid
+%                  [MICE_path '/de435.bsp'],...                                         % --> this is for Earth
+%                  [MICE_path '/mar097.bsp'],...                                        % --> this is for Mars
+%                  [MICE_path '/naif0012.tls'] } );                                     % --> this is for time system
 
 %%
 
 % --> number of DSM w.r.t. the number of revolutions per leg
 [NmanLeg] = revs2NmanLeg(revs);
+% NmanLeg(NmanLeg ~= 1)     = NmanLeg(NmanLeg ~= 1) - 1;
 
 % --> set the bounds
-t0days      = 10;
-tofperc     = 20/100;
+t0days      = 0;
+tofperc     = 1/100;
 rpperc      = 90/100;
 ksperc      = 90/100;
-optFirstMan = 1;
-vinfMin     = 3;
-vinfMax     = 5;
-dvsMaxMag   = 0.8;
+optFirstMan = 0;
+vinfMin     = 2;
+vinfMax     = 3.8;
+dvsMaxMag   = 0.5;
 
 % --> find lower/upper bounds
 [ t0Min, t0Max, TOFMin, TOFMax, rpMin, rpMax, etaMin, etaMax, seq, path ] = ...
@@ -88,12 +99,20 @@ dvsMaxMag   = 0.8;
 lb               = [ t0Min TOFMin dv1Min dvsMin epsMin etaMin rpMin ];
 ub               = [ t0Max TOFMax dv1Max dvsMax epsMax etaMax rpMax ];
 
-costFun    = @(x) wrap_mga_nDSM(seq, x, NmanLeg, INPUT.customEphemerides);
+struc_revs_man.revs       = revs;
+struc_revs_man.NmanLeg    = NmanLeg;
+struc_revs_man.vinfMax    = vinfMax;
+struc_revs_man.vinfMaxArr = path(end,9);
+struc_revs_man.dvsMaxMag = 1;
+
+costFun                = @(x) wrap_mga_nDSM(seq, x, struc_revs_man, INPUT.customEphemerides);
 
 %%
 
+close all; clc;
+
 % --> optimize
-maxit       = 5;
+maxit      = 1;
 optionsPSO = optPSO(lb, ub);
 sol        = zeros(maxit, length(lb));
 fval       = zeros(maxit, 1);
@@ -105,14 +124,23 @@ end
 minsol      = sol(row,:);
 
 close all; clc;
-[DV, dv, t0, tofs, MAT, output] = wrap_mga_nDSM(seq, minsol, NmanLeg, INPUT.customEphemerides, 1);
+[DV, dv, t0, tofs, MAT, output] = wrap_mga_nDSM(seq, minsol, struc_revs_man, INPUT.customEphemerides, 1);
+
+%%
+
+for indou = 1:length(output)
+    
+    output(indou).tt = output(indou).times;
+    output(indou).yy = output(indou).guess';
+
+end
 
 %%
 
 customEphemerides = INPUT.customEphemerides;
 
-vdep = 3;
-varr = 0;
+vdep = 5;
+varr = 3.7279;
 
 for inds = 1:size(MAT,1)
     
@@ -140,6 +168,7 @@ for inds = 1:size(MAT,1)
             vvBM    = vvinfPM + vvga;
         else
             vvBM = vvd(1,:);
+            dv(inds) = 0;
         end
         vvdTar = vvBM;
         % --> end: first leg of the transfer
@@ -251,7 +280,7 @@ struc = strucNew;
 %%
 
 % --> define low-thrust parameters
-lowThrustParameters.Tmax        = 0.6;      % --> max. thrust                       [N]
+lowThrustParameters.Tmax        = 0.26;      % --> max. thrust                       [N]
 lowThrustParameters.Isp         = 3000;     % --> specific impulse                  [s]
 lowThrustParameters.m0          = 2000;     % --> initial mass                      [kg]    
 lowThrustParameters.g0          = 9.80665;  % --> Earth acceleration at sea level   [m/s]
@@ -306,53 +335,11 @@ for inds = 1:length(struc)
     dvA    = struc(inds).dvA;
     accel  = ( dvD + dvA )*1000/tof;
     revopt = rev2RevOpt(revs(inds), res, inds);
-
-    if revopt(3) == 0 
-
-        if accel * 2 <= Tmax/m0
     
-            % --> initialise the parameters
-            param        = processDataAndWriteParam(m0, tof, state1, state2, Tmax, Isp, g0, revopt(1), idcentral, useParallel);
+    if dvD + dvA == 0 % --> possibly this is the first leg
 
-            % --> extract additional plots
-            param.plot   = plotParam;    % --> this plots the thrust evolution over time for different rho (default is false)            
-            param.gamma  = gamma;
-            if isfield(lowThrustParameters, 'rhoLim')
-                param.rhoLim = rhoLim;
-            end
-
-            if dvD + dvA <= 0.1
-                param.rhoLim = 0.01;
-            end
-
-            if dvD + dvA >= 1
-                param.rhoGuess1 = 0.5;
-                param.rhoGuess2 = 0.75;
-                
-                if param.Nrev > 0
-                    param.gamma     = 0.9;
-                end
-            end
-            
-            % --> solve the problem
-            LTsol = wrapSolveFopt( param );
-            
-            % --> new initial mass
-            m0                      = LTsol.mf; % --> new initial mass
-            strucToSave(inds).LTsol = LTsol;
-
-        else
-            
-            fprintf( 'Thrust system is not enough on leg: %d: \n', inds );
-            LT_SOLUTION = strucToSave;
-            break;
-        
-        end
-
-    else % --> there is a resonance in this leg
-        
         param        = processDataAndWriteParam(m0, tof, state1, state2, Tmax, Isp, g0, revopt(1), INPUT.idcentral, useParallel);
-
+    
         % --> simple propagation without thrusting
         [tt, yy] = propagateKepler(state1(1:3), state1(4:6), linspace(0, tof, 1e3), param.mu);
 
@@ -373,6 +360,82 @@ for inds = 1:length(struc)
         % --> new initial mass
         m0                      = LTsol.mf; % --> new initial mass
         strucToSave(inds).LTsol = LTsol;
+
+    else
+
+        if revopt(3) == 0 
+    
+            if accel * 2 <= Tmax/m0
+        
+                % --> initialise the parameters
+                param        = processDataAndWriteParam(m0, tof, state1, state2, Tmax, Isp, g0, revopt(1), idcentral, useParallel);
+    
+                % --> extract additional plots
+                param.plot   = plotParam;    % --> this plots the thrust evolution over time for different rho (default is false)            
+                param.gamma  = gamma;
+                if isfield(lowThrustParameters, 'rhoLim')
+                    param.rhoLim = rhoLim;
+                end
+    
+                if dvD + dvA <= 0.1
+                    param.rhoLim = 0.01;
+                end
+    
+                if dvD + dvA >= 1
+                    param.rhoGuess1 = 0.5;
+                    param.rhoGuess2 = 0.75;
+                    
+                    if param.Nrev > 0
+                        param.gamma     = 0.9;
+                    end
+                end
+
+                if param.Nrev > 0
+                    param.rhoGuess1 = 0.75;
+                    param.gamma     = 0.9;
+                end
+                
+                % --> solve the problem
+                LTsol = wrapSolveFopt( param );
+                
+                % --> new initial mass
+                m0                      = LTsol.mf; % --> new initial mass
+                strucToSave(inds).LTsol = LTsol;
+    
+            else
+                
+                fprintf( 'Thrust system is not enough on leg: %d: \n', inds );
+                LT_SOLUTION = strucToSave;
+                break;
+            
+            end
+    
+        else % --> there is a resonance in this leg
+            
+            param        = processDataAndWriteParam(m0, tof, state1, state2, Tmax, Isp, g0, revopt(1), INPUT.idcentral, useParallel);
+    
+            % --> simple propagation without thrusting
+            [tt, yy] = propagateKepler(state1(1:3), state1(4:6), linspace(0, tof, 1e3), param.mu);
+    
+            transfer = [ tt./86400, yy, m0.*ones(size(yy,1),1), zeros(size(yy,1),4) ];
+    
+            LTsol.transfer = transfer;
+            LTsol.lambdas  = zeros( 1,7 );
+            LTsol.Tmax     = param.Tmax;
+            LTsol.Isp      = param.Isp;
+            LTsol.g0       = param.g0;
+            LTsol.m0       = m0;
+            LTsol.mf       = m0;
+            LTsol.tof      = tof / 86400;
+            LTsol.DV       = 0;
+            LTsol.param    = param;
+            LTsol.success  = true;
+    
+            % --> new initial mass
+            m0                      = LTsol.mf; % --> new initial mass
+            strucToSave(inds).LTsol = LTsol;
+    
+        end
 
     end
 

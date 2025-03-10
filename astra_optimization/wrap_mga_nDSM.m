@@ -1,4 +1,4 @@
-function [DV, dv, t0, tofs, MAT, output] = wrap_mga_nDSM(seq, x, NmanLeg, customEphemerides, plotsol)
+function [DV, dv, t0, tofs, MAT, output] = wrap_mga_nDSM(seq, x, struc_revs_man, customEphemerides, plotsol)
 
 if nargin == 3
     customEphemerides = @EphSS_cartesian;
@@ -12,6 +12,8 @@ else
         plotsol = 1;
     end
 end
+
+NmanLeg = struc_revs_man.NmanLeg;
 
 t0   = x(1);
 x(1) = [];
@@ -36,11 +38,37 @@ rps       = x(1:nfbs);
 x(1:nfbs) = [];
 
 try
-    [DV, dv, MAT, output] = mga_nDSM_customEph(seq, t0, tofs, dv1, dvs, eps, eta, rps, NmanLeg, customEphemerides, plotsol);
+    [DV, dv, MAT, output] = mga_nDSM_customEph(seq, t0, tofs, dv1, dvs, eps, eta, rps, struc_revs_man, customEphemerides, plotsol);
+    
+%     if dv(1) < struc_revs_man.vinfMax
+%         DV = sum(dv(2:end));
+%         if max(dv(2:end-1)) < struc_revs_man.dvsMaxMag
+%             DV = dv(end);
+%             disp( 'yes' );
+%         end
+%     end
 
-    [ dv_end ] = deltaV_hyperbola( dv(end), 500e3, 1e6, 398600.446192176 );
-    dv(end)    = dv_end;
-    DV         = sum(dv);
+%     if dv(1) < struc_revs_man.vinfMax && dv(end) < struc_revs_man.vinfMaxArr
+%         DV = sum(dv(2:end-1));
+% %         if max(dv(2:end-1)) < struc_revs_man.dvsMaxMag
+% %             DV = dv(end);
+% %             disp( 'yes' );
+% %         end
+%     end
+
+%     if max(dv(2:end-1)) < struc_revs_man.dvsMaxMag
+%         DV = dv(1) + dv(end);
+%         disp( 'yes' );
+%     end
+
+%     if max(dv(2:end-1)) < struc_revs_man.dvsMaxMag
+%         DV = dv(1) + dv(end);
+%         disp( 'yes' );
+%     end
+
+%     [ dv_end ] = deltaV_hyperbola( dv(end), 500e3, 1e6, 398600.446192176 );
+%     dv(end)    = dv_end;
+%     DV         = sum(dv);
 
 %     DV = dv(end);
 
