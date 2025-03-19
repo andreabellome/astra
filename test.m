@@ -29,6 +29,19 @@ cspice_furnsh( { [MICE_path '/' num2str(max(seq)) '.bsp'],...                   
 
 [muCentral, mu_earth] = constants(1, 3);
 
+
+rp = 319 + 6378;
+ra = 1200000;
+
+% --> find apses velocities
+[vp, va, sma, ecc, period] = apses_velocities( rp, ra, mu_earth );
+
+vp
+
+%%
+
+[muCentral, mu_earth] = constants(1, 3);
+
 rpip = 500 + 6378;
 rat  = 500 + 6378;
 
