@@ -11,8 +11,8 @@ cspice_furnsh([MICE_path '/data.mk']); % --> include data
 %% --> load the data
 
 % --> put some pruning
-inc_min = 0;
-inc_max = Inf;
+inc_min = 40;
+inc_max = 43;
 ecc_max = Inf;
 
 % --> load and apply some filters if needed
