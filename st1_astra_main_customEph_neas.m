@@ -8,11 +8,13 @@ try clear INPUT; catch; end; clc;
 
 % --> sequence to be optimized
 INPUT.idcentral = 1; % --> central body (Sun in this case)
-seq = [ 3 3054374 ]; res = [  ];  % -->  (2000 SG344) -- OKAY
-% seq = [ 3 20099942 ]; res = [  ]; % --> APOPHIS
-seq = [ 3 3794982 ]; res = [];
-seq = [ 3 54105488 ]; res = [];
-seq = [ 3 3403148 ]; res = []; % --> (2006 RH120)
+% seq = [ 3 3054374 ]; res = [  ];  % -->  (2000 SG344) -- OKAY
+% % seq = [ 3 20099942 ]; res = [  ]; % --> APOPHIS
+% seq = [ 3 3794982 ]; res = [];
+% seq = [ 3 54105488 ]; res = [];
+% seq = [ 3 3403148 ]; res = []; % --> (2006 RH120)
+
+seq = [ 3 2 3 3 5 20540205 ]; res = [ 2 1 3 ];
 
 %%%%%%%%%% multi-rev. options %%%%%%%%%%
 maxrev                        = 1;                                                          % --> max. number of revolutions (round number)
@@ -22,24 +24,24 @@ chosenRevs                    = differentRuns_v2(seq, maxrev);                  
 %%%%%%%%%% multi-rev. options %%%%%%%%%%
 
 %%%%%%%%%% set departing options %%%%%%%%%%
-t0 = date2mjd2000([2030 1 1 12 0 0]); % --> initial date range (MJD2000)
-tf = t0 + 60*365.25;                  % --> final date range (MJD2000)
+t0 = date2mjd2000([2044 1 1 12 0 0]); % --> initial date range (MJD2000)
+tf = t0 + 1*365.25;                  % --> final date range (MJD2000)
 dt = 2;                            % --> step size (days)
 INPUT.depOpts = [t0 tf dt];
 %%%%%%%%%% set departing options %%%%%%%%%%
 
 %%%%%%%%%% set options %%%%%%%%%%
-INPUT.opt      = 3;          % --> (1) is for SODP, (2) is for MODP, (3) is for DATES, (4) is for YEARS - MODP
-INPUT.vInfOpts = [0 Inf];      % --> min/max departing infinity velocities (km/s)
-INPUT.dsmOpts  = [1 Inf];    % --> max defect DSM, and total DSMs (km/s)
+INPUT.opt      = 2;          % --> (1) is for SODP, (2) is for MODP, (3) is for DATES, (4) is for YEARS - MODP
+INPUT.vInfOpts = [0 5];      % --> min/max departing infinity velocities (km/s)
+INPUT.dsmOpts  = [2 Inf];    % --> max defect DSM, and total DSMs (km/s)
 INPUT.plot     = [1 1];      % --> plot(1) for Pareto front, plot(2) for best traj. DV
-INPUT.parallel = false;       % --> put true for parallel, false otherwise
+INPUT.parallel = true;       % --> put true for parallel, false otherwise
 INPUT.tstep    = dt;         % --> step size for Time of flight            
 %%%%%%%%%% set options %%%%%%%%%%
 
-% --> specify custom bounds for TOFs and VINFs
-INPUT.TOF_LIM = [[10 300]];
-INPUT.vInfLim = [ 0 Inf; 0 Inf ]; % --> PL1, PL2, PL3, ...   
+% % --> specify custom bounds for TOFs and VINFs
+% INPUT.TOF_LIM = [[10 300]];
+% INPUT.vInfLim = [ 0 Inf; 0 Inf ]; % --> PL1, PL2, PL3, ...   
 
 %%
 
@@ -48,9 +50,9 @@ MICE_path = './MICE_TOOLBOX' ;
 addpath(genpath(MICE_path)); % --> always include this
 cspice_furnsh([MICE_path '/data.mk']);
 
-spk_dir = 'test_download';
+spk_dir = 'eph_centaurs';
 cspice_furnsh([ pwd '\' spk_dir '\' num2str(seq(end)) '.bsp']);
-cspice_furnsh([ pwd '\' num2str(seq(end)) '.bsp']);
+% cspice_furnsh([ pwd '\' num2str(seq(end)) '.bsp']);
 
 INPUT.customEphemerides = @EphSS_NEOs;
 
@@ -72,7 +74,7 @@ cost = processed_OUTPUT.minCOST;
 tofy = processed_OUTPUT.minTOFY;
 
 % --> extract path from Pareto front
-[path, revs, res] = pathfromPF(OUTPUT, 1, 1, [], INPUT.customEphemerides);
+[path, revs, res] = pathfromPF(OUTPUT, 1, 1, 292, INPUT.customEphemerides);
 
 % --> plot the Pareto front
 figPareto = plotPareto(OUTPUT(1).ovPF);
