@@ -159,15 +159,15 @@ axis equal; grid on;
 
 if idcentral == 1
     AU = 149597870.7;
-    xlabel('x [AU]'); ylabel('y [AU]');
+    xlabel('x [AU]'); ylabel('y [AU]'); zlabel('z [AU]');
 else
     [~, AU] = planetConstants(idcentral);
     if idcentral == 5
-        xlabel('x [R_J]'); ylabel('y [R_J]');
+        xlabel('x [R_J]'); ylabel('y [R_J]'); zlabel('z [R_J]'); 
     elseif idcentral == 6
-        xlabel('x [R_S]'); ylabel('y [R_S]');
+        xlabel('x [R_S]'); ylabel('y [R_S]'); zlabel('z [R_S]');
     elseif idcentral == 7
-        xlabel('x [R_U]'); ylabel('y [R_U]');
+        xlabel('x [R_U]'); ylabel('y [R_U]'); zlabel('z [R_U]');
     end
 end
 
