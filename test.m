@@ -44,6 +44,14 @@ vp
 
 %%
 
+[~, ~, r1] = constants(1, 4);
+[~, ~, r2] = constants(1, 5);
+
+
+[hohmann] = hohmann_transfer(r1, r2, mu)
+
+%%
+
 [muCentral, mu_earth] = constants(1, 3);
 
 rpip = 500 + 6378;
