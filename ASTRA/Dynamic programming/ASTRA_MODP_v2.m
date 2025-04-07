@@ -96,7 +96,7 @@ if ~isempty(MSSTRUC(1).STRUC)
                 STRUC(indmm).VASn  = [];
                 STRUC(indmm).VINFn = [];
             else
-    
+                
                 Nrev = rev2RevOpt(nextn, INPUT.res, indms);
                 if Nrev(3) ~= 0 % --> compute the resonant transfers
                     [LEGSn, VASn, VINFn] = wrapConstructionResonance_DP(LEGSprev, VASprev, VINFprev, legs, Nrev(3:4), indms, deg2rad(1),...
