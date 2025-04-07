@@ -47,6 +47,9 @@ elseif nargin == 4
     style     = '-';
 
 elseif nargin == 5 
+    if isempty(customEphemerides)
+        customEphemerides = @EphSS_cartesian;
+    end
     fig       = figure('Color', [1 1 1]);
     colors    = zeros( length(pl), 3 );
     names     = {};
@@ -54,6 +57,9 @@ elseif nargin == 5
     style     = '-';
 
 elseif nargin == 6 % --> hold on with the current figure
+    if isempty(customEphemerides)
+        customEphemerides = @EphSS_cartesian;
+    end
     if holdon == 0
         fig = figure('Color', [1 1 1]);
     else
@@ -66,7 +72,9 @@ elseif nargin == 6 % --> hold on with the current figure
     style     = '-';
 
 elseif nargin == 7
-    
+    if isempty(customEphemerides)
+        customEphemerides = @EphSS_cartesian;
+    end
     if holdon == 0
         fig = figure('Color', [1 1 1]);
     else
@@ -82,7 +90,9 @@ elseif nargin == 7
     style     = '-';
 
 elseif nargin == 8
-
+    if isempty(customEphemerides)
+        customEphemerides = @EphSS_cartesian;
+    end
     if holdon == 0
         fig = figure('Color', [1 1 1]);
     else
@@ -100,7 +110,9 @@ elseif nargin == 8
     linewidth = 0.5;
     style     = '-';
 elseif nargin == 9
-
+    if isempty(customEphemerides)
+        customEphemerides = @EphSS_cartesian;
+    end
     if holdon == 0
         fig = figure('Color', [1 1 1]);
     else
@@ -117,6 +129,9 @@ elseif nargin == 9
 
     style     = '-';
 elseif nargin == 10
+    if isempty(customEphemerides)
+        customEphemerides = @EphSS_cartesian;
+    end
     if holdon == 0
         fig = figure('Color', [1 1 1]);
     else

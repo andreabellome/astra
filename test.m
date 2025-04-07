@@ -33,9 +33,9 @@ cspice_furnsh( { [MICE_path '/' num2str(max(seq)) '.bsp'],...                   
 rp = 319 + 6378;
 ra = 1200000;
 
-% --> GTO
-rp = 6378 + 250;
-ra = 6378 + 35942;
+% % --> GTO
+% rp = 6378 + 250;
+% ra = 6378 + 35942;
 
 % --> find apses velocities
 [vp, va, sma, ecc, period] = apses_velocities( rp, ra, mu_earth );
