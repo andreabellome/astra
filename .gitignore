@@ -7,6 +7,8 @@ MICE_TOOLBOX/
 
 transASTRA_analysis/
 
+test_*.m
+
 *.bsp
 *.csv
 *.mk
