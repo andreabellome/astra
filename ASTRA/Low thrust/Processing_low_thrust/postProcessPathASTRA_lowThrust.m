@@ -1,22 +1,23 @@
 function struc = postProcessPathASTRA_lowThrust(path, vdep, varr, idcentral, customEphemerides)
 
 % DESCRIPTION
+%
 % This function processes the output of a low-thrust trajectory optimization 
 % problem to generate a structured output. It calculates velocity adjustments 
 % (DSM), ephemerides, and departure/arrival states, while considering constraints 
 % such as flyby conditions and central body parameters.
-
+%
 % INPUT
 % - path      : matrix describing the trajectory, including object IDs and epochs
 % - vdep      : scalar, maximum departure velocity (default is 0 if not provided)
 % - varr      : scalar, maximum arrival velocity (default is 0 if not provided)
 % - idcentral : scalar, central body identifier (default is 1 for Sun)
-
+%
 % OUTPUT
 % - struc : structure containing detailed information about the trajectory,
 %           including departure and arrival states, velocity adjustments,
 %           and ephemerides for each transfer leg.
-
+%
 % -------------------------------------------------------------------------
 
 if nargin == 1
@@ -144,7 +145,7 @@ if norm(vvga - vva(end,:)) > varr % --> DSM on the first leg
     dvv  = abs( norm(vvga - vva(end,:)) - varr ).*(vvga - vva(end,:))./norm(vvga - vva(end,:));
     vvPM = vva(end,:) + dvv;
 else
-    dvv  = abs(norm(vvga - vva(end,:)) - varr);
+%     dvv  = abs(norm(vvga - vva(end,:)) - varr);
     vvPM = vva(end,:);
 end
 vvaTAR        = vva;
@@ -180,7 +181,6 @@ for indl = 1:size(legs,1)
     struc(indl).dvA = norm( struc(indl).dvvA );
 
 end
-
 
 % seq = path(:,7)';
 % seq(seq >= 12) = seq(seq >= 12) - 11;

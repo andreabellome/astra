@@ -14,7 +14,15 @@ INPUT.idcentral = 1; % --> central body (Sun in this case)
 % seq = [ 3 54105488 ]; res = [];
 % seq = [ 3 3403148 ]; res = []; % --> (2006 RH120)
 
-seq = [ 3 2 3 3 5 20540205 ]; res = [ 2 1 3 ];
+% seq = [ 3 2 3 3 5 20540205 ]; res = [ 2 1 3 ];
+% seq = [ 3 2 3 3 5 20000944 ]; res = [ 2 1 3 ];
+% seq = [ 3 2 3 3 5 20005335 ]; res = [ 2 1 3 ];
+% seq = [ 3 2 3 3 5 20613349 ]; res = [ 2 1 3 ];
+% seq = [ 3 2 3 3 5 20661762 ]; res = [ 2 1 3 ];
+seq = [ 3 2 3 3 5 54223974 ]; res = [ 2 1 3 ]; % --> this is good
+% seq = [ 3 2 3 3 5 54300558 ]; res = [ 2 1 3 ]; 
+seq = [ 3 2 3 3 5 20434620 ]; res = [ 2 1 3 ];
+seq = [ 3 2 3 3 5 20494219 ]; res = [ 2 1 3 ];
 
 %%%%%%%%%% multi-rev. options %%%%%%%%%%
 maxrev                        = 1;                                                          % --> max. number of revolutions (round number)
@@ -26,12 +34,12 @@ chosenRevs                    = differentRuns_v2(seq, maxrev);                  
 %%%%%%%%%% set departing options %%%%%%%%%%
 t0 = date2mjd2000([2044 1 1 12 0 0]); % --> initial date range (MJD2000)
 tf = t0 + 1*365.25;                  % --> final date range (MJD2000)
-dt = 2;                            % --> step size (days)
+dt = 3;                            % --> step size (days)
 INPUT.depOpts = [t0 tf dt];
 %%%%%%%%%% set departing options %%%%%%%%%%
 
 %%%%%%%%%% set options %%%%%%%%%%
-INPUT.opt      = 2;          % --> (1) is for SODP, (2) is for MODP, (3) is for DATES, (4) is for YEARS - MODP
+INPUT.opt      = 2;          % --> (1) is for SODP, (2) is for MODP, (3) is for DATES - SODP, (4) is for YEARS - MODP
 INPUT.vInfOpts = [0 5];      % --> min/max departing infinity velocities (km/s)
 INPUT.dsmOpts  = [2 Inf];    % --> max defect DSM, and total DSMs (km/s)
 INPUT.plot     = [1 1];      % --> plot(1) for Pareto front, plot(2) for best traj. DV
@@ -51,7 +59,7 @@ addpath(genpath(MICE_path)); % --> always include this
 cspice_furnsh([MICE_path '/data.mk']);
 
 spk_dir = 'eph_centaurs';
-cspice_furnsh([ pwd '\' spk_dir '\' num2str(seq(end)) '.bsp']);
+cspice_furnsh([ pwd '\' spk_dir '\' num2str(max(seq)) '.bsp']); % --> load the object ephemerides
 % cspice_furnsh([ pwd '\' num2str(seq(end)) '.bsp']);
 
 INPUT.customEphemerides = @EphSS_NEOs;
@@ -63,18 +71,23 @@ OUTPUT = ASTRA_DP(seq, INPUT);
 
 %% --> extract desired path and plot
 
-close all; clc;
+% close all; clc;
 
 % --> process the OUTPUT
-[processed_OUTPUT] = postProcessOutputASTRA( OUTPUT );
+processed_OUTPUT = postProcessOutputASTRA( OUTPUT );
 path = processed_OUTPUT.minPATH;
 revs = processed_OUTPUT.minREVS;
 res  = processed_OUTPUT.res;
 cost = processed_OUTPUT.minCOST;
 tofy = processed_OUTPUT.minTOFY;
 
+% --> process the output for better user experience
+paretoFront = process_paretoFront_structure( INPUT, processed_OUTPUT );
+
+%%
+
 % --> extract path from Pareto front
-[path, revs, res] = pathfromPF(OUTPUT, 1, 1, 292, INPUT.customEphemerides);
+[path, revs, res] = pathfromPF(OUTPUT, 1, 1, 283, INPUT.customEphemerides);
 
 % --> plot the Pareto front
 figPareto = plotPareto(OUTPUT(1).ovPF);
@@ -103,14 +116,14 @@ figPareto = plotPareto(OUTPUT(1).ovPF);
 
 %% --> find low-thrust trajectories
 
-Tmax        = 0.15;        % --> max. thrust                       [N]
+Tmax        = 0.6;        % --> max. thrust                       [N]
 Isp         = 3000;       % --> specific impulse                  [s]
-m0          = 750;       % --> initial mass                      [kg]           
+m0          = 3000;       % --> initial mass                      [kg]           
 g0          = 9.80665;    % --> Earth acceleration at sea level   [m/s]
 useParallel = true;       % --> if true, uses parallel for fsolve
 
 % --> post-process the path
-vinfFree = 1.5;
+vinfFree = 3.5;
 struc    = postProcessPathASTRA_lowThrust(path, vinfFree, 0, ...
                     INPUT.idcentral, INPUT.customEphemerides);
 
@@ -158,3 +171,4 @@ INPUT.res     = res;
 
 % --> further refine using ASTRA
 OUTPUTref = refineUsingASTRApath(path, INPUT);
+pathRef   = OUTPUTref.minPATH;

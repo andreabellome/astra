@@ -11,13 +11,15 @@ cspice_furnsh([MICE_path '/data.mk']); % --> include data
 %% --> load the data
 
 % --> put some pruning
-inc_min = 40;
-inc_max = 43;
+inc_min = 30;
+inc_max = Inf;
 ecc_max = Inf;
+sma_max = 7;
 
 % --> load and apply some filters if needed
 table        = readtable( ['sbdb_query_results_centaurs.csv'] );
-table_pruned = table( table.i <= inc_max & table.i >= inc_min & table.e <= ecc_max ,:);
+table_pruned = table( table.i <= inc_max & table.i >= inc_min &...
+                      table.e <= ecc_max & table.a <= sma_max,:);
 
 %% --> download
 

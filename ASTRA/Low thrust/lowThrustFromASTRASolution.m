@@ -96,8 +96,13 @@ else
 end
 % --> end: extact and process input
 
-% --> process ASTRA solution
-struc    = postProcessPathASTRA_lowThrust(path, vinf_dep_free, vinf_arr_free, idcentral, customEphemerides);
+if isfield( astraSolution, 'struc' )
+    struc = astraSolution.struc;
+else
+    % --> process ASTRA solution
+    struc = postProcessPathASTRA_lowThrust(path, vinf_dep_free, vinf_arr_free, idcentral, customEphemerides);
+end
+
 
 % --> solve the problem
 strucToSave = struct( 'LTsol', cell(1, length(struc)), ...
@@ -113,7 +118,7 @@ for inds = 1:length(struc)
     accel  = ( dvD + dvA )*1000/tof;
     revopt = rev2RevOpt(revs(inds), res, inds);
 
-    if revopt(3) == 0 
+    if revopt(3) == 0 && (dvD + dvA) >= 1e-2
 
         if accel * 2 <= Tmax/m0
     

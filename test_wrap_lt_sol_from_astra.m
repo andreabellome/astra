@@ -1,3 +1,4 @@
+%% --> define the parameters
 
 close all; clc;
 
@@ -17,14 +18,17 @@ lowThrustParameters.m0          = 2000;     % --> initial mass                  
 lowThrustParameters.g0          = 9.80665;  % --> Earth acceleration at sea level   [m/s]
 
 % --> further optional parameters for optimal control solution
-lowThrustParameters.gamma       = 0.5;      % --> discount factor for the smoothing parameter (default is 0.5)
+lowThrustParameters.gamma       = 0.75;     % --> discount factor for the smoothing parameter (default is 0.5)
 lowThrustParameters.plot        = true;     % --> this plots the thrust evolution over time for different rho (default is false)
 lowThrustParameters.useParallel = true;     % --> if true, uses parallel for fsolve (default is false)
+lowThrustParameters.rhoLim      = 0.001;    % --> limit on smoothing parameter (default is 1e-5)
+
+%% --> solve the fuel-optimal problem
 
 % --> find low-thrust transfers from ASTRA solution      
 [LT_SOLUTION, struc] = lowThrustFromASTRASolution( astraSolution, lowThrustParameters, INPUT.idcentral, INPUT.customEphemerides );
 
-%%
+%% --> plot trajectories, mass and thrust evolution
 
 % --> plot the final output
 close all; clc;
@@ -37,3 +41,6 @@ tend    = struc(end).tA;
 
 figure(figTRAJ);
 plotPLTS_tt(planets, t0, tend, INPUT.idcentral, INPUT.customEphemerides, 1, [], [], 0.5, '--');
+
+% --> plot spacecraft position and velocity 
+

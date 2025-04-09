@@ -93,3 +93,4 @@ INPUT.res     = res;
 
 % --> further refine using ASTRA
 OUTPUTref = refineUsingASTRApath(path, INPUT);
+pathRef   = OUTPUTref.minPATH;
