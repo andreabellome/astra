@@ -8,8 +8,6 @@ try clear INPUT; catch; end; clc;
 
 % --> sequence to be optimized
 INPUT.idcentral = 1; % --> central body (Sun in this case)
-seq = [ 3 2 3 3 5 ]; res = [ 2 1 3 ];
-seq = [ 3 2 3 4 4 4 5 ]; res = [ 2 1 4 3 1 5 ];
 seq = [ 3 2 3 4 3 5 ]; res = [ ];
 
 %%%%%%%%%% multi-rev. options %%%%%%%%%%
@@ -27,7 +25,7 @@ INPUT.depOpts = [t0 tf dt];
 %%%%%%%%%% set departing options %%%%%%%%%%
 
 %%%%%%%%%% set options %%%%%%%%%%
-INPUT.opt      = 1;          % --> (1) is for SODP, (2) is for MODP, (3) is for DATES, (4) is for YEARS - MODP
+INPUT.opt      = 2;          % --> (1) is for SODP, (2) is for MODP, (3) is for DATES, (4) is for YEARS - MODP
 INPUT.vInfOpts = [0 5];      % --> min/max departing infinity velocities (km/s)
 INPUT.dsmOpts  = [1 Inf];    % --> max defect DSM, and total DSMs (km/s)
 INPUT.plot     = [1 1];      % --> plot(1) for Pareto front, plot(2) for best traj. DV
@@ -42,7 +40,7 @@ MICE_path = './MICE_TOOLBOX' ;
 addpath(genpath(MICE_path)); % --> always include this
 cspice_furnsh([MICE_path '/data.mk']);
 
-INPUT.customEphemerides = @EphSS_NEOs;
+INPUT.customEphemerides = @EphSS_from_mice;
 
 %% --> optimize using ASTRA
 
@@ -63,23 +61,7 @@ figPareto = plotPareto(OUTPUT(1).ovPF);
 [figECI, STRUC, figSYN, figRSC, figVSC] = plotPath(path, INPUT.idcentral, INPUT.customEphemerides);
 
 % --> save the output
-generateOutputTXT(path, INPUT.idcentral, INPUT.customEphemerides, './results', 'customEphRes_EVEEJ');
-
-% % --> save the figures
-% name = [pwd '/results/Images/figPareto.png'];
-% exportgraphics(figPareto, name, 'Resolution', 1200);
-% 
-% name = [pwd '/results/Images/figECI.png'];
-% exportgraphics(figECI, name, 'Resolution', 1200);
-% 
-% name = [pwd '/results/Images/figSYN.png'];
-% exportgraphics(figSYN, name, 'Resolution', 1200);
-% 
-% name = [pwd '/results/Images/figRSC.png'];
-% exportgraphics(figRSC, name, 'Resolution', 1200);
-% 
-% name = [pwd '/results/Images/figVSC.png'];
-% exportgraphics(figVSC, name, 'Resolution', 1200);
+generateOutputTXT(path, INPUT.idcentral, INPUT.customEphemerides, './results', 'customEphRes_EVEMEJ');
 
 %% --> futher refine around the optimal DV-solution
 
