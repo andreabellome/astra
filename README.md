@@ -25,9 +25,10 @@ Lighter requirements will be required in future releases, as ASTRA will be able 
 To use the repository, one finds different test scripts. These are listed here:
 
 1. Test script 1: [st1_astra_main.m](/st1_astra_main.m), to optimize MGA missions. Refer to [this section](#Section_1).
-2. Test script 2: [st2_astra_main_saturn_system.m](/st2_astra_main_saturn_system.m), to optimize MGA missions using custom constraints and different planetary systems. Refer to [this section](#Section_2).
-3. Test scripts 3-4: [st2_astra_main_uranus_system.m](/st2_astra_main_uranus_system.m) and [st21_astra_main_uranus_system_long_chain.m](./st21_astra_main_uranus_system_long_chain.m), to optimize MGA missions using custom constraints and Uranus planetary systems.
+2. Test script 2: [st2_astra_main_saturn_system.m](/st2_astra_main_saturn_system.m), to optimize MGA missions using **custom constraints** and **different planetary systems**. Refer to [this section](#Section_2).
+3. Test scripts 3-4: [st2_astra_main_uranus_system.m](/st2_astra_main_uranus_system.m) and [st21_astra_main_uranus_system_long_chain.m](./st21_astra_main_uranus_system_long_chain.m), to optimize MGA missions using **custom constraints** and Uranus planetary systems.
 4. Test script 5: [low_thrust_trajectories.m](./low_thrust_trajectories.m). This contains a number of test cases for low-thrust trajectories. Please, refer to [this section](#Section_3).
+5. Test script 6: [astra_with_custom_eph_mice.m](./astra_with_custom_eph_mice.m). This script shows how to include custom ephemerides, including high-precision .bsp file integrating with [NASA SPICE toolkit](https://naif.jpl.nasa.gov/naif/toolkit.html). Refer to [this section](#Section_4).
 
 ### Test script 1: Run DP optimization with ASTRA  <a id="Section_1"></a> 
 
@@ -453,8 +454,72 @@ The following images show the optimal trajectory from Earth to Dionysus as well 
   <img src="./results/Images/earth_dionysus_traj.png" alt="Earth-Dionysus-traj" width="500"/>
 </p>
 
-| ![Earth-Dionysus-traj](./results/Images/earth_dionysus_thrust.png) | ![Pareto-front](./results/Images/earth_dionysus_mass.png) |
+| ![Earth-Dionysus-thrust](./results/Images/earth_dionysus_thrust.png) | ![Earth-Dionysus-mass](./results/Images/earth_dionysus_mass.png) |
 |:--------------------------------------------:|:--------------------------------------------:|
+
+### Test script 6: Integrating ASTRA with custom ephemerides and NASA SPICE Toolkit <a id="Section_4"></a> 
+
+[This script](./astra_with_custom_eph_mice.m) shows how the user can define custom ephemerides. The test case shown here is for integrating high-precision NASA planetary ephemerides to be integrated with the [SPICE toolkit](https://naif.jpl.nasa.gov/naif/toolkit.html). In particular, the MATLAB interface of SPICE is called MICE.
+
+**Bug detected: currently, using the MICE toolkit prevents ASTRA to be run in parallel mode when resonances are included in the sequence. Next update will eliminate this...**
+
+In order to run such script, one creates a folder called ```MICE_TOOLBOX``` and puts there the ```mice``` folder downloaded from NASA. Then, one can add the toolbox to the path:
+
+```matlab
+% --> load custom ephemerides
+MICE_path = './MICE_TOOLBOX' ;
+addpath(genpath(MICE_path)); % --> always include this
+cspice_furnsh([MICE_path '/data.mk']);
+```
+
+Note that a ```data.mk``` file is needed, which is the makefile that allows to load the kernels needed by MICE. This should look like the following:
+
+```makefile
+KPL/MK
+
+
+   \begindata
+
+      PATH_VALUES     = ( './MICE_TOOLBOX/mice/Kernel' )
+
+      PATH_SYMBOLS    = ( 'KERNELS' )
+
+      KERNELS_TO_LOAD = (
+
+                          '$KERNELS/naif0012.tls'
+			              '$KERNELS/de430.bsp'
+                          '$KERNELS/sat375.bsp'
+                          '$KERNELS/mar097.bsp'
+                          '$KERNELS/gm_de431.tpc'
+                          '$KERNELS/pck00010.tpc'
+                        )
+
+   \begintext
+
+End of MK.
+```
+
+One recognises ```naif0012.tls``` (for leapseconds),  ```gm_de431.tpc``` (for gravity fields), ```pck00010.tpc``` (for bodies properties and orientation), as well as Solar system planetary ephemerides (all those files with ```.bsp``` extension). All of these are available through NASA website.
+
+One then needs a function that allows ASTRA to read those ephemerides. This is provided in [EphSS_from_mice](./ASTRA/Ephemerides%20&%20constants/Eph_MICE_interface/EphSS_from_mice.m). Finally, one can pass it as input in ASTRA by simply setting the field:
+
+```matlab
+INPUT.customEphemerides = @EphSS_from_mice;
+```
+
+That's it.
+
+ASTRA is now ready to be run with NASA ephemerides. 
+
+[This script](./astra_with_custom_eph_mice.m) optimises an EVEMEJ sequence as a test case. One can check what is the difference between using high-precision ephemerides and approximate position of planets, i.e., those from [EphSS_car.m](./ASTRA/Ephemerides%20&%20constants/Solar%20System/EphSS_car.m) file, by simply removing the line ```INPUT.customEphemerides = @EphSS_from_mice;```, or commenting it.
+
+Obviously, if one needs to integrate other bodies in MICE, the corresponding ```.bsp``` file should be added to the kernels and a proper reference should be made to the ```data.mk``` file. Otherwise, one can simpy use this line:
+
+```matlab
+cspice_furnsh([ pwd '\' spk_dir '\' num2str(spk_id) '.bsp']);
+```
+
+where ```spk_dir``` is the directory where the ```.bsp``` file of the desired body is located, and ```spk_id``` is the SPK ID of the body. One can have SPK ID of desired bodies and download corresponding ```.bsp``` files directly from [NASA Small-Body Database Lookup](https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/).
 
 ## Contributing
 

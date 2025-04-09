@@ -38,7 +38,14 @@ function [muCentral, mupl, rpl, radpl, hmin, Tpl] = constants(idcentral, pl)
 
 if idcentral == 1
     muCentral                      = 132724487690;
-    [mupl, radpl, rpl, ~, ~, hmin] = planetConstants(pl);
+    if pl <= 8
+        [mupl, radpl, rpl, ~, ~, hmin] = planetConstants(pl);
+    else % --> likely is an asteroid/comet --> assume 0 mass
+        mupl  = 0;
+        radpl = 0;   % --> no specific info are provided in final output
+        rpl   = 0;   % --> no specific info are provided in final output
+        hmin  = 300; % --> no specific info are provided in final output
+    end
 elseif idcentral == 3
     [mupl, radpl, rpl, ~, ~, hmin] = planetConstants(idcentral);
     muCentral = mupl;

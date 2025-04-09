@@ -1,4 +1,4 @@
-function [LEGSnext, VASnext, VINFnext] = checkResonance_DP(LEGSnext, VASnext, VINFnext, plt, res, parallel, idcentral)
+function [LEGSnext, VASnext, VINFnext] = checkResonance_DP(LEGSnext, VASnext, VINFnext, plt, res, parallel, idcentral, customEphemerides)
 
 % DESCRIPTION
 % This function checks if specific resonances can be achieved during a spacecraft's flyby
@@ -24,6 +24,9 @@ function [LEGSnext, VASnext, VINFnext] = checkResonance_DP(LEGSnext, VASnext, VI
 
 if nargin == 6
     idcentral = 1;
+    customEphemerides = @EphSS_cartesian;
+elseif nargin == 7
+    customEphemerides = @EphSS_cartesian;
 end
 
 if idcentral == 1
@@ -54,7 +57,7 @@ if parallel == true
         plIN = LEGSnext(indi, end-1);
         tIN  = LEGSnext(indi, end);
 
-        [rrga, vvga] = EphSS_cartesian(plIN, tIN, idcentral);
+        [rrga, vvga] = customEphemerides(plIN, tIN, idcentral);
 
         vvinfIN = vvIN - vvga;
 
@@ -93,7 +96,7 @@ else
         plIN = LEGSnext(indi, end-1);
         tIN  = LEGSnext(indi, end);
 
-        [rrga, vvga] = EphSS_cartesian(plIN, tIN, idcentral);
+        [rrga, vvga] = customEphemerides(plIN, tIN, idcentral);
 
         vvinfIN = vvIN - vvga;
 

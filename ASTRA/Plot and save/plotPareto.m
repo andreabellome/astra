@@ -27,7 +27,8 @@ if nargin == 1 % --> new figure
     fig = figure( 'Color', [1 1 1] );
     hold on; grid on;
     xlabel('Time of flight [years]'); ylabel('\Deltav [km/s]');
-    plot(paretofront(:,1), paretofront(:,2), 'o', 'MarkerSize', markersize, 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Red', 'HandleVisibility', 'Off');
+    plot(paretofront(:,1), paretofront(:,2), 'o', 'MarkerSize', markersize, ...
+        'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Red', 'HandleVisibility', 'Off');
 elseif nargin == 2 % --> same figure
     markersize = 8;
     if holdon == 1
@@ -36,7 +37,8 @@ elseif nargin == 2 % --> same figure
     end
     hold on; grid on;
     xlabel('Time of flight [years]'); ylabel('\Deltav [km/s]');
-    plot(paretofront(:,1), paretofront(:,2), 'o', 'MarkerSize', markersize, 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Green', 'HandleVisibility', 'Off');
+    plot(paretofront(:,1), paretofront(:,2), 'o', 'MarkerSize', markersize, ...
+        'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Green', 'HandleVisibility', 'Off');
 elseif nargin == 3
     markersize = 8;
     if holdon == 1
@@ -45,7 +47,8 @@ elseif nargin == 3
     end
     hold on; grid on;
     xlabel('Time of flight [years]'); ylabel('\Deltav [km/s]');
-    plot(paretofront(:,1), paretofront(:,2), marker, 'MarkerSize', markersize, 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Green', 'HandleVisibility', 'Off');
+    plot(paretofront(:,1), paretofront(:,2), marker, 'MarkerSize', markersize, ...
+        'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Green', 'HandleVisibility', 'Off');
 elseif nargin == 4
     markersize = 8;
     if holdon == 1
@@ -54,7 +57,8 @@ elseif nargin == 4
     end
     hold on; grid on;
     xlabel('Time of flight [years]'); ylabel('\Deltav [km/s]');
-    plot(paretofront(:,1), paretofront(:,2), marker, 'MarkerSize', markersize, 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', color, 'HandleVisibility', 'Off');
+    plot(paretofront(:,1), paretofront(:,2), marker, 'MarkerSize', markersize, ...
+        'MarkerEdgeColor', 'Black', 'MarkerFaceColor', color, 'HandleVisibility', 'Off');
     legend;
     legend('Location', 'Best');
     myleg = legend;
@@ -67,7 +71,8 @@ elseif nargin == 5
     end
     hold on; grid on;
     xlabel('Time of flight [years]'); ylabel('\Deltav [km/s]');
-    plot(paretofront(:,1), paretofront(:,2), marker, 'MarkerSize', markersize, 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', color, 'DisplayName', name);
+    plot(paretofront(:,1), paretofront(:,2), marker, 'MarkerSize', markersize, ...
+        'MarkerEdgeColor', 'Black', 'MarkerFaceColor', color, 'DisplayName', name);
     legend;
     legend('Location', 'Best');
     myleg = legend;
@@ -79,7 +84,8 @@ elseif nargin == 6
     end
     hold on; grid on;
     xlabel('Time of flight [years]'); ylabel('\Deltav [km/s]');
-    plot(paretofront(:,1), paretofront(:,2), marker, 'MarkerSize', markersize, 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', color, 'DisplayName', name);
+    plot(paretofront(:,1), paretofront(:,2), marker, 'MarkerSize', markersize, ...
+        'MarkerEdgeColor', 'Black', 'MarkerFaceColor', color, 'DisplayName', name);
     legend;
     legend('Location', 'Best');
 
@@ -88,8 +94,8 @@ elseif nargin == 6
 
 end
 
-labelsDim = 16;
-axesDim   = 16;
+labelsDim = 12;
+axesDim   = 12;
 set(findall(gcf,'-property','FontSize'), 'FontSize',labelsDim)
 h = findall(gcf, 'type', 'text');
 set(h, 'fontsize', axesDim);

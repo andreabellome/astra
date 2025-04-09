@@ -25,14 +25,9 @@ function [OUTPUT] = ASTRA_DP(seq, INPUT)
 %                front. Please put plot(i)=1 if you want to plot the results. 
 %                - parallel   : if 1, then parallel computing is used
 %                - tstep      : (days) discretization time step
-% tofs  : vector with time of fligth for each leg of the sequence (days)
-% NREVS : nx3 matrix (n=length(seq)-1) on which the multiple revolutions
-%         options are passed. If NREVS(i,3)~=0, then a resonance is
-%         included in the transfer.
 %
 % OUTPUT :
-% path : is the path matrix
-% fig  : if requested by the user, a figure with the trajectory is returned
+% OUTPUT : structure with the final trajectories
 %
 % -------------------------------------------------------------------------
 
@@ -49,7 +44,7 @@ end
 
 if ( INPUT.depOpts(2) - INPUT.depOpts(1) )/365.25 >= 3 && INPUT.opt == 2
     INPUT.opt = 4;
-elseif ( INPUT.depOpts(2) - INPUT.depOpts(1) )/365.25 >= 3 && INPUT.opt == 1
+elseif ( INPUT.depOpts(2) - INPUT.depOpts(1) )/365.25 >= 5 && INPUT.opt == 1
     INPUT.opt = 5;
 end
 
@@ -61,7 +56,7 @@ elseif INPUT.opt == 2 % --> 2.MODP
 elseif INPUT.opt == 3 % --> 3.DATES w. SODP
     OUTPUT = ASTRA_dates(INPUT, seq);
 elseif INPUT.opt == 4 % --> 4.YEARS w. MODP
-    OUTPUT = ASTRA_years(seq, INPUT);
+    OUTPUT = ASTRA_years(INPUT, seq);
 elseif INPUT.opt == 5 % --> 5.YEARS w. SODP
     
 end

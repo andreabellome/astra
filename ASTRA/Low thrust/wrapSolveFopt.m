@@ -36,27 +36,31 @@ end
 
 % --> start: STEP 0 --> first try energy-optimal guess with zero guess
 fprintf( "Computing energy-optimal profile \n" );
-initiallamba                = [zeros(1,7)];
-[initiallamba, Fsol, flag]  = fsolve(@(lambda0)...
-    propagateState_vA(lambda0, @propagateEopt_MEXIFY_mex,...
-    param),initiallamba,param.fsolveoptions);
-initiallambaEOPT = initiallamba;
+try
+    initiallamba                = [zeros(1,7)];
+    [initiallamba, Fsol, flag]  = fsolve(@(lambda0)...
+        propagateState_vA(lambda0, @propagateEopt_MEXIFY_mex,...
+        param),initiallamba,param.fsolveoptions);
+    initiallambaEOPT = initiallamba;
+catch
+    Fsol = 1e99;
+end
 
 if max(abs(Fsol)) <= param.tol
     
     param.odeoptions.MaxStep    = 0.5;
-        [time, states]              = ode45(@(t,x) propagateEopt_MEXIFY_mex(t, x, ...
-                                        [ param.muScl, param.TmaxScl, param.IspScl, param.g0Scl, param.rho ]),...
-                                        [param.tStart,param.tEnd],...
-                                        [param.x0, param.m0Scl, initiallamba], ...
-                                        param.odeoptions);
+    [time, states]              = ode45(@(t,x) propagateEopt_MEXIFY_mex(t, x, ...
+                                    [ param.muScl, param.TmaxScl, param.IspScl, param.g0Scl, param.rho ]),...
+                                    [param.tStart,param.tEnd],...
+                                    [param.x0, param.m0Scl, initiallamba], ...
+                                    param.odeoptions);
 
     fprintf( "Final mass from energy-optimal: %f kg \n", states(end,7)*param.MU );
 
     if param.plot == true
         transfer = postProcessLT( time, states, @propagateEopt_MEXIFY_mex, param );
         hold on;
-        plotLT_Th( transfer, param, 1 );
+        plotLT_Th( transfer, param, 1, 'Energy-optimal solution' );
     end
 
 end
@@ -64,19 +68,32 @@ end
 if max(abs(Fsol)) <= param.tol
     
     pm = param;
-    pm.fsolveoptions.MaxFunctionEvaluations = 1.5e3;
+    pm.fsolveoptions.MaxFunctionEvaluations = 10e3;
+    
+    if isfield(param, 'rhoGuess1')
+        rhoGuess1 = param.rhoGuess1;
+    else
+        rhoGuess1 = 0.1;
+    end
 
-    param.rho = 0.1;
+    param.rho = rhoGuess1;
     fprintf( "Computing smooth profile Rho: %f, at iteration: %d \n", [param.rho, 0] );
-    [initiallamba, Fsol, flag] = ...
+    [initiallamba, Fsol] = ...
             fsolve(@(lambda0) propagateState_vA(lambda0, @propagateFopt_MEXIFY_mex, param), ...
             initiallamba, pm.fsolveoptions);
 
     if max(abs(Fsol)) > param.tol
         initiallamba = initiallambaEOPT; % --> re-initialize the search
-        param.rho = 0.5;
+
+        if isfield(param, 'rhoGuess2')
+            rhoGuess2 = param.rhoGuess2;
+        else
+            rhoGuess2 = 0.5;
+        end
+
+        param.rho = rhoGuess2;
         fprintf( "Computing smooth profile Rho: %f, at iteration: %d \n", [param.rho, 0] );
-        [initiallamba, Fsol, flag] = ...
+        [initiallamba, Fsol] = ...
                 fsolve(@(lambda0) propagateState_vA(lambda0, @propagateFopt_MEXIFY_mex, param), ...
                 initiallamba, pm.fsolveoptions);
     end
@@ -106,7 +123,7 @@ end
 if max(abs(Fsol)) > param.tol
     param.rho = 1;
     pm = param;
-    pm.fsolveoptions.MaxFunctionEvaluations = 5e3; % --> so not to stress too much in difficult cases
+    pm.fsolveoptions.MaxFunctionEvaluations = 8e3; % --> so not to stress too much in difficult cases
     fprintf( "Computing smooth profile Rho: %f, at iteration: %d \n", [param.rho, 0] );
     initiallamba                = [ 1*rand(1,6), 1];
     [initiallamba, Fsol, flag, OUTPUT] = ...

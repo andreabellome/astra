@@ -60,6 +60,14 @@ OUTPUT = ASTRA_DP(seq, INPUT);
 
 close all; clc;
 
+% --> process the OUTPUT
+[processed_OUTPUT] = postProcessOutputASTRA( OUTPUT );
+path = processed_OUTPUT.minPATH;
+revs = processed_OUTPUT.minREVS;
+res  = processed_OUTPUT.res;
+cost = processed_OUTPUT.minCOST;
+tofy = processed_OUTPUT.minTOFY;
+
 % --> extract path from Pareto front
 [path, revs, res] = pathfromPF(OUTPUT, INPUT.idcentral);
 
@@ -84,8 +92,22 @@ INPUT.res     = res;
 OUTPUTref = refineUsingASTRApath(path, INPUT);
 
 % --> plot refined path
-figECI2 = plotPath(OUTPUTref.minPATH, INPUT.idcentral);
+[figECI2, STRUC2, figSYN2, figRSC2, figVSC2] = plotPath(OUTPUTref.minPATH, INPUT.idcentral);
 
 % --> save the refined path
-generateOutputTXT(OUTPUTref.minPATH, INPUT.idcentral, '/results/refined');
+generateOutputTXT(OUTPUTref.minPATH, INPUT.idcentral, @EphSS_cartesian, '/results/refined');
+
+% --> save the figures
+name = [pwd '/results/Images/figECI2_uranus.png'];
+exportgraphics(figECI2, name, 'Resolution', 1200);
+
+name = [pwd '/results/Images/figSYN_uranus.png'];
+exportgraphics(figSYN2, name, 'Resolution', 1200);
+
+name = [pwd '/results/Images/figRSC_uranus.png'];
+exportgraphics(figRSC2, name, 'Resolution', 1200);
+
+name = [pwd '/results/Images/figVSC_uranus.png'];
+exportgraphics(figVSC2, name, 'Resolution', 1200);
+
 

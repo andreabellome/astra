@@ -1,4 +1,4 @@
-function [statesSYN] = wrapECI2Synodic_SE(statesECI, epochs, idcentral, pl)
+function [statesSYN] = wrapECI2Synodic_SE(statesECI, epochs, idcentral, customEphemerides, pl)
 
 % This function transforms the states of an object from eclipticJ2000
 % reference frame to Sun-Earth Synodic reference frame (i.e., co-rotating
@@ -18,9 +18,21 @@ function [statesSYN] = wrapECI2Synodic_SE(statesECI, epochs, idcentral, pl)
 % -------------------------------------------------------------------------
 
 if nargin == 2
-    idcentral = 1;
-    pl        = 3;
+    idcentral         = 1;
+    customEphemerides = @EphSS_cartesian;
+    pl                = 3;
 elseif nargin == 3
+    if idcentral == 1
+        pl = 3;
+    elseif idcentral == 5
+        pl = 5;
+    elseif idcentral == 6
+        pl = 5;
+    elseif idcentral == 7
+        pl = 5;
+    end
+    customEphemerides = @EphSS_cartesian;
+elseif nargin == 4
     if idcentral == 1
         pl = 3;
     elseif idcentral == 5
@@ -41,9 +53,13 @@ end
 
 statesSYN = zeros( size(statesECI,1), 6 );
 for inds = 1:size(statesECI,1)
-    [rr, vv]           = EphSS_cartesian(pl, epochs(inds), idcentral);
+    try
+    [rr, vv]           = customEphemerides(pl, epochs(inds), idcentral);
     [Xsyn]             = eci2synodic_eph(statesECI(inds,:), [rr, vv], mus, mue);
     statesSYN(inds,:)  = [Xsyn(1:3)' Xsyn(4:6)'];
+    catch
+        st = 1;
+    end
 end
 
 end

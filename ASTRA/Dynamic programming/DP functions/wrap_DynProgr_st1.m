@@ -39,7 +39,7 @@ TOFS = wrap_TOFs(pl1, pl2, optMR, tstep, TOF_LIM, indl);
 
 % --> find next nodes (i.e. couples of planets with their visiting epochs)
 [MAT, M1, M2] = generateMAT(pl1, pl2, T0, TOFS);
-[EPH]         = wrap_generateEPH(M1, M2, idcentral);
+[EPH]         = wrap_generateEPH(M1, M2, idcentral, INPUT.customEphemerides);
 
 nLP  = size(MAT,1);
 
