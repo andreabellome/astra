@@ -513,6 +513,14 @@ ASTRA is now ready to be run with NASA ephemerides.
 
 [This script](./astra_with_custom_eph_mice.m) optimises an EVEMEJ sequence as a test case. One can check what is the difference between using high-precision ephemerides and approximate position of planets, i.e., those from [EphSS_car.m](./ASTRA/Ephemerides%20&%20constants/Solar%20System/EphSS_car.m) file, by simply removing the line ```INPUT.customEphemerides = @EphSS_from_mice;```, or commenting it.
 
+Obviously, if one needs to integrate other bodies in MICE, the corresponding ```.bsp``` file should be added to the kernels and a proper reference should be made to the ```data.mk``` file. Otherwise, one can simpy use this line:
+
+```matlab
+cspice_furnsh([ pwd '\' spk_dir '\' num2str(spk_id) '.bsp']);
+```
+
+where ```spk_dir``` is the directory where the ```.bsp``` file of the desired body is located, and ```spk_id``` is the SPK ID of the body. One can have SPK ID of desired bodies and download corresponding ```.bsp``` files directly from [NASA Small-Body Database Lookup](https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/).
+
 ## Contributing
 
 Currently, only invited developers can contribute to the repository.
