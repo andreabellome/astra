@@ -555,7 +555,14 @@ t0_mjd2000 = date2mjd2000(t0);
 [rr, vv]   = INPUT.customEphemerides( spk_id, t0_mjd2000, 1 );
 ```
 
-A sequence to the object will look like: ```[planet_id, planet_id, spkid]```. Then one simply falls back again the test script [astra_with_custom_eph_mice.m](./astra_with_custom_eph_mice.m).
+A sequence to the object will look like: ```[planet_id, planet_id, spkid]```. Then one simply falls back again the test script [astra_with_custom_eph_mice.m](./astra_with_custom_eph_mice.m). In particular, when using other objects one should use the following lines before launching ASTRA:
+
+```matlab
+cspice_furnsh([ pwd '\' spk_dir '\' num2str(spk_id) '.bsp']); % --> load the object ephemerides
+INPUT.customEphemerides = @EphSS_from_mice;
+```
+
+where again ```spk_dir``` is the location of the recently downloaded ```.bsp``` file, and ```spk_id``` is the SPKID of the object.
 
 ## Contributing
 
