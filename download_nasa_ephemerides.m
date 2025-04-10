@@ -27,10 +27,6 @@ success = getSPK(num2str(spk_id), num2str(t0), num2str(tf), spk_dir, 'overwrite'
 %% --> check that you can use the ephemerides properly
 
 % --> load custom ephemerides
-MICE_path = './MICE_TOOLBOX';
-addpath(genpath(MICE_path)); % --> always include this
-cspice_furnsh([MICE_path '/data.mk']);
-
 cspice_furnsh([ spk_dir '\' num2str(spk_id) '.bsp']); % --> load the object ephemerides
 
 INPUT.customEphemerides = @EphSS_from_mice;

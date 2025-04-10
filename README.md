@@ -463,7 +463,7 @@ The following images show the optimal trajectory from Earth to Dionysus as well 
 
 **Bug detected: currently, using the MICE toolkit prevents ASTRA to be run in parallel mode when resonances are included in the sequence. Next update will eliminate this...**
 
-In order to run such script, one creates a folder called ```MICE_TOOLBOX``` and puts there the ```mice``` folder downloaded from NASA. Then, one can add the toolbox to the path:
+In order to run such script, one creates a folder called ```MICE_TOOLBOX``` and puts there the ```mice``` folder downloaded from NASA as well as a folder called ```Kernels``` inside the ```mice``` one (i.e., ```MICE_TOOLBOX/mice/Kernels```). Then, one can add the toolbox to the path:
 
 ```matlab
 % --> load custom ephemerides
@@ -472,7 +472,7 @@ addpath(genpath(MICE_path)); % --> always include this
 cspice_furnsh([MICE_path '/data.mk']);
 ```
 
-Note that a ```data.mk``` file is needed, which is the makefile that allows to load the kernels needed by MICE. This should look like the following:
+Note that a ```MICE_TOOLBOX/data.mk``` file is needed, which is the makefile that allows to load the kernels needed by MICE. This should look like the following:
 
 ```makefile
 KPL/MK
@@ -520,6 +520,42 @@ cspice_furnsh([ pwd '\' spk_dir '\' num2str(spk_id) '.bsp']);
 ```
 
 where ```spk_dir``` is the directory where the ```.bsp``` file of the desired body is located, and ```spk_id``` is the SPK ID of the body. One can have SPK ID of desired bodies and download corresponding ```.bsp``` files directly from [NASA Small-Body Database Lookup](https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/).
+
+Additionally, a [script](./download_nasa_ephemerides.m) is added that automatically downloads ```.bsp``` files from NASA database via API request. Essentially, one needs to set up the lower and upper bounds for ephemerides:
+
+```matlab
+% --> lower and upper bounds for ephemerides
+t0 = [ 2030 1 1 12 0 0 ];
+tf = [ 2100 1 1 12 0 0 ];
+```
+
+and then pass the SPKID of the desired object, found at [NASA website](https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/):
+
+```matlab
+% --> SPKID of the object (found at https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/)
+spk_id = 1000508;
+```
+
+Finally, the path to save the ```.bsp``` file is added ad the function ```getSPK``` is run:
+
+```matlab
+% --> run the code (if success=1 then everything is okay)
+success = getSPK(num2str(spk_id), num2str(t0), num2str(tf), spk_dir, 'overwrite', 'on');
+```
+
+An example to call position and velocity of the downloaded object is also provided:
+
+```matlab
+% --> load custom ephemerides
+cspice_furnsh([ spk_dir '\' num2str(spk_id) '.bsp']); % --> load the object ephemerides
+
+INPUT.customEphemerides = @EphSS_from_mice;
+
+t0_mjd2000 = date2mjd2000(t0);
+[rr, vv]   = INPUT.customEphemerides( spk_id, t0_mjd2000, 1 );
+```
+
+A sequence to the object will look like: ```[planet_id, planet_id, spkid]```. Then one simply falls back again the test script [astra_with_custom_eph_mice.m](./astra_with_custom_eph_mice.m).
 
 ## Contributing
 
