@@ -487,7 +487,7 @@ KPL/MK
       KERNELS_TO_LOAD = (
 
                           '$KERNELS/naif0012.tls'
-			              '$KERNELS/de430.bsp'
+			  '$KERNELS/de430.bsp'
                           '$KERNELS/sat375.bsp'
                           '$KERNELS/mar097.bsp'
                           '$KERNELS/gm_de431.tpc'
