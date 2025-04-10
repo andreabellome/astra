@@ -532,6 +532,9 @@ tf = [ 2100 1 1 12 0 0 ];
 and then pass the SPKID of the desired object, found at [NASA website](https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/):
 
 ```matlab
+% --> set the path where to save the ephemerides
+spk_dir = pwd;
+
 % --> SPKID of the object (found at https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/)
 spk_id = 1000508;
 ```
@@ -542,6 +545,8 @@ Finally, the path to save the ```.bsp``` file is added ad the function ```getSPK
 % --> run the code (if success=1 then everything is okay)
 success = getSPK(num2str(spk_id), num2str(t0), num2str(tf), spk_dir, 'overwrite', 'on');
 ```
+
+If ```success=1```, then a fresh new ```.bsp``` file should be present in the local directory, and ready to use. 
 
 An example to call position and velocity of the downloaded object is also provided:
 
