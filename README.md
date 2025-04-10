@@ -82,10 +82,10 @@ Things to notice are:
 - ```maxRevOuterPlanets``` will prune options with more than one rev. on legs towards outer planets (i.e., from Jupiter on). This to prevent the mission duration to increase a lot.
 - ```res``` is a list of integers with ```[ N, M, LEG_ID ]```, where ```N``` and ```M``` are the object and spacecraft revolutions, respectively, and ```LEG_ID``` is the number of the leg at which the resonance is.
 - ```INPUT.opt``` selects the type of optimization. 
-```1``` is for SODP
-```2``` is for MODP
-```3``` is for SODP run each launch date. If the user selects a launch window greater or equal than 1 year, this option is selected automatically.
-```4``` is for MODP run each launch year. If the user selects a launch window greater or equal than 3 year, this option is selected automatically.
+  - ```1``` is for SODP
+  - ```2``` is for MODP
+  - ```3``` is for SODP run each launch date. 
+  - ```4``` is for MODP run each launch year. If the user selects a launch window greater or equal than 3 year AND ```INPUT.opt=2```, this option is selected automatically. This allows to reduce the computational burden in terms of RAM.
 
 The options defined above allow for an MGA trajectory search of ```Earth-Venus-Earth-Earth-Jupiter``` mission in year ```2023``` using MODP (```INPUT.opt=2```). There is a specified 2:1 resonance on the ```Earth-Earth``` leg, i.e., ```res = [2 1 3]```.
 
