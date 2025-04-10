@@ -529,7 +529,7 @@ t0 = [ 2030 1 1 12 0 0 ];
 tf = [ 2100 1 1 12 0 0 ];
 ```
 
-and then pass the SPKID of the desired object, found at [NASA website]():
+and then pass the SPKID of the desired object, found at [NASA website](https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/):
 
 ```matlab
 % --> SPKID of the object (found at https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/)
@@ -543,7 +543,19 @@ Finally, the path to save the ```.bsp``` file is added ad the function ```getSPK
 success = getSPK(num2str(spk_id), num2str(t0), num2str(tf), spk_dir, 'overwrite', 'on');
 ```
 
-An example to call position and velocity of the downloaded object is also provided 
+An example to call position and velocity of the downloaded object is also provided:
+
+```matlab
+% --> load custom ephemerides
+cspice_furnsh([ spk_dir '\' num2str(spk_id) '.bsp']); % --> load the object ephemerides
+
+INPUT.customEphemerides = @EphSS_from_mice;
+
+t0_mjd2000 = date2mjd2000(t0);
+[rr, vv]   = INPUT.customEphemerides( spk_id, t0_mjd2000, 1 );
+```
+
+A sequence to the object will look like: ```[planet_id, planet_id, spkid]```. Then one simply falls back again the test script [astra_with_custom_eph_mice.m](./astra_with_custom_eph_mice.m).
 
 ## Contributing
 
