@@ -20,14 +20,14 @@ chosenRevs                    = differentRuns_v2(seq, maxrev);                  
 %%%%%%%%%% set departing options %%%%%%%%%%
 t0 = date2mjd2000([2023 1 1 0 0 0]); % --> initial date range (MJD2000)
 tf = t0 + 1*365.25;                  % --> final date range (MJD2000)
-dt = 2.5;                            % --> step size (days)
+dt = 3;                            % --> step size (days)
 INPUT.depOpts = [t0 tf dt];
 %%%%%%%%%% set departing options %%%%%%%%%%
 
 %%%%%%%%%% set options %%%%%%%%%%
 INPUT.opt      = 2;          % --> (1) is for SODP, (2) is for MODP, (3) is for DATES, (4) is for YEARS - MODP
 INPUT.vInfOpts = [0 5];      % --> min/max departing infinity velocities (km/s)
-INPUT.dsmOpts  = [1 Inf];    % --> max defect DSM, and total DSMs (km/s)
+INPUT.dsmOpts  = [2 Inf];    % --> max defect DSM, and total DSMs (km/s)
 INPUT.plot     = [1 1];      % --> plot(1) for Pareto front, plot(2) for best traj. DV
 INPUT.parallel = true;       % --> put true for parallel, false otherwise
 INPUT.tstep    = dt;         % --> step size for Time of flight            
@@ -46,6 +46,14 @@ INPUT.customEphemerides = @EphSS_from_mice;
 
 % --> launch ASTRA optimization
 OUTPUT = ASTRA_DP(seq, INPUT);
+
+%%
+
+% --> process the OUTPUT
+processed_OUTPUT = postProcessOutputASTRA( OUTPUT );
+
+% --> process the output for better user experience
+paretoFront = process_paretoFront_structure( INPUT, processed_OUTPUT );
 
 %% --> extract desired path and plot
 

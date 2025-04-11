@@ -10,6 +10,7 @@ try clear INPUT; catch; end; clc;
 INPUT.idcentral = 1; % --> central body (Sun in this case)
 % seq = [ 3 2 3 4 4 4 5 ];   res = [ 2 1 4 3 1 5 ];
 seq = [ 3 2 3 4 3 5 ];   res = [  ];
+% seq = [ 3 2 3 3 5 ];   res = [ 2 1 3 ];
 
 % % seq = [ 3 2 3 4 3 5 ];   res = [  ];
 % seq = [ 3 2 2 1 1 1 1 ]; res = [];
@@ -29,7 +30,7 @@ INPUT.depOpts = [t0 tf dt];
 %%%%%%%%%% set departing options %%%%%%%%%%
 
 %%%%%%%%%% set options %%%%%%%%%%
-INPUT.opt      = 1;          % --> (1) is for SODP, (2) is for MODP, (3) is for DATES, (4) is for YEARS - MODP
+INPUT.opt      = 2;          % --> (1) is for SODP, (2) is for MODP, (3) is for DATES, (4) is for YEARS - MODP
 INPUT.vInfOpts = [0 5];      % --> min/max departing infinity velocities (km/s)
 INPUT.dsmOpts  = [2 Inf];    % --> max defect DSM, and total DSMs (km/s)
 INPUT.plot     = [1 1];      % --> plot(1) for Pareto front, plot(2) for best traj. DV
@@ -79,19 +80,19 @@ generateOutputTXT(path, INPUT.idcentral, ...
     'min_tof_sol');
 
 % --> save the figures
-name = [pwd '/results/Images/figPareto_evemej.png'];
+name = [pwd '/results/Images/figPareto_evemmmj.png'];
 exportgraphics(figPareto, name, 'Resolution', 1200);
 
-name = [pwd '/results/Images/figECI_evemej.png'];
+name = [pwd '/results/Images/figECI_evemmmj.png'];
 exportgraphics(figECI, name, 'Resolution', 1200);
 
-name = [pwd '/results/Images/figSYN_evemej.png'];
+name = [pwd '/results/Images/figSYN_evemmmj.png'];
 exportgraphics(figSYN, name, 'Resolution', 1200);
 
-name = [pwd '/results/Images/figRSC_evemej.png'];
+name = [pwd '/results/Images/figRSC_evemmmj.png'];
 exportgraphics(figRSC, name, 'Resolution', 1200);
 
-name = [pwd '/results/Images/figVSC_evemej.png'];
+name = [pwd '/results/Images/figVSC_evemmmj.png'];
 exportgraphics(figVSC, name, 'Resolution', 1200);
 
 %% --> futher refine around the optimal DV-solution
@@ -103,5 +104,8 @@ INPUT.revs    = revs;
 INPUT.res     = res;
 
 % --> further refine using ASTRA
-OUTPUTref = refineUsingASTRApath(path, INPUT);
+OUTPUTref           = refineUsingASTRApath(path, INPUT);
+processed_OUTPUTref = postProcessOutputASTRA( OUTPUTref );
+paretoFrontref      = process_paretoFront_structure( INPUT, processed_OUTPUTref );
+
 pathRef   = OUTPUTref.minPATH;

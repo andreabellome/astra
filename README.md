@@ -128,12 +128,12 @@ The plot of the Pareto front is the following:
 
 The plot of the optimal trajectory in inertial and Earth-Sun synodic frame is the following:
 
-| ![Pareto-front](./results/Images/figECI.png) | ![Pareto-front](./results/Images/figSYN.png) |
+| ![fig-eci](./results/Images/figECI.png) | ![fig-syn](./results/Images/figSYN.png) |
 |:--------------------------------------------:|:--------------------------------------------:|
 
 The function [plotPath.m](./ASTRA/Plot%20and%20save/plotPath.m) also allows to plot the evolutions of spacecraft distance and velocity with respect to central body:
 
-| ![Pareto-front](./results/Images/figRSC.png) | ![Pareto-front](./results/Images/figVSC.png) |
+| ![fig-rr](./results/Images/figRSC.png) | ![fig-vv](./results/Images/figVSC.png) |
 |:--------------------------------------------:|:--------------------------------------------:|
 
 The function [generateOutputTXT.m](./ASTRA/Plot%20and%20save/generateOutputTXT.m) creates a .txt file in a folder called ```./results``` that has all the info of the trajectory. This is reported here:

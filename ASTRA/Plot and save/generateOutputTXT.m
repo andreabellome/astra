@@ -35,11 +35,17 @@ elseif nargin == 2
         mkdir('results');
     end
 elseif nargin == 3
+    if isempty(customEphemerides)
+        customEphemerides = @EphSS_cartesian;
+    end
     if exist('results','dir') == 7 % --> the folder exists on the current path
     else % --> the folder does not exist on the current path
         mkdir('results');
     end
 elseif nargin == 4
+    if isempty(customEphemerides)
+        customEphemerides = @EphSS_cartesian;
+    end
     nametemp = [];
 end
 
