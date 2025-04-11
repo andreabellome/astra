@@ -1,4 +1,5 @@
 
+% --> load ASTRA
 clearDeleteAdd; % --> !!! ONLY CALL IT ONCE FOR SPEED
 
 % --> load mice
@@ -32,5 +33,5 @@ cspice_furnsh([ spk_dir '\' num2str(spk_id) '.bsp']); % --> load the object ephe
 INPUT.customEphemerides = @EphSS_from_mice;
 
 t0_mjd2000 = date2mjd2000(t0);
-[rr, vv]   = INPUT.customEphemerides( spk_id, t0_mjd2000, 1 );
+[rr, vv]   = INPUT.customEphemerides( spk_id, t0_mjd2000, idcentral );
 
