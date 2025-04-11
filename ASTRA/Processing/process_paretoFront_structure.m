@@ -54,6 +54,8 @@ OUTPUT.res            = processed_OUTPUT.res;
 n           = size(PF,1);
 paretoFront = struct( 'path', cell(1,n), 'revs', cell(1,n), 'res', cell(1,n),...
                     'objVal', cell(1,n), ...
+                    't_dep_mjd2000', cell(1,n), 't_dep_date', cell(1,n),...
+                    't_arr_mjd2000', cell(1,n), 't_arr_date', cell(1,n),...
                     'tof_days', cell(1,n), 'tof_years', cell(1,n), 'tofs_days', cell(1,n), ...
                     'vinfDep', cell(1,n), 'vinfArr', cell(1,n), ...
                     'defects', cell(1,n), 'defects_sum', cell(1,n));
@@ -62,17 +64,21 @@ for indpf = 1:size(PF,1)
     % --> extract path from Pareto front
     [path, revs, res] = pathfromPF(OUTPUT, INPUT.idcentral, 1, indpf, INPUT.customEphemerides);
 
-    paretoFront(indpf).path         = path;
-    paretoFront(indpf).revs         = revs;
-    paretoFront(indpf).res          = res;
-    paretoFront(indpf).objVal       = OUTPUT.ovPF(indpf,1:end-1);
-    paretoFront(indpf).tof_days     = sum(path( 2:end,11 ));
-    paretoFront(indpf).tof_years    = sum(path( 2:end,11 ))/365.25;
-    paretoFront(indpf).vinfDep      = path( 1,9 );
-    paretoFront(indpf).vinfArr      = path( end,9 );
-    paretoFront(indpf).defects      = path( 2:end,10 );
-    paretoFront(indpf).tofs_days    = path( 2:end,11 );
-    paretoFront(indpf).defects_sum  = sum(path( :,10 ));
+    paretoFront(indpf).path          = path;
+    paretoFront(indpf).revs          = revs;
+    paretoFront(indpf).res           = res;
+    paretoFront(indpf).objVal        = OUTPUT.ovPF(indpf,1:end-1);
+    paretoFront(indpf).t_dep_mjd2000 = path(1,8);
+    paretoFront(indpf).t_dep_date    = mjd20002date(path(1,8));
+    paretoFront(indpf).t_arr_mjd2000 = path(end,8);
+    paretoFront(indpf).t_arr_date    = mjd20002date(path(end,8));
+    paretoFront(indpf).tof_days      = sum(path( 2:end,11 ));
+    paretoFront(indpf).tof_years     = sum(path( 2:end,11 ))/365.25;
+    paretoFront(indpf).vinfDep       = path( 1,9 );
+    paretoFront(indpf).vinfArr       = path( end,9 );
+    paretoFront(indpf).defects       = path( 2:end,10 );
+    paretoFront(indpf).tofs_days     = path( 2:end,11 );
+    paretoFront(indpf).defects_sum   = sum(path( :,10 ));
 
 end
 
