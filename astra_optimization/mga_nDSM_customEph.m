@@ -3,6 +3,8 @@ function [DV, dv, MAT, output] = mga_nDSM_customEph(seq, t0, tofs, dv1, dvs, eps
 NmanLeg = struc_revs_man.NmanLeg;
 revs    = struc_revs_man.revs;
 
+idcentral = 1;
+
 if nargin == 9
     customEphemerides = @EphSS_cartesian;
     plotsol = 0;
@@ -147,7 +149,7 @@ for indm = 1:size(MAT,1)
                 [muPLIN, radPL] = planetConstants(pl2);
                 kIN             = MAT(indm,8);
                 rpIN            = MAT(indm,9)*radPL;
-                [rra, vva]      = swingby_vA(rra, vva, pl2, t2, kIN, rpIN, muPLIN);
+                [rra, vva]      = swingby_vA(rra, vva, pl2, t2, kIN, rpIN, muPLIN, idcentral, customEphemerides);
             end
 
         else % --> propagate until the DSM point
@@ -185,7 +187,7 @@ for indm = 1:size(MAT,1)
                 [muPLIN, radPL] = planetConstants(pl2);
                 kIN             = MAT(indm,8);
                 rpIN            = MAT(indm,9)*radPL;
-                [rra, vva]      = swingby_vA(rra, vva, pl2, t2, kIN, rpIN, muPLIN);
+                [rra, vva]      = swingby_vA(rra, vva, pl2, t2, kIN, rpIN, muPLIN, idcentral, customEphemerides);
 
             end
 
