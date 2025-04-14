@@ -58,7 +58,7 @@ elseif INPUT.opt == 3 % --> 3.DATES w. SODP
 elseif INPUT.opt == 4 % --> 4.YEARS w. MODP
     OUTPUT = ASTRA_years(INPUT, seq);
 elseif INPUT.opt == 5 % --> 5.YEARS w. SODP
-    
+    OUTPUT = ASTRA_years_sodp(INPUT, seq);
 end
 
 % --> post-process

@@ -7,41 +7,33 @@ clearDeleteAdd; % --> !!! ONLY CALL IT ONCE FOR SPEED
 try clear INPUT; catch; end; clc;
 
 % --> sequence to be optimized
-INPUT.idcentral = 1; % --> central body (Sun in this case)
-% seq = [ 3 2 3 4 4 4 5 ];   res = [ 2 1 4 3 1 5 ];
-seq = [ 3 2 3 4 3 5 ];   res = [  ];
-% seq = [ 3 2 3 3 5 ];   res = [ 2 1 3 ];
-
-% % seq = [ 3 2 3 4 3 5 ];   res = [  ];
-% seq = [ 3 2 2 1 1 1 1 ]; res = [];
+INPUT.idcentral = 1; 
+seq = [ 3 2 2 3 5 6 ]; res = [  ];
 
 %%%%%%%%%% multi-rev. options %%%%%%%%%%
-maxrev                        = 0;                                                          % --> max. number of revolutions (round number)
-chosenRevs                    = differentRuns_v2(seq, maxrev);                              % --> generate successive runs
-[INPUT.chosenRevs, INPUT.res] = processResonances(chosenRevs, res);                         % --> process the resonances options
-[INPUT.chosenRevs]            = maxRevOuterPlanets(seq, INPUT.chosenRevs, INPUT.idcentral); % --> only zero revs. on outer planets
+maxrev                        = 0;                                         % --> max. number of revolutions (round number)
+chosenRevs                    = differentRuns_v2(seq, maxrev);             % --> generate successive runs
+[INPUT.chosenRevs, INPUT.res] = processResonances(chosenRevs, res);        % --> process the resonances options
+[INPUT.chosenRevs]            = maxRevOuterPlanets(seq, INPUT.chosenRevs); % --> only zero revs. on outer planets
 %%%%%%%%%% multi-rev. options %%%%%%%%%%
 
 %%%%%%%%%% set departing options %%%%%%%%%%
-t0 = date2mjd2000([2023 1 1 0 0 0]); % --> initial date range (MJD2000)
-tf = t0 + 1*365.25;                  % --> final date range (MJD2000)
-dt = 3;                            % --> step size (days)
+t0 = date2mjd2000([1997 1 1 0 0 0]); % --> initial date range for launch (MJD2000)
+tf = t0 + 1*365.25;                  % --> final date range for launch (MJD2000)
+dt = 3;                              % --> step size in launch window (days)
 INPUT.depOpts = [t0 tf dt];
 %%%%%%%%%% set departing options %%%%%%%%%%
 
 %%%%%%%%%% set options %%%%%%%%%%
 INPUT.opt      = 2;          % --> (1) is for SODP, (2) is for MODP, (3) is for DATES, (4) is for YEARS - MODP
-INPUT.vInfOpts = [0 5];      % --> min/max departing infinity velocities (km/s)
+INPUT.vInfOpts = [3 5];      % --> min/max departing infinity velocities (km/s)
 INPUT.dsmOpts  = [2 Inf];    % --> max defect DSM, and total DSMs (km/s)
 INPUT.plot     = [1 1];      % --> plot(1) for Pareto front, plot(2) for best traj. DV
 INPUT.parallel = true;       % --> put true for parallel, false otherwise
 INPUT.tstep    = dt;         % --> step size for Time of flight            
 %%%%%%%%%% set options %%%%%%%%%%
 
-% indxs                       = find(INPUT.chosenRevs(:,1) > 21);
-% INPUT.chosenRevs(indxs,:)   = [];
-% INPUT.vInfLim               = [ [0 4]; [0 Inf]; [0 Inf]; [0 Inf]; [0 Inf]; [0 Inf]; [0 4]; ];
-% INPUT.TOF_LIM               = [[100 500]; [100 500]; [100 500]; [100 400]; [100 400]; [100 400]];
+INPUT.TOF_LIM  = [ 30 400; 100 470; 30 400; 400 2000; 1000 6000 ];
 
 %% --> optimize using ASTRA
 
@@ -60,7 +52,7 @@ paretoFront = process_paretoFront_structure( INPUT, processed_OUTPUT );
 
 close all; clc;
 
-row  = length(paretoFront);   % --> select the path to plot
+row  =103; length(paretoFront);   % --> select the path to plot
 path = paretoFront(row).path;
 revs = paretoFront(row).revs;
 res  = paretoFront(row).res;
@@ -69,7 +61,7 @@ res  = paretoFront(row).res;
 figPareto = plotPareto(processed_OUTPUT.PARETO_FRONT);
 
 % --> plot the path
-[figECI, STRUC, figSYN, figRSC, figVSC] = plotPath(path, INPUT.idcentral);
+[figECI, STRUC] = plotPath(path, INPUT.idcentral);
 
 %%
 
