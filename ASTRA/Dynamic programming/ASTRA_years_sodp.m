@@ -82,7 +82,7 @@ if exist('OUTPUT', 'var')
     VINFovPF = cell2mat({OUTPUT.VINFovPF}');
     REVSovPF = cell2mat({OUTPUT.REVSovPF}');
     
-    [~, ~, COSTS, TOFYS] = INPUT.costFunc2(LEGSnext, VASnext, VINFnext);
+    [~, ~, COSTS, TOFYS] = INPUT.costFunc2(LEGovPF, VASovPF, VINFovPF);
     COSTm                = [ TOFYS COSTS ];
     PF                   = paretoFront_MODP( COSTm );
 
