@@ -52,7 +52,7 @@ paretoFront = process_paretoFront_structure( INPUT, processed_OUTPUT );
 
 close all; clc;
 
-row  =103; length(paretoFront);   % --> select the path to plot
+row  = 129; length(paretoFront);   % --> select the path to plot
 path = paretoFront(row).path;
 revs = paretoFront(row).revs;
 res  = paretoFront(row).res;
