@@ -190,4 +190,8 @@ LEGSn = cell2mat({STRUC.LEGSn}');
 VASn  = cell2mat({STRUC.VASn}');
 VINFn = cell2mat({STRUC.VINFn}');
 
+% LEGSn = cell2mat({STRUC.LEGSnSTM}');
+% VASn  = cell2mat({STRUC.VASnSTM}');
+% VINFn = cell2mat({STRUC.VINFnSTM}');
+
 end
