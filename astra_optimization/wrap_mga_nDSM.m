@@ -49,6 +49,11 @@ end
 try
     [DV, dv, MAT, output] = mga_nDSM_customEph(seq, t0, tofs, dv1, dvs, eps, eta, rps, struc_revs_man, customEphemerides, plotsol);
     
+%     if max(dv(end)) < 2
+% %         DV = dv(1) + dv(end);
+%         DV = 1e3;
+%     end
+
     if maxTofy > 0
         
         if sum(tofs)/365.25 > maxTofy

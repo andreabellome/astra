@@ -8,32 +8,38 @@ try clear INPUT; catch; end; clc;
 
 % --> sequence to be optimized
 INPUT.idcentral = 1; 
-seq = [ 3 2 2 3 5 6 ]; res = [  ];
+% seq = [ 3 2 2 3 5 6 ]; res = [  ];
+seq = [ 3 2 2 1 1 1 1 ]; res = [ 1 1 2 ];
 
 %%%%%%%%%% multi-rev. options %%%%%%%%%%
-maxrev                        = 0;                                         % --> max. number of revolutions (round number)
+maxrev                        = 2;                                         % --> max. number of revolutions (round number)
 chosenRevs                    = differentRuns_v2(seq, maxrev);             % --> generate successive runs
 [INPUT.chosenRevs, INPUT.res] = processResonances(chosenRevs, res);        % --> process the resonances options
 [INPUT.chosenRevs]            = maxRevOuterPlanets(seq, INPUT.chosenRevs); % --> only zero revs. on outer planets
 %%%%%%%%%% multi-rev. options %%%%%%%%%%
 
 %%%%%%%%%% set departing options %%%%%%%%%%
-t0 = date2mjd2000([1997 1 1 0 0 0]); % --> initial date range for launch (MJD2000)
+t0 = date2mjd2000([2005 1 1 0 0 0]); % --> initial date range for launch (MJD2000)
 tf = t0 + 1*365.25;                  % --> final date range for launch (MJD2000)
 dt = 3;                              % --> step size in launch window (days)
 INPUT.depOpts = [t0 tf dt];
 %%%%%%%%%% set departing options %%%%%%%%%%
 
 %%%%%%%%%% set options %%%%%%%%%%
-INPUT.opt      = 2;          % --> (1) is for SODP, (2) is for MODP, (3) is for DATES, (4) is for YEARS - MODP
-INPUT.vInfOpts = [3 5];      % --> min/max departing infinity velocities (km/s)
+INPUT.opt      = 1;          % --> (1) is for SODP, (2) is for MODP, (3) is for DATES, (4) is for YEARS - MODP
+INPUT.vInfOpts = [0 5];      % --> min/max departing infinity velocities (km/s)
 INPUT.dsmOpts  = [2 Inf];    % --> max defect DSM, and total DSMs (km/s)
 INPUT.plot     = [1 1];      % --> plot(1) for Pareto front, plot(2) for best traj. DV
 INPUT.parallel = true;       % --> put true for parallel, false otherwise
 INPUT.tstep    = dt;         % --> step size for Time of flight            
 %%%%%%%%%% set options %%%%%%%%%%
 
-INPUT.TOF_LIM  = [ 30 400; 100 470; 30 400; 400 2000; 1000 6000 ];
+% INPUT.TOF_LIM  = [ 30 400; 100 470; 30 400; 400 2000; 1000 6000 ];
+
+% --> specify if some defects need to increase or decrease the infinity velocity and on which leg
+INPUT.decrease       = 1;
+INPUT.vilt_seq_index = [4 5 6];
+INPUT.TOF_LIM        = [ 50 500; 100 500; 50 400; 50 300; 50 400; 100 600 ];
 
 %% --> optimize using ASTRA
 
@@ -47,6 +53,17 @@ processed_OUTPUT = postProcessOutputASTRA( OUTPUT );
 
 % --> process the output for better user experience
 paretoFront = process_paretoFront_structure( INPUT, processed_OUTPUT );
+
+[ allSolutions ] = test_process_all_solutions( INPUT, processed_OUTPUT );
+[~,index]        = sortrows([allSolutions.vinfArr; allSolutions.vinfDep].');
+allSolutions     = allSolutions(index);
+
+%%
+
+row  = 2;
+path = allSolutions(row).path;
+revs = allSolutions(row).revs;
+res  = allSolutions(row).res;
 
 %% --> extract desired path and plot
 

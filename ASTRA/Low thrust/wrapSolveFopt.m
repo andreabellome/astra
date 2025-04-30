@@ -71,7 +71,7 @@ end
 if max(abs(Fsol)) <= param.tol
     
     pm = param;
-    pm.fsolveoptions.MaxFunctionEvaluations = 10e3;
+    pm.fsolveoptions.MaxFunctionEvaluations = 5e3;
     
     if isfield(param, 'rhoGuess1')
         rhoGuess1 = param.rhoGuess1;

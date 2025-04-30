@@ -17,6 +17,18 @@ if ~isfield(INPUT, 'customEphemerides')
     INPUT.customEphemerides = @EphSS_cartesian;
 end
 
+if ~isfield(INPUT, 'decrease')
+    INPUT.decrease = [];
+else
+    if isempty(INPUT.decrease) || isnan(INPUT.decrease)
+        INPUT.decrease = [];
+    end
+end
+
+if ~isfield(INPUT, 'vilt_seq_index')
+    INPUT.vilt_seq_index = [];
+end
+
 % --> run different optimizations for the chosen revolutions options
 chosenRevs = INPUT.chosenRevs;
 
@@ -105,6 +117,9 @@ if ~isempty(MSSTRUC(1).STRUC)
                     roptstemp(indms,:)   = Nrev;
                     [LEGSn, VASn, VINFn, nlp, ndef] = wrap_DynProgr_st2(LEGSprev, VASprev, legs, roptstemp, indms, tstep, TOF_LIM, INPUT);
                 end
+
+                [ LEGSn, VASn, VINFn ] = prune_vilt_tour( LEGSprev, VASprev, VINFprev, LEGSn, VASn, VINFn, indms, INPUT );
+
                 pn                 = opt(indmm,end);
                 STRUC(indmm).opt   = pn;
                 STRUC(indmm).LEGSn = LEGSn;
