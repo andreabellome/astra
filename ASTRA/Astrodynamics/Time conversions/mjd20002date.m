@@ -34,9 +34,12 @@ function date = mjd20002date(mjd2000)
 %
 % ------------------------- - SpaceART Toolbox - --------------------------
 
-% Compute the year month and day
-jd   = mjd20002jd(mjd2000);
-date = jd2date(jd);
+date = zeros( length(mjd2000),6 );
+for inddate = 1:length(mjd2000)
+    % Compute the year month and day
+    jd   = mjd20002jd(mjd2000(inddate));
+    date(inddate,:) = jd2date(jd);
+end
 
 
 return

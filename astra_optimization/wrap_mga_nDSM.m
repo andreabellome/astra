@@ -37,9 +37,31 @@ x(1:nfbs) = [];
 rps       = x(1:nfbs);
 x(1:nfbs) = [];
 
+if isfield(struc_revs_man, 'maxTofy')
+    maxTofy = struc_revs_man.maxTofy;
+    if isempty(maxTofy)
+        maxTofy = 0;
+    end
+else
+    maxTofy = 0;
+end
+
 try
     [DV, dv, MAT, output] = mga_nDSM_customEph(seq, t0, tofs, dv1, dvs, eps, eta, rps, struc_revs_man, customEphemerides, plotsol);
     
+%     if max(dv(end)) < 2
+% %         DV = dv(1) + dv(end);
+%         DV = 1e3;
+%     end
+
+    if maxTofy > 0
+        
+        if sum(tofs)/365.25 > maxTofy
+            DV = 1e3;
+        end
+
+    end
+
 %     if dv(1) < struc_revs_man.vinfMax
 %         DV = sum(dv(2:end));
 %         if max(dv(2:end-1)) < struc_revs_man.dvsMaxMag

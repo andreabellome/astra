@@ -1,14 +1,15 @@
-function [tt,yy] = propagateKepler_tof(rr1, vv1, tof, mu)
+function [tt,yy] = propagateKepler_tof(rr1, vv1, tof, mu, npoints)
 
 % DESCRIPTION
 % This function propagates in keplerian dynamics an initial state for a
 % specified time of flight.
 % 
 % INPUT
-% - rr1 : 1x3 vector with initial position [km]
-% - vv1 : 1x3 vector with initial velocity [km/s]
-% - tof : time of flight [sec]
-% - mu  : gravitational constant of the central body [km3/s2]
+% - rr1     : 1x3 vector with initial position [km]
+% - vv1     : 1x3 vector with initial velocity [km/s]
+% - tof     : time of flight [sec]
+% - mu      : gravitational constant of the central body [km3/s2]
+% - npoints : number of points for the propagation (default: 500)
 % 
 % OUTPUT 
 % - tt   : same as in input
@@ -19,7 +20,11 @@ function [tt,yy] = propagateKepler_tof(rr1, vv1, tof, mu)
 % 
 % -------------------------------------------------------------------------
 
-tt = linspace( 0, tof, 500 );
+if nargin == 4
+    npoints = 500;
+end
+
+tt = linspace( 0, tof, npoints );
 
 kep1 = car2kep([rr1, vv1], mu);
 

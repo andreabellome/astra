@@ -204,7 +204,7 @@ for inds = 1:length(LT_SOLUTION)
         if inds == 1
             LT_SOLUTION(inds).cumulative_tof = LT_SOLUTION(inds).LTsol.tof;
         else
-            LT_SOLUTION(inds).cumulative_tof = LT_SOLUTION(1:inds-1).LTsol.tof + LT_SOLUTION(inds).LTsol.tof;
+            LT_SOLUTION(inds).cumulative_tof = LT_SOLUTION(inds-1).cumulative_tof + LT_SOLUTION(inds).LTsol.tof;
         end
 
     end

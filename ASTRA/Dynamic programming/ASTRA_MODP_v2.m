@@ -124,6 +124,10 @@ if ~isempty(MSSTRUC(1).STRUC)
             if INPUT.opt ~= 4
                 toc(tic0)
             end
+
+            if INPUT.opt == 4
+                fprintf('struc. number %d / 100 -- computing at: %.3f /100 \n', [indms/length(MSSTRUC)*100, indmm/size(opt,1)*100]);
+            end
     
         end
         MSSTRUC(indms).STRUC = STRUC;

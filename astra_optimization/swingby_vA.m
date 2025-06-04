@@ -1,8 +1,25 @@
-function [rrOU, vvOU, vvInfIN, vvInfOU] = swingby_vA(rrIN, vvIN, plIN, tIN, kIN, rpIN, muPLIN)
+function [rrOU, vvOU, vvInfIN, vvInfOU] = swingby_vA(rrIN, vvIN, plIN, tIN, kIN, rpIN, muPLIN, idcentral, customEphemerides)
 
 % rpIN is in DIMENSIONAL UNITS (km)!!!!
 
-[~, vvga] = EphSS_car(plIN, tIN);
+if nargin == 7
+    idcentral         = 1;
+    customEphemerides = @EphSS_cartesian;
+elseif nargin == 8
+    if isempty(idcentral)
+        idcentral = 1;
+    end
+    customEphemerides = @EphSS_cartesian;
+elseif nargin == 9
+    if isempty(idcentral)
+        idcentral = 1;
+    end
+    if isempty(customEphemerides)
+        customEphemerides = @EphSS_cartesian;
+    end
+end
+
+[~, vvga] = customEphemerides(plIN, tIN, idcentral);
 
 vvInfIN = vvIN - vvga;
 

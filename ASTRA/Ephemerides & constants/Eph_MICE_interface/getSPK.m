@@ -88,16 +88,51 @@ response = send(request,[url url_add_1 url_add_2]);
 % If the request was valid...
 if strcmp(response.StatusCode,'OK')
     if isfield(response.Body.Data,'spk')
+        % Normal case: SPK is found
         f = fopen(spk_path, "wb");
         fwrite(f,matlab.net.base64decode(response.Body.Data.spk));
         fclose('all');
-
         success = 1;
+    elseif isfield(response.Body.Data,'result') && contains(response.Body.Data.result, 'Small-body Index Search Results')
+        % Handle special case: index match returned
+        lines = splitlines(response.Body.Data.result);
+        record_lines = lines(contains(lines, spk_id));  % Or match by spk_id
+        if isempty(record_lines)
+            warning('No matching records found in index search.');
+            success = 0;
+            return
+        end
+        
+        % Extract the most recent record number (last in list)
+        last_line = strtrim(record_lines{end});
+        tokens = regexp(last_line, '^\s*(\d+)', 'tokens');
+        if isempty(tokens)
+            warning('Failed to parse record number from index response.');
+            success = 0;
+            return
+        end
+        record_number = tokens{1}{1};  % Extracted record number
+        
+        % Build new request using record number
+        url_add_2b = ['&COMMAND=''' record_number '''&START_TIME=''' date_i '''&STOP_TIME=''' date_f ''''];
+        response2 = send(request, [url url_add_1 url_add_2b]);
+        
+        if strcmp(response2.StatusCode,'OK') && isfield(response2.Body.Data,'spk')
+            f = fopen(spk_path, "wb");
+            fwrite(f,matlab.net.base64decode(response2.Body.Data.spk));
+            fclose('all');
+            success = 1;
+        else
+            warning('Retry with record number failed.');
+            success = 0;
+        end
     else
+        warning('Unknown response format. No SPK file retrieved.');
         success = 0;
     end
 else
-    error('Failed data retrival from web. Check "request" data')
+    error('Failed data retrieval from web. Check "request" data')
 end
+
 
 
