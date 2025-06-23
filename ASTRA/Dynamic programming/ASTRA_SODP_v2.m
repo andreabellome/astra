@@ -118,7 +118,7 @@ if ~isempty(MSSTRUC(1).STRUC)
                     [LEGSn, VASn, VINFn, nlp, ndef] = wrap_DynProgr_st2(LEGSprev, VASprev, legs, roptstemp, indms, tstep, TOF_LIM, INPUT);
                 end
 
-                [ LEGSn, VASn, VINFn ] = prune_vilt_tour( LEGSprev, VASprev, VINFprev, LEGSn, VASn, VINFn, indms, INPUT );
+%                 [ LEGSn, VASn, VINFn ] = prune_vilt_tour( LEGSprev, VASprev, VINFprev, LEGSn, VASn, VINFn, indms, INPUT );
 
                 pn                 = opt(indmm,end);
                 STRUC(indmm).opt   = pn;
