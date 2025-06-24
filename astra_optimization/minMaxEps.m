@@ -21,5 +21,4 @@ for indman = 1:length(NmanLeg)
     end
 end
 
-
 end
