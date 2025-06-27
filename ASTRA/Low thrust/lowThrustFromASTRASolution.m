@@ -110,6 +110,8 @@ strucToSave = struct( 'LTsol', cell(1, length(struc)), ...
     'DV', cell(1, length(struc)), 'tof', cell(1, length(struc)), 'cumulative_tof',  cell(1, length(struc)));
 for inds = 1:length(struc)
 
+    fprintf( 'Computing leg: %d \n', inds );
+
     state1 = struc(inds).xxDtar;
     state2 = struc(inds).xxAtar;
     tof    = ( struc(inds).tA - struc(inds).tD ) * 86400;
@@ -118,7 +120,7 @@ for inds = 1:length(struc)
     accel  = ( dvD + dvA )*1000/tof;
     revopt = rev2RevOpt(revs(inds), res, inds);
 
-    if revopt(3) == 0 && (dvD + dvA) >= 1e-2
+    if revopt(3) == 0 && (dvD + dvA) >= 0.1
 
         if accel * 2 <= Tmax/m0
     
@@ -140,9 +142,9 @@ for inds = 1:length(struc)
                 param.rhoGuess1 = 0.5;
                 param.rhoGuess2 = 0.75;
                 
-                if param.Nrev > 0
-                    param.gamma     = 0.9;
-                end
+%                 if param.Nrev > 0
+%                     param.gamma     = 0.9;
+%                 end
             end
             
             % --> solve the problem
