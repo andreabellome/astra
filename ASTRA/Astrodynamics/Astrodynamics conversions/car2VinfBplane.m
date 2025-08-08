@@ -55,7 +55,7 @@ maDir = cross(hDir, eccVecDir);
 
 tanInf    = acos(-1/ecc);
 inVinfDir = -cos(tanInf) .* eccVecDir + sin(tanInf) .* maDir;
-polarIn   = cart2Spherical( inVinfDir );
+polarIn   = car2Spherical( inVinfDir );
 
 zDir = [ 0, 0, 1 ];
 tDir = cross(inVinfDir, zDir)./norm(cross(inVinfDir, zDir));
