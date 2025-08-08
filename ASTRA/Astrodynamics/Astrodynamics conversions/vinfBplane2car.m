@@ -44,7 +44,7 @@ ecc     = sqrt( 1 - slr/sma );
 tanInf  = acos(-1/ecc);
 
 polarIn   = [1, right_ascension, declination];
-inVinfDir = spherical2Cart( polarIn );
+inVinfDir = spherical2Car( polarIn );
 
 zDir = [0, 0, 1];
 tDir = cross( inVinfDir, zDir )./norm(cross(inVinfDir, zDir));
