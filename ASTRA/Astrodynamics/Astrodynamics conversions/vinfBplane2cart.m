@@ -5,6 +5,8 @@ function cart = vinfBplane2cart( vinf_bplane_params, mu_planet )
 % vel_x, vel_y, vel_z) in a planetary-centered inertial reference frame
 % from the B-plane elements. 
 %
+% This is only valid for hyperbolic trajectories.
+%
 % INPUT :
 % - vinf_bplane_params : 1x6 vector with the following parameters
 %                       - vinf_mag        = vinf_bplane_params(1) magnitude
