@@ -1,4 +1,4 @@
-function cart = spherical2Cart( spherical )
+function cart = spherical2Car( spherical )
 
 % DESCRIPTION :
 % Spherical coordinates (r, th, phi) to position vector (pos_x, pos_y,

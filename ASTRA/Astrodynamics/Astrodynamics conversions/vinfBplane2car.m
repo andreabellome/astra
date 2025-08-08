@@ -1,4 +1,4 @@
-function cart = vinfBplane2cart( vinf_bplane_params, mu_planet )
+function cart = vinfBplane2car( vinf_bplane_params, mu_planet )
 
 % DESCRIPTION :
 % This function computes the cartesian elements (pos_x, pos_y, pos_z,
@@ -21,6 +21,7 @@ function cart = vinfBplane2cart( vinf_bplane_params, mu_planet )
 %                       component of the B-vector [km]
 %                       - th              = vinf_bplane_params(6) true
 %                       anomaly along the hyperbola [rad]
+% - mu_planet : gravitational parameter of the planet [km3/s2]
 %
 % OUTPUT :
 % - cart : 1x6 vector with (pos_x, pos_y, pos_z, vel_x, vel_y, vel_z) in
