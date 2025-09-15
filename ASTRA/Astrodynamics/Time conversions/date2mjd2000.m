@@ -1,10 +1,5 @@
 function mjd2000 = date2mjd2000(date)
 
-% date2mjd2000.m - Modified Julian day 2000 number from Gregorian date.
-%
-% PROTOTYPE:
-%   mjd2000 = date2mjd2000(date)
-%
 % DESCRIPTION:
 % 	Returns the modified Julian day 2000 number of the given date
 %   (Gregorian calendar) plus a fractional part depending on the time of
@@ -17,7 +12,7 @@ function mjd2000 = date2mjd2000(date)
 %       check is done on that.
 %
 % INPUT:
-%	date[6]     Date in the Gregorian calendar, as a 6-element vector
+% -	date[6]     Date in the Gregorian calendar, as a 6-element vector
 %               [year, month, day, hour, minute, second]. For dates before
 %               1582, the resulting date components are valid only in the
 %               Gregorian proleptic calendar. This is based on the
@@ -26,21 +21,8 @@ function mjd2000 = date2mjd2000(date)
 %               -4713.
 %
 % OUTPUT:
-%   mjd2000[1]  Date in MJD 2000. MJD2000 is defined as the number of days
+% - mjd2000[1]  Date in MJD 2000. MJD2000 is defined as the number of days
 %               since 01-01-2000, 12:00 noon.
-%
-% See also mjd20002date.
-%
-% CALLED FUNCTIONS:
-%    date2jd
-%
-% AUTHOR:
-%   Nicolas Croisard, 16/02/2008, MATLAB, date2mjd2000.m
-%
-% CHANGELOG:
-%   03/03/2008, REVISION, Camilla Colombo
-%   22/04/2010, Camilla Colombo: Header and function name in accordance
-%       with guidlines.
 %
 % -------------------------------------------------------------------------
 
