@@ -14,7 +14,7 @@ function out = kep2car(kep,mu,p)
 % - p :          Semi-latus rectum [L]. Only used for parabola case.
 %
 % OUTPUT:
-% 	out[1,6]    State vector in cartesian coordinates (position [L],
+% - out[1,6]    State vector in cartesian coordinates (position [L],
 %               velocity [L/T]).
 %
 % -------------------------------------------------------------------------
