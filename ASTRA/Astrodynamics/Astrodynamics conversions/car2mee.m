@@ -16,12 +16,12 @@ function mee = car2mee( car, mu )
 % OUTPUT
 % - mee : vector of Modified Equinoctial Elements [p, f, g, h, k, L]
 %         where:
-%         p : semi-latus rectum [km]
-%         f : e*cos(omega + Omega)
-%         g : e*sin(omega + Omega)
-%         h : tan(i/2)*cos(Omega)
-%         k : tan(i/2)*sin(Omega)
-%         L : true longitude [rad]
+%         - p : semi-latus rectum [km]
+%         - f : e*cos(omega + Omega)
+%         - g : e*sin(omega + Omega)
+%         - h : tan(i/2)*cos(Omega)
+%         - k : tan(i/2)*sin(Omega)
+%         - L : true longitude [rad]
 %
 % -------------------------------------------------------------------------
 
