@@ -7,7 +7,7 @@ function [vinflim, TOF_LIM, tstep, tofyMax, ...
 % to be used in trajectory optimization calculations. The function ensures that default values 
 % or functions are assigned if specific fields are not present or empty in the input structure.
 %
-% INPUT:
+% INPUTS:
 % INPUT : structure containing the following fields:
 %    - vInfLim        : (Optional) Vector defining the range of departure infinity velocities (km/s).
 %                       If not provided, defaults to an empty array.

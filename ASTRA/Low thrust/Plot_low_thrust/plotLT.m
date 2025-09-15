@@ -10,13 +10,13 @@ function [figTRAJ, figMASS, figTHRmag] = plotLT( transfer, param, holdon )
 %
 % INPUT
 % - transfer: Matrix containing trajectory and associated parameters:
-%   Column 1  : Time [days]
-%   Columns 2-4: Position (x, y, z) [km]
-%   Columns 5-7: Velocity (vx, vy, vz) [km/s]
-%   Column 8  : Spacecraft mass [kg]
-%   Column 9  : Thrust magnitude [N]
+%   - Column 1  : Time [days]
+%   - Columns 2-4: Position (x, y, z) [km]
+%   - Columns 5-7: Velocity (vx, vy, vz) [km/s]
+%   - Column 8  : Spacecraft mass [kg]
+%   - Column 9  : Thrust magnitude [N]
 % - param: Structure containing simulation parameters:
-%   - param.AU: Astronomical Unit [m], used to scale positions to AU
+%   - param.AU: Astronomical Unit [km], used to scale positions to AU
 %
 % OUTPUT
 % - figTRAJ   : Figure handle for the trajectory plot

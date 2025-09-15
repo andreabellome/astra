@@ -7,18 +7,18 @@ function [legn, vvf, vinff] = costFunction1_DP(legn, vvf, vinff)
 % according to the defined cost criteria.
 %
 % INPUT:
-% legn   : Matrix where each row represents a different candidate trajectory,
+% - legn   : Matrix where each row represents a different candidate trajectory,
 %          and the columns correspond to different legs of the trajectory. 
 %          The cost for each leg is stored in the 3rd column of each group of three columns.
-% vvf    : Matrix where each row contains the final velocities for the corresponding 
+% - vvf    : Matrix where each row contains the final velocities for the corresponding 
 %          candidate trajectories.
-% vinff  : Matrix where each row contains the incoming velocities for the corresponding 
+% - vinff  : Matrix where each row contains the incoming velocities for the corresponding 
 %          candidate trajectories.
 %
 % OUTPUT:
-% legn   : The optimal trajectory (row) from the input `legn` matrix, based on the minimum total cost.
-% vvf    : The final velocities associated with the optimal trajectory.
-% vinff  : The incoming velocities associated with the optimal trajectory.
+% - legn   : The optimal trajectory (row) from the input `legn` matrix, based on the minimum total cost.
+% - vvf    : The final velocities associated with the optimal trajectory.
+% - vinff  : The incoming velocities associated with the optimal trajectory.
 %
 % -------------------------------------------------------------------------
 
