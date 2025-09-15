@@ -5,26 +5,19 @@ function [rr, vv] = EphSS_cartesian(pl, t, idcentral)
 % It uses different ephemeris functions depending on the type of body, such as planets, asteroids, or other objects.
 % 
 % INPUT:
-% pl : Identifier for the celestial body. 
+% - pl : Identifier for the celestial body. 
 %      - Values <= 10 correspond to planets in the Solar System.
 %      - Values between 11 and 473 correspond to Jupiter-family comets.
 %      - Values between 474 and 1183 correspond to Centaurs.
 %      - Value 1194 corresponds to the asteroid Lutetia.
 %      - Other values are handled by a default ephemeris function.
 % 
-% t          : Time at which the position and velocity vectors are to be computed.
-% idcentral  : ID of the central body. See constants.m
+% - t          : Time at which the position and velocity vectors are to be computed.
+% - idcentral  : ID of the central body. See constants.m
 % 
 % OUTPUT:
-% rr : Cartesian position vector of the celestial body (3x1 vector).
-% vv : Cartesian velocity vector of the celestial body (3x1 vector).
-% 
-% FUNCTION CALLS:
-% EphSS_car    : Computes ephemeris for planets in the Solar System.
-% EphCA_car    : Computes ephemeris for Jupiter-family comets.
-% EphCE_car    : Computes ephemeris for Centaurs.
-% EphLutetia   : Computes ephemeris for the asteroid Lutetia.
-% EphLOWq      : Computes ephemeris for other celestial bodies not covered by the specific cases.
+% - rr : Cartesian position vector of the celestial body (3x1 vector).
+% - vv : Cartesian velocity vector of the celestial body (3x1 vector).
 % 
 % -------------------------------------------------------------------------
 
