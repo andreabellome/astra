@@ -1,4 +1,4 @@
-function dv_tcn = dv_to_TCN(r, v, vec)
+function dv_tcn = to_TCN(r, v, vec)
 
 % DESCRIPTION
 % This function rotates a vector from an inertial reference frame
@@ -14,9 +14,10 @@ function dv_tcn = dv_to_TCN(r, v, vec)
 % OUTPUT
 % - dv_tcn : delta-v components in the TCN frame [1x3] = [dv_T, dv_C, dv_N],
 %            where:
-%            dv_T = component along the tangential direction (velocity)
-%            dv_C = component along the cross-track direction (orbital angular momentum)
-%            dv_N = component along the radial-like direction (toward position vector)
+%
+%            - dv_T = component along the tangential direction (velocity)
+%            - dv_C = component along the cross-track direction (orbital angular momentum)
+%            - dv_N = component along the radial-like direction (toward position vector)
 %
 % -------------------------------------------------------------------------
 
