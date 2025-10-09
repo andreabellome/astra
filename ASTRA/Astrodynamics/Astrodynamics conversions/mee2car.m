@@ -7,18 +7,18 @@ function car = mee2car( mee, mu )
 %
 % INPUT
 % - mee : 6x1 vector of Modified Equinoctial Elements [p, f, g, h, k, L], where:
-%         p : semi-latus rectum
-%         f : component of eccentricity vector along x
-%         g : component of eccentricity vector along y
-%         h : component of inclination vector along x
-%         k : component of inclination vector along y
-%         L : true longitude
+%         - p : semi-latus rectum [km]
+%         - f : e*cos(omega + Omega)
+%         - g : e*sin(omega + Omega)
+%         - h : tan(i/2)*cos(Omega)
+%         - k : tan(i/2)*sin(Omega)
+%         - L : true longitude [rad]
 % - mu  : gravitational parameter of the central body [km3/s2]
 %
 % OUTPUT
 % - car : 6x1 Cartesian state vector [rx, ry, rz, vx, vy, vz], where:
-%         r : position vector components in inertial frame [km]
-%         v : velocity vector components in inertial frame [km/s]
+%         - r : position vector components in inertial frame [km]
+%         - v : velocity vector components in inertial frame [km/s]
 %
 % -------------------------------------------------------------------------
 

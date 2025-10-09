@@ -23,10 +23,6 @@ function [LEGSnext, VASnext, VINFnext] = prune_VINF_DP(LEGSnext, VASnext, VINFne
 % - VINFnext : Pruned matrix of velocity-infinity data, corresponding to 
 %              the remaining entries in LEGSnext.
 % 
-% PROCESS
-% - Remove rows from LEGSnext, VASnext, and VINFnext where the velocity-infinity 
-%   is outside the range defined by INPUT.vInfOpts.
-% 
 % -------------------------------------------------------------------------
 
 indxs             = find(LEGSnext(:,end-2) > INPUT.vInfOpts(2));

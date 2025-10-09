@@ -1,9 +1,8 @@
 function [DV, dv, MAT, output] = mga_nDSM_customEph(seq, t0, tofs, dv1, dvs, eps, eta, rps, struc_revs_man, customEphemerides, plotsol)
 
-NmanLeg = struc_revs_man.NmanLeg;
-revs    = struc_revs_man.revs;
-
-idcentral = 1;
+NmanLeg   = struc_revs_man.NmanLeg;
+revs      = struc_revs_man.revs;
+idcentral = struc_revs_man.idcentral;
 
 if nargin == 9
     customEphemerides = @EphSS_cartesian;
@@ -29,7 +28,8 @@ end
 output = [];
 
 % --> gravitational parameter of the Sun
-mu = 132724487690;
+% mu = 132724487690;
+mu = constants(idcentral, 1);
 
 % --> epochs of the flybys
 tt    = zeros(1,length(seq));
@@ -159,7 +159,7 @@ for indm = 1:size(MAT,1)
             vvd = vvga1 + MAT(indm,5:7);
 
             % --> final spacecraft position and velocity
-            [rra, vva] = FGKepler_cart(rrd, vvd, (t2 - t1)*86400, mu);            
+            [rra, vva] = FGCar_dt(rrd, vvd, (t2 - t1)*86400, mu);            
             
             dv = [ dv; norm(MAT(indm,5:7)) ];
 
@@ -196,12 +196,12 @@ for indm = 1:size(MAT,1)
             if pl1 < 1e98
                 rrd        = RRAprev;
                 vvd        = VVAprev;
-                [rra, vva] = FGKepler_cart(rrd, vvd, (t2 - t1)*86400, mu);
+                [rra, vva] = FGCar_dt(rrd, vvd, (t2 - t1)*86400, mu);
                 dv         = [dv; 0];
             else
                 rrd        = RRAprev;
                 vvd        = VVAprev + MAT(indm,5:7);
-                [rra, vva] = FGKepler_cart(rrd, vvd, (t2 - t1)*86400, mu);
+                [rra, vva] = FGCar_dt(rrd, vvd, (t2 - t1)*86400, mu);
                 dv         = [dv; norm(MAT(indm,5:7))];
             end
             

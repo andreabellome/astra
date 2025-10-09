@@ -5,26 +5,26 @@ function [LEGSn, VASn, VINFn] = wrap_Pruning_DP(LEGSn, VASn, VINFn, INPUT)
 % It sequentially checks for NaN values, then prunes based on defect limits, final velocity norms, and total time of flight.
 % 
 % INPUTS:
-% LEGSn  : Matrix of trajectory legs to be pruned.
-% VASn   : Matrix of velocity vectors corresponding to each trajectory leg.
-% VINFn  : Matrix of final velocity norms corresponding to each trajectory leg.
-% INPUT  : Structure containing pruning criteria:
+% - LEGSn  : Matrix of trajectory legs to be pruned.
+% - VASn   : Matrix of velocity vectors corresponding to each trajectory leg.
+% - VINFn  : Matrix of final velocity norms corresponding to each trajectory leg.
+% - INPUT  : Structure containing pruning criteria:
 %          - INPUT.dsmOpts(1) : Maximum allowed individual defect for pruning.
 %          - INPUT.dsmOpts(2) : Maximum allowed total defect for pruning.
 %          - INPUT.vInfLim    : Velocity norm limits for pruning.
 %          - INPUT.tofyMax    : Maximum allowed total time of flight for pruning.
 % 
 % OUTPUTS:
-% LEGSn  : Pruned matrix of trajectory legs.
-% VASn   : Pruned matrix of velocity vectors.
-% VINFn  : Pruned matrix of final velocity norms.
+% - LEGSn  : Pruned matrix of trajectory legs.
+% - VASn   : Pruned matrix of velocity vectors.
+% - VINFn  : Pruned matrix of final velocity norms.
 % 
 % FUNCTION CALLS:
-% check_ISNAN_DP   : Removes rows with NaN values in the trajectory legs matrix.
-% prune_DEFECT_DP  : Removes rows where the individual defect exceeds the specified limit.
-% prune_DEFECTtot_DP : Removes rows where the total defect exceeds the specified limit.
-% prune_VINFn_DP   : Removes rows where the final velocity norm exceeds the specified limit.
-% prune_TOFY_tot   : Removes rows where the total time of flight exceeds the specified limit.
+% - check_ISNAN_DP   : Removes rows with NaN values in the trajectory legs matrix.
+% - prune_DEFECT_DP  : Removes rows where the individual defect exceeds the specified limit.
+% - prune_DEFECTtot_DP : Removes rows where the total defect exceeds the specified limit.
+% - prune_VINFn_DP   : Removes rows where the final velocity norm exceeds the specified limit.
+% - prune_TOFY_tot   : Removes rows where the total time of flight exceeds the specified limit.
 % 
 % -------------------------------------------------------------------------
 

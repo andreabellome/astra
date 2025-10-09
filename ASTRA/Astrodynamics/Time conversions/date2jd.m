@@ -16,7 +16,7 @@ function jd = date2jd(date)
 %       check is done on that.
 %
 % INPUT:
-%	date[6]     Date in the Gregorian calendar, as a 6-elements vector
+% -	date[6]     Date in the Gregorian calendar, as a 6-elements vector
 %               [year, month, day, hour, minute, second]. For dates before
 %               1582, the resulting date components are valid only in the
 %               Gregorian proleptic calendar. This is based on the
@@ -25,11 +25,13 @@ function jd = date2jd(date)
 %               -4713.
 %
 % OUTPUT:
-%   jd[1]       Date in Julian Day. The JD (Julian day) count is from 0 at
+% - jd[1]       Date in Julian Day. The JD (Julian day) count is from 0 at
 %               12:00 noon, 1 January -4712 (4713 BC), Julian proleptic
 %               calendar. The corresponding date in Gregorian calendar is
 %               12:00 noon, 24 November -4713.
 %
+% -------------------------------------------------------------------------
+% 
 % REFERENCES:
 %   Formula from http://scienceworld.wolfram.com/astronomy/JulianDate.html
 %   (last visited 15/02/2008)

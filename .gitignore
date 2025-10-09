@@ -17,3 +17,4 @@ test_*.m
 *.mat
 *.asv
 *.zip
+*.pdf

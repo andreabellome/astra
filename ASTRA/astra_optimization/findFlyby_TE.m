@@ -1,4 +1,11 @@
-function [RP, DELTA] = findFlyby_TE(vvrelIN, vvrelOU, plIN, tIN)
+function [RP, DELTA] = findFlyby_TE(vvrelIN, vvrelOU, plIN, tIN, idcentral, customEphemerides)
+
+if nargin == 4
+    idcentral         = 1;
+    customEphemerides = @EphSS_cartesian;
+elseif nargin == 5
+    customEphemerides = @EphSS_cartesian;
+end
 
 [muPL, radius] = planetConstants(plIN);
 rpmin          = maxmin_flybyAltitude(plIN) + radius;
@@ -24,7 +31,7 @@ else
     delta    = delta_A;
 end
 
-[~, vvga] = EphSS_car(plIN, tIN);
+[~, vvga] = customEphemerides(plIN, tIN, idcentral);
 
 % find b-plane angle
 b1 = vvInfIN./norm(vvInfIN);

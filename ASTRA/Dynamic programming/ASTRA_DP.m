@@ -4,8 +4,8 @@ function [OUTPUT] = ASTRA_DP(seq, INPUT)
 % This is a wrapper for all ASTRA functionalities.
 % 
 % INPUT :
-% seq      : vector with planets IDs in the MGA sequence
-% INPUT    : structure with the following mandatory fields:
+% - seq      : vector with planets IDs in the MGA sequence
+% - INPUT    : structure with the following mandatory fields:
 %                - chosenRevs : 
 %                - res        : vector with N:M resonant ratio and number
 %                of leg at which the resonant transfer is needed. If no
@@ -27,7 +27,7 @@ function [OUTPUT] = ASTRA_DP(seq, INPUT)
 %                - tstep      : (days) discretization time step
 %
 % OUTPUT :
-% OUTPUT : structure with the final trajectories
+% - OUTPUT : structure with the final trajectories
 %
 % -------------------------------------------------------------------------
 
