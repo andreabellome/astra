@@ -35,9 +35,15 @@ else
     PHI_0(1:6)  = [rr0 vv0];            % initial state
     PHI_0(7:42) = reshape(eye(6),36,1); % initial STM
     OPTIONS     = odeset('RelTol',3e-14,'AbsTol',1e-14);
-    [~,PHI]     = ode113(@(t, PHI) keplerianSTMdot(t, PHI, mu), [0 dt], PHI_0, OPTIONS);
-    rr1         = PHI(end, 1:3);
-    vv1         = PHI(end, 4:6);
+    if dt == 0
+        PHI = PHI_0;
+        rr1 = rr0;
+        vv1 = vv0;
+    else
+        [~,PHI]     = ode113(@(t, PHI) keplerianSTMdot(t, PHI, mu), [0 dt], PHI_0, OPTIONS);
+        rr1         = PHI(end, 1:3);
+        vv1         = PHI(end, 4:6);
+    end
     STM         = reshape(PHI(end,7:42),6,6);
     R           = STM(1:3,4:6);
     V           = STM(4:6,4:6);
