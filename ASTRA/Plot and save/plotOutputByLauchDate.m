@@ -35,7 +35,9 @@ for indou = 1:length(OUTPUT)
     tdep(indou,:) = OUTPUT(indou).LEGSpf(1,2);
 end
 costs   = [ OUTPUT.minCOST ]';
-MAT     = sortrows( [tdep, costs], 2 );
+tofs    = [ OUTPUT.minTOFy ]';
+
+MAT     = sortrows( [tdep, costs, tofs], 2 );
 [~, ia] = unique(MAT(:,1), 'rows', 'first');
 mat     = MAT(ia,:);
 
@@ -46,8 +48,17 @@ for indi = 1:size(mat,1)
     N(indi,1) = datenum(date);
 end
 
-plot( N, mat(:,2), 'o', 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Yellow' );
-        datetick('x','mmm.dd,yy' );
+% plot( N, mat(:,2), 'o', 'MarkerEdgeColor', 'Black', 'MarkerFaceColor', 'Yellow' );
+%         datetick('x','mmm.dd,yy' );
+
+scatter(N, mat(:,2), 50, mat(:,3), 'filled'); % '50' è la dimensione dei marker
+
+colormap('cool'); % Seleziona una colormap (es. 'jet', 'parula', 'hot', etc.)
+cb = colorbar; % Mostra la barra dei colori per riferimento
+ylabel(cb, 'ToF [years]'); % Aggiungi l'etichetta alla barra dei colori
+
+datetick('x','mmm.dd,yy' );
+
 
 labelsDim = 12;
 axesDim   = 12;
