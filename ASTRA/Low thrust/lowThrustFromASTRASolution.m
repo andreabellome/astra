@@ -8,23 +8,25 @@ function [LT_SOLUTION, struc] = lowThrustFromASTRASolution( astraSolution, lowTh
 % the trajectory details, including mass evolution, delta-v, and time of flight for each leg of the mission.
 %
 % INPUT
-% - astraSolution : structure containing ASTRA solution data
-%   - path      : trajectory path data
-%   - revs      : revolutions' options for each leg
-%   - res       : resonance options for each leg
-%   - vdep_free : velocity for free departure [km/s]
-%   - varr_free : velocity for free arrival [km/s]
+% - astraSolution       : structure containing ASTRA solution data
+%   - path              : trajectory path data
+%   - revs              : revolutions' options for each leg
+%   - res               : resonance options for each leg
+%   - vdep_free         : velocity for free departure [km/s]
+%   - varr_free         : velocity for free arrival [km/s]
 % - lowThrustParameters : structure containing low-thrust trajectory parameters
-%   - Tmax          : maximum thrust [N]
-%   - Isp           : specific impulse [s]
-%   - m0            : initial mass [kg]
-%   - gamma         : discount factor for the smoothing parameter (default is 0.5)
-%   - rhoLim        : limit on the smoothing parameter for optimal control solution (default is 0.001)
-%   - plot          : boolean flag to enable plotting of the thrust profile (default is false)
-%   - useParallel   : boolean flag to enable parallel computation (default is false)
-%   - g0            : gravitational acceleration constant [m/s^2]
-% - idcentral         : ID of the central body for the transfer
-% - customEphemerides : function handle for custom ephemerides
+%   - Tmax              : maximum thrust [N]
+%   - Isp               : specific impulse [s]
+%   - m0                : initial mass [kg]
+%   - gamma             : discount factor for the smoothing parameter (default is 0.5)
+%   - rhoLim            : limit on the smoothing parameter for optimal control solution (default is 0.001)
+%   - plot              : boolean flag to enable plotting of the thrust profile (default is false)
+%   - useParallel       : boolean flag to enable parallel computation (default is false)
+%   - g0                : gravitational acceleration constant [m/s^2]
+% - idcentral           : ID of the central body for the transfer
+% - customEphemerides   : function handle for custom ephemerides
+% - use_energy_guess    : boolean to select if to use energy-optimal guess
+%                       (default is true)
 %
 % OUTPUT
 % - LT_SOLUTION : structure containing the low-thrust trajectory solution
@@ -44,32 +46,44 @@ path          = astraSolution.path;              % --> ASTRA solution
 revs          = astraSolution.revs;              % --> revolutions' options from ASTRA solution
 res           = astraSolution.res;               % --> resonances' options from ASTRA solution
 
-if isfield(astraSolution, 'vdep_free')
+if isfield(astraSolution, 'vdep_free') && ~isempty(astraSolution.vdep_free)
     vinf_dep_free = astraSolution.vdep_free;         % --> v-infinity provided by launcher 'for free' [km/s]
 else
     vinf_dep_free = 0;
 end
 
-if isfield(astraSolution, 'varr_free')
+if isfield(astraSolution, 'varr_free') && ~isempty(astraSolution.varr_free)
     vinf_arr_free = astraSolution.varr_free;         % --> arrival infinity velocity 'for free' [km/s]
 else
     vinf_arr_free = 0;
 end
 
-if isfield(lowThrustParameters, 'gamma')
+if isfield(lowThrustParameters, 'gamma') && ~isempty(lowThrustParameters.gamma)
     gamma = lowThrustParameters.gamma;
 else
     gamma = 0.5;
 end
 
-if isfield(lowThrustParameters, 'rhoLim')
+if isfield(lowThrustParameters, 'rhoLim') && ~isempty(lowThrustParameters.rhoLim)
     rhoLim = lowThrustParameters.rhoLim;
 end
     
-if isfield(lowThrustParameters, 'plot')
+if isfield(lowThrustParameters, 'plot') && ~isempty(lowThrustParameters.plot)
     plotParam = lowThrustParameters.plot;
 else
     plotParam = false;
+end
+
+if isfield(lowThrustParameters, 'use_energy_guess') && ~isempty(lowThrustParameters.use_energy_guess)
+    use_energy_guess = lowThrustParameters.use_energy_guess;
+else
+    use_energy_guess = true;
+end
+
+if isfield(lowThrustParameters, 'max_accel_factor') && ~isempty(lowThrustParameters.max_accel_factor)
+    max_accel_factor = lowThrustParameters.max_accel_factor;
+else
+    max_accel_factor = 2;
 end
 
 if nargin == 2
@@ -77,30 +91,36 @@ if nargin == 2
     customEphemerides = @EphSS_cartesian;
 elseif nargin == 3
     customEphemerides = @EphSS_cartesian;
+elseif nargin == 4
+    if isempty(customEphemerides)
+        customEphemerides = @EphSS_cartesian;
+    end
 end
 
 Tmax = lowThrustParameters.Tmax;
 Isp  = lowThrustParameters.Isp;
 m0   = lowThrustParameters.m0;
 
-if isfield(lowThrustParameters, 'useParallel')
+if isfield(lowThrustParameters, 'useParallel') && ~isempty(lowThrustParameters.useParallel)
     useParallel = lowThrustParameters.useParallel;
 else
     useParallel = false;
 end
 
-if isfield(lowThrustParameters, 'g0')
+if isfield(lowThrustParameters, 'g0') && ~isempty(lowThrustParameters.g0)
     g0 = lowThrustParameters.g0;
 else
     g0 = 9.80665;
 end
 % --> end: extact and process input
 
-if isfield( astraSolution, 'struc' )
-    struc = astraSolution.struc;
+if isfield( astraSolution, 'struc' ) && ~isempty(astraSolution.struc)
+    struc           = astraSolution.struc;
+    using_dsm_sol   = true;
 else
     % --> process ASTRA solution
-    struc = postProcessPathASTRA_lowThrust(path, vinf_dep_free, vinf_arr_free, idcentral, customEphemerides);
+    struc           = postProcessPathASTRA_lowThrust(path, vinf_dep_free, vinf_arr_free, idcentral, customEphemerides);
+    using_dsm_sol   = false;
 end
 
 
@@ -119,10 +139,16 @@ for inds = 1:length(struc)
     dvA    = struc(inds).dvA;
     accel  = ( dvD + dvA )*1000/tof;
     revopt = rev2RevOpt(revs(inds), res, inds);
+    if revopt(3) > 0
+        if using_dsm_sol
+            revopt(1) = revopt(end);
+            revopt(3) = 0; % --> no resonances allowed in DSM solution
+        end
+    end
 
     if revopt(3) == 0 && (dvD + dvA) >= 0.1
 
-        if accel * 2 <= Tmax/m0
+        if accel * max_accel_factor <= Tmax/m0
     
             % --> initialise the parameters
             param        = processDataAndWriteParam(m0, tof, state1, state2, Tmax, Isp, g0, revopt(1), idcentral, useParallel);
@@ -147,6 +173,7 @@ for inds = 1:length(struc)
 %                 end
             end
             
+            param.use_energy_guess = use_energy_guess;
             % --> solve the problem
             LTsol = wrapSolveFopt( param );
             
