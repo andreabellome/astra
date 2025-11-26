@@ -41,8 +41,17 @@ LT_TRANSFER.TRANSFER = TRANSFER;
 LT_TRANSFER.ST_12    = ST_12;
 % --> end: process the low-thrust solution
 
-% --> plot the trajectory, mass and thrust evolutions
-[figTRAJ, figMASS, figTHRmag] = plotLT( LT_TRANSFER.TRANSFER, param );
+if nargout == 1
+
+    % --> plot the trajectory, mass and thrust evolutions
+    figTRAJ = plotLT( LT_TRANSFER.TRANSFER, param );
+
+else
+
+    % --> plot the trajectory, mass and thrust evolutions
+    [figTRAJ, figMASS, figTHRmag] = plotLT( LT_TRANSFER.TRANSFER, param );
+
+end
 
 st12 = LT_TRANSFER.ST_12;
 AU    = param.AU;
