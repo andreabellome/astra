@@ -25,9 +25,15 @@ if e<1
     end
     theta = 2*atan2(sqrt(1+e)*sin(E/2), sqrt(1-e)*cos(E/2));    
 else
-    for i = 1:50
-        ddf = (1 - e*cosh(E));
-        E  = E-(M + E - e*sinh(E))/ddf;
+    for i = 1:itmax
+
+        f       = e * sinh(E) - E - M;
+        fp      = e * cosh(E) - 1.0;
+        delta   = f / fp;
+        E       = E - delta;
+
+        % ddf = (1 - e*cosh(E));
+        % E  = E-(M + E - e*sinh(E))/ddf;
         theta  = 2*atan(sqrt((1+e)/(e-1))*tanh(E/2));
     end
 end
