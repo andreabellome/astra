@@ -61,5 +61,3 @@ end
 
 lgd = legend('Location', 'best');
 plotFontSizeAxesDim(14, 14, fig, gca);
-
-
