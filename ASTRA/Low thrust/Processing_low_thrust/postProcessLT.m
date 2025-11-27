@@ -41,7 +41,6 @@ thrustRTN       = zeros( length(time),3 );
 thrust          = zeros( length(time),3 );
 thrustmag       = zeros( length(time),1 );
 for indt = 1:length(time)
-    % stateCartScl(indt,1:6) = CoordConv.ep2pv(statevec(indt,1:6), pm.muScl);
     stateCartScl(indt,1:6) = mee2car(statevec(indt,1:6), pm.muScl);
 
     % --> obtain the thrust profile
