@@ -54,7 +54,7 @@ if strcmpi(type, 'pdf')
     fig_height = fig_pos(4) / screen_dpi;
     set(fig, 'PaperSize', [fig_width fig_height]);
     
-    name = [name_including_folder(1:end-2) '.pdf'];
+    name = [name_including_folder(1:end-4) '.pdf'];
 
     % Export to PDF with specified resolution
     print(fig, name, '-dpdf', ['-r' num2str(dpi)]);
@@ -74,7 +74,7 @@ elseif strcmpi(type, 'svg')
     fig_height = fig_pos(4) / screen_dpi;
     set(fig, 'PaperSize', [fig_width fig_height]);
 
-    name = [name_including_folder(1:end-2) '.svg'];
+    name = [name_including_folder(1:end-4) '.svg'];
     
     % Save as SVG
     print(fig, name, '-dsvg', ['-r' num2str(dpi)]);

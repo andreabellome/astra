@@ -35,13 +35,13 @@ if param.plot == true
 end
 
 % --> start: STEP 0 --> first try energy-optimal guess with zero guess
-fprintf( "Computing energy-optimal profile \n" );
 if ~isfield(param, 'use_energy_guess')
     param.use_energy_guess = true;
 end
 
 if param.use_energy_guess
     try
+        fprintf( "Computing energy-optimal profile \n" );
         pm = param;
         pm.fsolveoptions.MaxFunctionEvaluations = 10e3;
     

@@ -59,7 +59,7 @@ B = [0                      2*p/q*sqrt_p_mu                0;
 
 % --> start: fuel-optimal control
 % sigmaStar   = (g0Scl*IspScl/m) * norm(B'*xvalues(8:13)) + lambda_m;
-% sigmaStar   = norm(B'*xvalues(8:13)) + lambda_m*m/(g0Scl*IspScl); % --> this should be the correct one...
+% sigmaStar   = norm(B'*xvalues(8:13)) + lambda_m*(g0Scl*IspScl)/m; % --> this should be the correct one...
 sigmaStar   = norm(B'*xvalues(8:13)) + lambda_m;
 
 
