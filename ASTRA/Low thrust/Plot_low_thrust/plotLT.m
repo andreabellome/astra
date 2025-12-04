@@ -81,10 +81,10 @@ if nargout == 1
 %         'HandleVisibility', 'Off');
     
     yy_custom = yy;
-    yy_custom(transfer(:,9) <= 1e-3,:) = NaN;
+    yy_custom(transfer(:,9) <= 5e-3,:) = NaN;
 
     yy_custom_traj = yy;
-    yy_custom_traj(transfer(:,9) > 1e-3,:) = NaN;
+    yy_custom_traj(transfer(:,9) > 5e-3,:) = NaN;
 
     plot3(yy_custom_traj(:,1)./AU, yy_custom_traj(:,2)./AU, yy_custom_traj(:,3)./AU, 'Color', 'blue',...
         'linewidth', 2,...
@@ -131,10 +131,10 @@ elseif nargout == 2
 %         'HandleVisibility', 'Off');
     
     yy_custom = yy;
-    yy_custom(transfer(:,9) <= 1e-3,:) = NaN;
+    yy_custom(transfer(:,9) <= 5e-3,:) = NaN;
 
     yy_custom_traj = yy;
-    yy_custom_traj(transfer(:,9) > 1e-3,:) = NaN;
+    yy_custom_traj(transfer(:,9) > 5e-3,:) = NaN;
 
     plot3(yy_custom_traj(:,1)./AU, yy_custom_traj(:,2)./AU, yy_custom_traj(:,3)./AU, 'Color', 'blue',...
         'linewidth', 2,...
@@ -196,10 +196,10 @@ elseif nargout == 3
 %         'HandleVisibility', 'Off');
     
     yy_custom = yy;
-    yy_custom(transfer(:,9) <= 1e-3,:) = NaN;
+    yy_custom(transfer(:,9) <= 5e-3,:) = NaN;
 
     yy_custom_traj = yy;
-    yy_custom_traj(transfer(:,9) > 1e-3,:) = NaN;
+    yy_custom_traj(transfer(:,9) > 5e-3,:) = NaN;
 
     plot3(yy_custom_traj(:,1)./AU, yy_custom_traj(:,2)./AU, yy_custom_traj(:,3)./AU, 'Color', 'blue',...
         'linewidth', 2,...

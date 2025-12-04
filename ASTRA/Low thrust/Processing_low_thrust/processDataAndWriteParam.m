@@ -99,8 +99,8 @@ initState = [ state1(1:3)./param.AU, state1(4:6)./param.LU.*param.TU ];
 finState  = [ state2(1:3)./param.AU, state2(4:6)./param.LU.*param.TU ];
 
 % --> convert cartesian to MEE
-initState = CoordConv.vec2mee(initState(1:3)',initState(4:6)', param.muScl);
-finState  = CoordConv.vec2mee(finState(1:3)',finState(4:6)', param.muScl);
+initState = car2mee(initState, param.muScl);
+finState  = car2mee(finState, param.muScl);
 
 param.tStart = tStart;
 param.tEnd   = tEnd;

@@ -49,16 +49,16 @@ processed_OUTPUT = postProcessOutputASTRA( OUTPUT );
 % --> process the output for better user experience
 paretoFront = process_paretoFront_structure( INPUT, processed_OUTPUT );
 
-[ allSolutions ] = test_process_all_solutions( INPUT, processed_OUTPUT );
-[~,index]        = sortrows([allSolutions.vinfArr; allSolutions.vinfDep].');
-allSolutions     = allSolutions(index);
+% [ allSolutions ] = test_process_all_solutions( INPUT, processed_OUTPUT );
+% [~,index]        = sortrows([allSolutions.vinfArr; allSolutions.vinfDep].');
+% allSolutions     = allSolutions(index);
 
 %%
 
-row  = 2;
-path = allSolutions(row).path;
-revs = allSolutions(row).revs;
-res  = allSolutions(row).res;
+% row  = 2;
+% path = allSolutions(row).path;
+% revs = allSolutions(row).revs;
+% res  = allSolutions(row).res;
 
 %% --> extract desired path and plot
 
