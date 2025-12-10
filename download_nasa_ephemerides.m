@@ -14,7 +14,7 @@ idcentral = 1;
 
 % --> lower and upper bounds for ephemerides
 t0 = [ 2000 1 1 12 0 0 ];
-tf = [ 2050 1 1 12 0 0 ];
+tf = [ 2100 1 1 12 0 0 ];
 
 % --> SPKID of the object (found at https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/)
 spk_id = 20000001; % --> Ceres

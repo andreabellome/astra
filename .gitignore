@@ -18,3 +18,7 @@ test_*.m
 *.asv
 *.zip
 *.pdf
+
+*.emf
+*.png
+*.txt
