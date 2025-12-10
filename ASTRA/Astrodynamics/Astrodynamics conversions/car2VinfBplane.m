@@ -1,7 +1,8 @@
 function vinf_bplane_params = car2VinfBplane( cart, mu_planet )
 
 % DESCRIPTION :
-% This function computes the B-plane elements from cartesian elements.
+% This function computes the B-plane elements from cartesian elements in a
+% planetary-centered inertial reference frame from the B-plane elements. 
 %
 % INPUT : 
 % - cart      : 1x6 vector with (pos_x, pos_y, pos_z, vel_x, vel_y, vel_z)
