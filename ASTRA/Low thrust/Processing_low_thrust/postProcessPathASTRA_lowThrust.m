@@ -182,42 +182,4 @@ for indl = 1:size(legs,1)
 
 end
 
-% seq = path(:,7)';
-% seq(seq >= 12) = seq(seq >= 12) - 11;
-% legs = fromSeq2Legs(seq);
-% 
-% tt     = path(:,8);
-% tt     = mjd20002mjd(tt);
-% epochs = [tt(1:end-1) tt(2:end) ];
-% vecDV  = [ dv; norm(dvv) ];
-% 
-% struc.id1           = seq(1);
-% struc.id2           = seq(end) + 11;
-% 
-% struc.id1GTOC       = seq(1);
-% struc.id2GTOC       = seq(end);
-% 
-% struc.t1            = epochs(1,1);
-% struc.t2            = epochs(end,2);
-% struc.tof12         = epochs(end,2) - epochs(1,1);
-% struc.tof12y        = ( epochs(end,2) - epochs(1,1) )/365.25;
-% struc.dv1           = vecDV(1);
-% struc.dv2           = vecDV(end);
-% struc.dvtot         = sum(vecDV);
-% 
-% struc.legsASTRA     = fromSeq2Legs(path(:,7)');
-% struc.epochsMJD2000 = [path(1:end-1,8) path(2:end,8) ];
-% 
-% struc.legsGTOC     = legs;
-% struc.epochsMJD    = epochs;
-% 
-% struc.statesObjDep  = statesObjDep;
-% struc.statesObjArr  = statesObjArr;
-% struc.statesDepBM   = [ rrd vvouBM ];
-% struc.statesDep     = [ rrd vvd ];
-% struc.statesArr     = [ rra vva ];
-% struc.statesArrTAR  = [ rra vvaTAR ];
-% struc.dv            = vecDV;
-% struc.path          = path;
-
 end
