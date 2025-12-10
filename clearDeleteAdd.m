@@ -108,9 +108,22 @@ catch
 end
 
 
+try
+
+    propagateFopt_SEP_MEXIFY(ones(1,1), ones(14,1), ones(1,11));
+    disp( 'Fuel-optimal propagation with SEP mex function available! All good.' );
+catch
+    cd(newFolder);
+
+    disp( 'No fuel-optimal propagation mex function available with SEP... ASTRA creates it!!' );
+
+    codegen propagateFopt_SEP_MEXIFY -args {ones(1,1), ones(14,1), ones(1,11)};
+
+    cd(currFolder);
+    disp( 'Done!!' );
+end
 
 %%
 
 mu = 132724487690;
 AU = 149597870.7;
-
