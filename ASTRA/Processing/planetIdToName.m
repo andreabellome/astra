@@ -50,7 +50,10 @@ elseif idcentral == 7
     catch
         name = num2str(idPL);
     end
-    
+
+else
+
+    name = num2str(idPL);
 
 end
 
