@@ -170,6 +170,8 @@ elseif idcentral == 6
     fprintf(out,'Distance from the central body : %.4f Rs \n', rplf/AU);
 elseif idcentral == 7
     fprintf(out,'Distance from the central body : %.4f Ru \n', rplf/AU);
+else
+    fprintf(out,'Distance from the central body : %.4f km \n', rplf);
 end
 
 fprintf(out,'Departing C3                   : %.4f km^2/s^2 \n', path(1,9)^2);
@@ -204,7 +206,7 @@ end
 
 fprintf(out,'\n');
 
-fprintf(out, ['DSMs magnitudes        : ' num2str(path(1,10)) ' km/s \n']);
+fprintf(out, ['Defects magnitudes     : ' num2str(path(1,10)) ' km/s \n']);
 for indi = 2:size(path,1)
 fprintf(out, ['                         ' num2str(path(indi,10)) ' km/s \n']);
 end
