@@ -36,9 +36,13 @@ close all; clc;
 
 % --> check parallel pool
 if INPUT.parallel == true
-    try
-        parpool
-    catch
+    if isempty(gcp('nocreate'))
+        if isfield(INPUT, 'numWorkers')
+            numWorkers = INPUT.numWorkers;
+            start_safe_parpool(numWorkers);
+        else
+            start_safe_parpool();
+        end
     end
 end
 
