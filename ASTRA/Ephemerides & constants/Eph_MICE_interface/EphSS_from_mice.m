@@ -21,11 +21,15 @@ function [rr, vv] = EphSS_from_mice(IDspk, t, idcentral)
 
 
 if nargin == 2
-    idcentral = 1;
+    idcentral    = 1;
+elseif nargin == 3
+    if isempty(idcentral)
+        idcentral = 1;
+    end
 end
 
 if idcentral == 1 % --> currently only works for Solar System tours
-    
+
     % --> Ephemeris Time (ET)
     date = processDate(t);
     et   = cspice_str2et([num2str(date) ' TDB']);

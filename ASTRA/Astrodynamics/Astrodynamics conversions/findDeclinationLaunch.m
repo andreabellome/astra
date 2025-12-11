@@ -17,8 +17,8 @@ function [Dec, Asc] = findDeclinationLaunch(vvsc, vvpl)
 
 vEscape = vvsc - vvpl; % --> this is the v-infinity, with
 epsilon = deg2rad(23.439291);
-R       = [1 0 0; 0 cos(epsilon) -sin(epsilon); 0 sin(epsilon) cos(epsilon)];
-% R       = [1 0 0; 0 cos(epsilon) sin(epsilon); 0 -sin(epsilon) cos(epsilon)]; % --> from ecliptic to equatorial 
+R       = [1 0 0; 0 cos(epsilon) -sin(epsilon); 0 sin(epsilon) cos(epsilon)]; % --> from ecliptic to equatorial 
+% R       = [1 0 0; 0 cos(epsilon) sin(epsilon); 0 -sin(epsilon) cos(epsilon)]; % --> from equatorial to ecliptic
 
 v_eci   = R*vEscape';
 
