@@ -1,11 +1,10 @@
 
-clear all; close all; clc; format long g;
+clearDeleteAdd;
 
-MICE_path           = 'C:/Users/Andrea/Documents/GitHub/astra/MICE_TOOLBOX';
-MICE_kernel_path    = 'C:/Users/Andrea/Documents/GitHub/astra/MICE_TOOLBOX/mice/Kernel';
-
+% --> load custom ephemerides
+MICE_path = './MICE_TOOLBOX' ;
+addpath(genpath(MICE_path)); % --> always include this
 cspice_furnsh([MICE_path '/data.mk']);
-cspice_furnsh([MICE_kernel_path '/20000001.bsp']); % --> load the object ephemerides
 
 mu        = 132724487690;
 AU        = 149597870.7;
