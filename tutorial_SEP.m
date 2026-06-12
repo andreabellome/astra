@@ -120,4 +120,4 @@ dist_to_sun_au = [0.5:0.0001:3];
 thrust_profile  = func_thrust_fitted( dist_to_sun_au, param);
 
 figure;
-plot(dist_to_sun_au, thrust_profile)
+plot(dist_to_sun_au, thrust_profile);
