@@ -63,6 +63,10 @@ if INPUT.parallel == true
         [vvd, vva] = lambertMR_MEXIFY_mex(rr1, rr2, tof*86400, mu, optMR(1), optMR(2));
 
         dv               = norm(vvd - vv1);
+        % [~, dv] = first_leg_of_the_transfer( idcentral, ...
+        %     INPUT.customEphemerides, ...
+        %     pl1, t1, vvd, 5, deg2rad(-5), deg2rad(-5) );
+
         VASnext(indm,:)  = vva;
         LEGSnext(indm,:) = [pl1 t1 dv pl2 t2];
         VINFnext(indm,:) = norm(vv2 - vva);
