@@ -1,4 +1,4 @@
-function dv_tcn = to_TCN(r, v, vec)
+function [dv_tcn, R_inertial_to_TCN] = to_TCN(r, v, vec)
 
 % DESCRIPTION
 % This function rotates a vector from an inertial reference frame
@@ -19,6 +19,7 @@ function dv_tcn = to_TCN(r, v, vec)
 %            - dv_C = component along the cross-track direction (orbital angular momentum)
 %            - dv_N = component along the radial-like direction (toward position vector)
 %
+% - R_inertial_to_TCN : 3x3 rotation matrix from inertial frame to TCN
 % -------------------------------------------------------------------------
 
 % Ensure column vectors

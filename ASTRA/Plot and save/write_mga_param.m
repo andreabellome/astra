@@ -5,13 +5,13 @@ function write_mga_param( struc, INPUT, name )
 %
 % INPUT
 % - struc : Structure array defining the trajectory sequence. Each element contains:
-%           idD [--] departing body ID for leg i
-%           idA [--] arriving body ID for leg i
-%           tD [MJD2000] departure epoch of leg i
-%           tA [MJD2000] arrival epoch of leg i
-%           xxDtar [km, km/s] state vector at departure (position and velocity)
-%           xxAtar [km, km/s] state vector at arrival (position and velocity)
-%           dvA [km/s] arrival impulsive velocity change (optional)
+%           - idD [--] departing body ID for leg i
+%           - idA [--] arriving body ID for leg i
+%           - tD [MJD2000] departure epoch of leg i
+%           - tA [MJD2000] arrival epoch of leg i
+%           - xxDtar [km, km/s] state vector at departure (position and velocity)
+%           - xxAtar [km, km/s] state vector at arrival (position and velocity)
+%           - dvA [km/s] arrival impulsive velocity change (optional)
 %
 % - INPUT : Structure containing global parameters:
 %           idcentral [--] central body identifier

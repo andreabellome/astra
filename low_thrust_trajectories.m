@@ -1,6 +1,50 @@
 
 clearDeleteAdd; % --> !!! ONLY CALL IT ONCE FOR SPEED
 
+%%
+
+% --> load custom ephemerides
+spk_dir = [];           % --> location of the bsp file with object ephemerides (if empty, then the current directory is used)
+cspice_furnsh([ pwd '\' spk_dir '\' num2str(max(seq)) '.bsp']); % --> load the object ephemerides
+INPUT.customEphemerides = @EphSS_from_mice_workaround;
+
+t0              = date2mjd2000( [ 2040 10 5 0 0 0 ] )
+t1              = t0 + 1.38726831784583 * 365.25
+[ rr0, vv0 ]    = INPUT.customEphemerides( 3, t0, 1 )
+[ rr1, vv1 ]    = INPUT.customEphemerides( 20000001, t1, 1 )
+
+rr1./AU
+
+%%
+
+idcentral   = 1;
+Tmax        = 0.02;
+Isp         = 2000;
+m0          = 25.428452061293765;       % --> initial mass                      [kg]           
+g0          = 9.80665;                  % --> Earth acceleration at sea level   [m/s]
+useParallel = true;                     % --> if true, uses parallel for fsolve
+
+tof    = 88992000.0;                                                     % --> time of flight [sec]
+state1 = [ -53157262.06781612 -130620700.3064826  -56614407.24518578 27.40389403018237  -9.70337134849152  -4.20641613779124];   % --> initial state [km],[km/s]
+state2 = [ -20015773.996428743 96133712.04917876 44520583.699179895 -34.550452193550356 -6.848215514247735 -0.8962032747115676]; % --> final state [km],[km/s]
+Nrev   = 2; % --> number of revolutions
+
+% --> initialise the parameters
+param = processDataAndWriteParam(m0, tof, state1, state2, Tmax, Isp, g0, Nrev, idcentral, useParallel);
+
+% --> you might want to overwrite some of those (some examples below)
+param.plot                                  = true;    % --> this plots the thrust evolution over time for different rho (default is false)
+param.rhoLim                                = 0.0001;
+param.rho                                   = 1;
+param.gamma                                 = 0.1;
+param.fsolveoptions.MaxFunctionEvaluations  = 10e3;
+param.fsolveoptions.MaxIterations           = 10e3;
+
+% param.use_energy_guess                      = false;
+
+% --> solve the problem
+LTsol = wrapSolveFopt( param );
+
 %% TEST CASE 1: Earth-Mars (this is very fast)
 
 close all; clc;
@@ -384,3 +428,9 @@ figure(figTRAJ);
 colors = cool(2);
 plotPLTS_tt([3 4], 0, 12*365.25, idcentral, @EphSS_cartesian, 1, colors, {'Earth', 'Mars'}, 2);
 view( [-19 13] );
+
+%% TEST CASE 9: Mars-to-Asteroid using Solar Electric Propulsion (SEP)
+
+close all; clc;
+
+

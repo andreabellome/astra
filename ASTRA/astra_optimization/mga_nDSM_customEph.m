@@ -159,7 +159,10 @@ for indm = 1:size(MAT,1)
             vvd = vvga1 + MAT(indm,5:7);
 
             % --> final spacecraft position and velocity
-            [rra, vva] = FGCar_dt(rrd, vvd, (t2 - t1)*86400, mu);            
+            [rra, vva] = FGCar_dt(rrd, vvd, (t2 - t1)*86400, mu);  
+            % [~, yy2] = propagateKeplerODE(rrd, vvd, linspace(0, (t2 - t1)*86400, 1e3), mu);
+            % rra = yy2(end,1:3);
+            % vva = yy2(end,4:6);
             
             dv = [ dv; norm(MAT(indm,5:7)) ];
 
@@ -192,21 +195,35 @@ for indm = 1:size(MAT,1)
             end
 
         else % --> there is a propagation
-
+            
+            try
             if pl1 < 1e98
                 rrd        = RRAprev;
                 vvd        = VVAprev;
                 [rra, vva] = FGCar_dt(rrd, vvd, (t2 - t1)*86400, mu);
+                % [~, yy2] = propagateKeplerODE(rrd, vvd, linspace(0, (t2 - t1)*86400, 1e3), mu);
+                % rra = yy2(end,1:3);
+                % vva = yy2(end,4:6);
                 dv         = [dv; 0];
             else
                 rrd        = RRAprev;
                 vvd        = VVAprev + MAT(indm,5:7);
                 [rra, vva] = FGCar_dt(rrd, vvd, (t2 - t1)*86400, mu);
+                % [~, yy2] = propagateKeplerODE(rrd, vvd, linspace(0, (t2 - t1)*86400, 1e3), mu);
+                % rra = yy2(end,1:3);
+                % vva = yy2(end,4:6);
                 dv         = [dv; norm(MAT(indm,5:7))];
+            end
+            catch
+                st = 1;
             end
             
         end
 
+    end
+
+    if isnan(vva(1))
+        st = 1;
     end
 
     if plotsol == 1
@@ -282,5 +299,21 @@ for indm = 1:size(MAT,1)
 
 end
 DV = sum(dv);
+
+end
+
+%% auxiliary function
+function [tt, yy] = propagateKeplerODE(rvec, vvec, timevector, muPL)
+
+%Equation of motion ¨r+mu*r/R^3 = T/m
+F=@(t,x)   [x(4); %dx/dt=Vx
+    x(5); %dy/dt=Vy
+    x(6); %dz/dt=Vz
+    -muPL*x(1)/(sqrt(x(1)^2+x(2)^2+x(3)^2)^3);
+    -muPL*x(2)/(sqrt(x(1)^2+x(2)^2+x(3)^2)^3);
+    -muPL*x(3)/(sqrt(x(1)^2+x(2)^2+x(3)^2)^3)];
+
+options=odeset('RelTol',1e-6,'AbsTol',1e-7,'Refine',50);
+[tt,yy]=ode45(F,timevector,[rvec vvec],options);
 
 end
