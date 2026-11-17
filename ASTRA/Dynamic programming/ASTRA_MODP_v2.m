@@ -23,9 +23,9 @@ chosenRevs = INPUT.chosenRevs;
 
 %% --> start the search
 
-if INPUT.opt ~= 4
-    clc;
-end
+% if INPUT.opt ~= 4
+%     clc;
+% end
 
 % --> step 1
 T0  = [INPUT.depOpts(1):INPUT.depOpts(3):INPUT.depOpts(2)]'; % --> launch date vector
