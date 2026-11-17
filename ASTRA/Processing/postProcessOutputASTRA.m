@@ -1,4 +1,4 @@
-function [processed_OUTPUT] = postProcessOutputASTRA( OUTPUT )
+function [processed_OUTPUT] = postProcessOutputASTRA( INPUT, OUTPUT )
 
 % DESCRIPTION
 % This function processes the output of the ASTRA tool, extracting key information 
@@ -7,6 +7,8 @@ function [processed_OUTPUT] = postProcessOutputASTRA( OUTPUT )
 % cost functions, time of flight, Pareto-front solutions, and the path with minimum cost.
 % 
 % INPUT
+% - INPUT  : structure containing mission setup parameters,
+%            including the objective functions and SPICE settings
 % - OUTPUT : Structure array containing the raw results from ASTRA, with fields such as:
 %            * minPATH  : Matrix with the path of minimum cost.
 %            * res      : Resonance information (optional).
@@ -74,36 +76,38 @@ if ~isempty(OUTPUT)
     processed_OUTPUT.COSTS = cell2mat({OUTPUT.COSTS}'); % --> overall cost function (typically km/s -- depends upon the user)
     processed_OUTPUT.TOFYS = cell2mat({OUTPUT.TOFYS}'); % --> overall time of fligth (years)
     
-
-
     % --> Pareto-front solutions
-    fieldname = 'ovPF';  % the field you want to check
-    isOnlyFirstPopulated = ~isempty(OUTPUT(1).(fieldname)) && ...
-        all(arrayfun(@(x) isempty(x.(fieldname)), OUTPUT(2:end)));
+    % fieldname = 'ovPF';  % the field you want to check
+    % isOnlyFirstPopulated = ~isempty(OUTPUT(1).(fieldname)) && ...
+    %     all(arrayfun(@(x) isempty(x.(fieldname)), OUTPUT(2:end)));
 
-    if isOnlyFirstPopulated
-
-        processed_OUTPUT.PARETO_FRONT = OUTPUT(1).ovPF;
-        processed_OUTPUT.LEGSpf       = OUTPUT(1).LEGovPF;
-        processed_OUTPUT.VASpf        = OUTPUT(1).VASovPF;
-        processed_OUTPUT.VINFapf      = OUTPUT(1).VINFovPF;
-        processed_OUTPUT.REVSpf       = OUTPUT(1).REVSovPF;
-
-    else
+    % if isOnlyFirstPopulated
+    % 
+    %     processed_OUTPUT.PARETO_FRONT = OUTPUT(1).ovPF;
+    %     processed_OUTPUT.LEGSpf       = OUTPUT(1).LEGovPF;
+    %     processed_OUTPUT.VASpf        = OUTPUT(1).VASovPF;
+    %     processed_OUTPUT.VINFapf      = OUTPUT(1).VINFovPF;
+    %     processed_OUTPUT.REVSpf       = OUTPUT(1).REVSovPF;
+    % 
+    % else
         warning('on', 'all');
-        warning('ASTRA DATES option identified. For the overall Pareto front, the sum of departing v-inf, arrival v-inf and defects is considered and time of flight.');
+        warning('For the overall Pareto front, the function costFunc2_MODP.m is used unless overwritten.');
         warning('off','all');
+        
+        [~, ~, ~, ~, ...
+            ~, ~, ~, ~, ...
+            ~, costFunc2_MODP] = check_INPUT(INPUT);
         
         [processed_OUTPUT.LEGSpf, ...
          processed_OUTPUT.VASpf, ...
          processed_OUTPUT.VINFapf, ...
          processed_OUTPUT.PARETO_FRONT] = ...
-         costFunction2_MODP(processed_OUTPUT.LEGS, ...
-                            processed_OUTPUT.VAS, ...
-                            processed_OUTPUT.VINFa);
+         costFunc2_MODP(processed_OUTPUT.LEGS, ...
+                        processed_OUTPUT.VAS, ...
+                        processed_OUTPUT.VINFa);
 
         processed_OUTPUT.REVSpf = processed_OUTPUT.REVS(processed_OUTPUT.PARETO_FRONT(:,end),:);
-    end
+    % end
     
     % --> path with minimum cost
     [~, row] = min( [OUTPUT.minCOST]' );
