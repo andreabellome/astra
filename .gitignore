@@ -1,7 +1,6 @@
 tests/
 tests_and_future_releases/
 
-codegen/
 mice/
 MICE_TOOLBOX/
 
@@ -10,6 +9,8 @@ transASTRA_analysis/
 test_functions/
 
 test_*.m
+sols_*/
+**/codegen/
 
 *.bsp
 *.csv
