@@ -17,7 +17,7 @@ function [OUTPUT] = ASTRA_dates(INPUT, seq)
 % 
 % -------------------------------------------------------------------------
 
-clc;
+% clc;
 if ~isfield(INPUT, 'customEphemerides')
     INPUT.customEphemerides = @EphSS_cartesian;
 end
@@ -39,7 +39,7 @@ for indt = 1:length(TT0)
     end
     
 end
-clc;
+% clc;
 
 if exist('OUTPUT','var') == 1
 
