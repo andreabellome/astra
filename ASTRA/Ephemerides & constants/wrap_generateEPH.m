@@ -13,6 +13,14 @@ function [EPH] = wrap_generateEPH(M1, M2, idcentral, customEphemerides)
 % OUTPUT:
 % - EPH : Combined ephemeris matrix containing unique rows of ephemeris data for both departure and arrival time pairs.
 % 
+% IMPLEMENTATION NOTE (drop-in replacement, identical input/output)
+% The original evaluated the ephemerides for all rows of M1 and of M2 and
+% only then removed duplicate rows. When departure and arrival share
+% (body, epoch) pairs (e.g. Earth-Earth legs) the same ephemeris was
+% evaluated twice. Here the (body, epoch) pairs are deduplicated first, in
+% the same 'stable' order, so each ephemeris is evaluated once. Since the
+% ephemeris is a deterministic function of (body, epoch), EPH is identical.
+% 
 % -------------------------------------------------------------------------
 
 if nargin == 2
@@ -22,10 +30,7 @@ elseif nargin == 3
     customEphemerides = @EphSS_cartesian;
 end
 
-EPH1 = generateEPH(M1, idcentral, customEphemerides);
-EPH2 = generateEPH(M2, idcentral, customEphemerides);
-EPH  = [EPH1; EPH2];
-
-EPH = unique(EPH, 'rows', 'stable');
+M   = unique([M1; M2], 'rows', 'stable');
+EPH = generateEPH(M, idcentral, customEphemerides);
 
 end
