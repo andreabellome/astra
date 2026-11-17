@@ -1,4 +1,4 @@
-function m0 = ariane_64_launcher( vinf, dla_deg, mass_adapter, type )
+function [m0, type] = ariane_64_launcher( vinf, dla_deg, mass_adapter, type )
 
 % DESCRIPTION:
 % Launch mass from infinity-velocity for Ariane 64 launcher.
@@ -57,6 +57,9 @@ end
 vinf_vec = 1:1:6;
 
 if dla_deg > 5 || dla_deg < -5
+    warning('on', 'all');
+    warning("Launch declination at Earth outside the [-5, +5] bounds. Bi-boost is automatically selected.");
+    warning('on', 'all');
     type = 'bi_boost';
 end
 
