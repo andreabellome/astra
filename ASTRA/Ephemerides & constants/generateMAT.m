@@ -16,16 +16,24 @@ function [MAT, M1, M2] = generateMAT(pl1, pl2, T0, TOFS)
 % - M1   : Matrix of unique departure time pairs (departure planet ID and initial time).
 % - M2   : Matrix of unique arrival time pairs (arrival planet ID and arrival time).
 % 
+% IMPLEMENTATION NOTE (drop-in replacement, identical input/output)
+% The double for-loop filling MAT row by row is replaced by repelem/repmat.
+% Row order (T0 outer, TOFS inner) and the arrival times T0(i)+TOFS(j) are
+% computed with the same floating-point operation, so MAT is bit-identical.
+% 
 % -------------------------------------------------------------------------
 
-MAT = zeros(length(TOFS)*length(T0), 4);
-ind  = 1;
-for indt0 = 1:length(T0)
-    for indtof = 1:length(TOFS)
-        MAT(ind,:) = [ pl1 T0(indt0) pl2 [T0(indt0) + TOFS(indtof)] ];
-        ind        = ind + 1;
-    end
-end
+nT0  = length(T0);
+nTOF = length(TOFS);
+t0v  = reshape(T0(1:nT0), [], 1);
+tofv = reshape(TOFS(1:nTOF), [], 1);
+
+t1  = repelem(t0v, nTOF, 1);
+MAT = zeros(nTOF*nT0, 4);
+MAT(:,1) = pl1;
+MAT(:,2) = t1;
+MAT(:,3) = pl2;
+MAT(:,4) = t1 + repmat(tofv, nT0, 1);
 
 M1   = unique(MAT(:,1:2), 'rows', 'stable');
 M2   = unique(MAT(:,3:4), 'rows', 'stable');
