@@ -17,7 +17,7 @@ function [OUTPUT] = ASTRA_dates(INPUT, seq)
 % 
 % -------------------------------------------------------------------------
 
-% clc;
+clc;
 if ~isfield(INPUT, 'customEphemerides')
     INPUT.customEphemerides = @EphSS_cartesian;
 end
@@ -27,19 +27,29 @@ TT0        = [INPUT.depOpts(1):INPUT.depOpts(3):INPUT.depOpts(2)]'; % --> launch
 input      = INPUT;
 input.plot = [ 0 0 ];
 indl       = 1;
+
+% --> caches of the Lambert arcs (shared by all launch dates)
+if (isfield(INPUT, 'fastLastLeg') && INPUT.fastLastLeg) || (isfield(INPUT, 'fastAllLegs') && INPUT.fastAllLegs)
+    wrap_DynProgr_st2_fast('reset');
+    cleanupCache = onCleanup(@() wrap_DynProgr_st2_fast('reset')); %#ok<NASGU>
+end
+
 for indt = 1:length(TT0)
 
     fprintf( "Computing at: %.1f/100 \n", indt/length(TT0)*100 );
     
     input.depOpts = [TT0(indt) TT0(indt) 1];
     output        = ASTRA_SODP_v2(input, seq);
+    if isfield(INPUT, 'paretoByDate') && INPUT.paretoByDate
+        output = keepParetoOfDate(output); % --> keep only the (cost, ToF) Pareto front of this launch date
+    end
     if ~isempty(output(1).LEGSpf)
         OUTPUT(indl:length(output)+indl-1) = output;
         indl = length(OUTPUT) + 1;
     end
     
 end
-% clc;
+clc;
 
 if exist('OUTPUT','var') == 1
 
@@ -96,4 +106,27 @@ else
 
 end
 
+end
+
+% =========================================================================
+function output = keepParetoOfDate(output)
+% Keeps, for each element of the output of ASTRA_SODP_v2 (one launch
+% date), only the solutions on its (TOF, cost) Pareto front, i.e. the rows
+% already identified by output(k).PF(:,3). All the per-solution arrays are
+% subset consistently and PF(:,3) is remapped. minPATH/minCOST/minTOFy are
+% unchanged (the min-cost solution is on the front). The overall Pareto
+% front over all launch dates is a subset of the union of these fronts.
+for k = 1:numel(output)
+    if isempty(output(k).LEGS) || isempty(output(k).PF)
+        continue;
+    end
+    idx                  = output(k).PF(:,end);
+    output(k).LEGS       = output(k).LEGS(idx,:);
+    output(k).VAS        = output(k).VAS(idx,:);
+    output(k).VINFa      = output(k).VINFa(idx,:);
+    output(k).COSTS      = output(k).COSTS(idx,:);
+    output(k).TOFYS      = output(k).TOFYS(idx,:);
+    output(k).chosenRevs = output(k).chosenRevs(idx,:);
+    output(k).PF(:,end)  = (1:numel(idx))';
+end
 end
