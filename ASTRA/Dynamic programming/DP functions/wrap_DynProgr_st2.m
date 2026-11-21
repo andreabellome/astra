@@ -27,6 +27,14 @@ function [LEGSn, VASn, VINFn, nLP, nDEF] = wrap_DynProgr_st2(LEGSnext, VASnext, 
 % 
 % -------------------------------------------------------------------------
 
+% --> fast vectorised/cached version (opt = 3): last leg, or all legs after the first
+useFast = ( isfield(INPUT, 'fastLastLeg') && INPUT.fastLastLeg && indl == size(legs,1) ) || ...
+          ( isfield(INPUT, 'fastAllLegs') && INPUT.fastAllLegs && indl >= 2 );
+if useFast
+    [LEGSn, VASn, VINFn, nLP, nDEF] = wrap_DynProgr_st2_fast(LEGSnext, VASnext, legs, runOpts, indl, tstep, TOF_LIM, INPUT);
+    return;
+end
+
 idcentral = INPUT.idcentral;
 mu        = constants(idcentral, 1);
 
